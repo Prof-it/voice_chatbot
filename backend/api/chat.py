@@ -1,4 +1,4 @@
-from fastapi import APIRouter, HTTPException, Request
+from fastapi import APIRouter, HTTPException, Request, UploadFile, File
 from fastapi.responses import StreamingResponse
 from openai import AsyncOpenAI
 import os
@@ -8,14 +8,25 @@ import logging
 from pydantic import BaseModel
 from typing import List, Dict, Any, Optional
 import json
+from utils.convert_to_wav import convert_to_wav_bytes
 from utils.preprocess import preprocess_text
 from utils.predict import predict_diseases
 from utils.drug import search_drug_info
+from faster_whisper import WhisperModel
+
+
 import numpy as np
 import traceback
+import tempfile
+
+from io import BytesIO
+
 load_dotenv()
 
 logging.basicConfig(level=logging.DEBUG)  # Debug logging enabled
+
+
+model = WhisperModel("base.en", compute_type="int8", download_root="./models")
 
 # Load OpenAI API Key
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
@@ -259,3 +270,63 @@ def generate_advice(disease: str) -> str:
         "Allergic Rhinitis": "Avoid allergens, use antihistamines, and keep indoor air clean."
     }
     return advice_map.get(disease, "Consult a doctor for an accurate diagnosis and treatment plan.")
+
+
+
+
+
+@chat_router.post("/transcribe_openai")
+async def transcribe_audio(file: UploadFile = File(...)):
+    """
+    Accepts audio file and returns Whisper transcription without disk I/O.
+    """
+    try:
+        audio_bytes = await file.read()
+        
+        audio_buffer = BytesIO(audio_bytes)
+        audio_buffer.name = file.filename  # Whisper API expects filename attribute
+        
+        transcript = await client.audio.transcriptions.create(
+            model="whisper-1",
+            file=audio_buffer,
+            response_format="text",
+            language="en"
+        )
+
+        print(f"Transcription result: {transcript}")
+
+        logging.debug(f"Transcription result: {transcript}")
+        
+        return {"text": transcript}
+
+    except Exception as e:
+        logging.error(f"Transcription error: {e}")
+        raise HTTPException(status_code=500, detail="Transcription failed.")
+    
+
+@chat_router.post("/transcribe")
+async def transcribe_audio(file: UploadFile = File(...)):
+    """
+    Accepts audio file and returns transcription using faster-whisper.
+    """
+    try:
+        # Read audio file bytes
+        file_bytes = await file.read()
+
+        # Convert to WAV using ffmpeg in memory
+        wav_bytes = convert_to_wav_bytes(file_bytes)
+
+        # Save to temporary file for model input
+        with tempfile.NamedTemporaryFile(suffix=".wav") as temp_wav:
+            temp_wav.write(wav_bytes)
+            temp_wav.flush()
+
+            segments, _ = model.transcribe(temp_wav.name)
+            transcription = " ".join([seg.text for seg in segments])
+
+        return {"text": transcription}
+
+    except Exception as e:
+        logging.error(f"Transcription failed: {e}")
+        raise HTTPException(status_code=500, detail="Transcription failed.")
+

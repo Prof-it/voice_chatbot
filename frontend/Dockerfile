@@ -8,3 +8,5 @@ RUN npm install
 COPY . .
 
 CMD ["npm", "start"]
+# CMD ["tail", "-f", "/dev/null"]
+

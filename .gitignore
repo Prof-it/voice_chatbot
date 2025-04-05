@@ -16,3 +16,8 @@ build
 
 # ignore package-lock.json
 package-lock.json
+
+# ignore .locks folders
+.locks/
+
+blobs
