@@ -1,0 +1,18 @@
+# ignore .DS_Store files
+.DS_Store
+
+# ignore .env files
+.env
+
+# ignore node_modules
+node_modules
+
+# ignore build files
+build
+
+# ihnore .pyc files
+*.pyc
+
+
+# ignore package-lock.json
+package-lock.json
