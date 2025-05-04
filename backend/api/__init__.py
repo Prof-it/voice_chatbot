@@ -2,14 +2,14 @@ from fastapi import FastAPI, Depends
 from fastapi.middleware.cors import CORSMiddleware
 import json
 import os
+import torch
+# hf import
+from transformers import AutoTokenizer, AutoModelForSequenceClassification
 
-def load_json():
-    """Loads JSON data from file at startup."""
-    # Get the absolute path of the file
-    file_path = os.path.join(os.path.dirname(__file__), "ent_drug_data.json")
-    
-    with open(file_path, "r") as file:
-        return json.load(file)
+# Constants
+ICD_MODEL_NAME = "AkshatSurolia/ICD-10-Code-Prediction"
+ICD_CACHE_DIR  = os.path.join(os.path.dirname(__file__), "models", "icd10")
+
 
 def create_app():
     app = FastAPI(title="ENT Symptom Predictor API", version="1.0")
@@ -24,21 +24,30 @@ def create_app():
     )
 
     # Global storage for JSON config
-    app.state.medical_advice_data = {}
+    app.state.icd10 = {}
 
     @app.on_event("startup")
     async def startup_event():
         """Loads JSON data on FastAPI startup."""
-        app.state.medical_advice_data = load_json()
+        
+        # Ensure the cache directory exists
+        os.makedirs(ICD_CACHE_DIR, exist_ok=True)
 
-    def get_config():
-        """Dependency to access config data."""
-        return app.state.medical_advice_data
+        # Load the tokenizer and model for ICD-10 code prediction
+        icd_tokenizer = AutoTokenizer.from_pretrained(ICD_MODEL_NAME, cache_dir=ICD_CACHE_DIR)
+        icd_model = AutoModelForSequenceClassification.from_pretrained(ICD_MODEL_NAME, cache_dir=ICD_CACHE_DIR)
+        device        = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+        icd_model.to(device)
 
-    from api.predict import predict_router
+        app.state.icd10["tokenizer"] = icd_tokenizer
+        app.state.icd10["model"] = icd_model
+        app.state.icd10["device"] = device
+
     from api.chat import chat_router
+    from api.transcribe import transcribe_router
+    
 
-    app.include_router(predict_router)
     app.include_router(chat_router)
+    app.include_router(transcribe_router)
 
-    return app, get_config  # Returning `get_config` for dependency injection if needed
+    return app  # Returning `get_config` for dependency injection if needed

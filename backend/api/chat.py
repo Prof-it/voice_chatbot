@@ -1,25 +1,23 @@
-from fastapi import APIRouter, HTTPException, Request, UploadFile, File
+import os
+import traceback
+import asyncio
+import logging
+import json
+import traceback
+
+from utils.predict import predict_icd10, map_icd10_to_specialties
+from utils.prompts import MAP_PROMPT, SYSTEM_PROMPT, TOOLS
+from utils.types import ChatRequest
+
+
+from fastapi import APIRouter, HTTPException, Request
 from fastapi.responses import StreamingResponse
 from openai import AsyncOpenAI
-import os
-import asyncio
+from openai.types.chat import ChatCompletion
 from dotenv import load_dotenv
-import logging
-from pydantic import BaseModel
-from typing import List, Dict, Any, Optional
-import json
-from utils.convert_to_wav import convert_to_wav_bytes
-from utils.preprocess import preprocess_text
-from utils.predict import predict_diseases
-from utils.drug import search_drug_info
+
 from faster_whisper import WhisperModel
 
-
-import numpy as np
-import traceback
-import tempfile
-
-from io import BytesIO
 
 load_dotenv()
 
@@ -39,79 +37,36 @@ client = AsyncOpenAI(api_key=OPENAI_API_KEY)
 # FastAPI Router
 chat_router = APIRouter()
 
-class Message(BaseModel):
-    role: str
-    content: str
-
-class ChatRequest(BaseModel):
-    messages: List[Message]
-    accumulated_symptoms: Optional[List[str]] = []
-
-
-SYSTEM_PROMPT = {
-    "role": "system",
-    "content": """
-    You are a medical assistant integrated with function tooling. Your task is to extract all clearly mentioned symptoms from the user's message, regardless of the body region or condition.
-
-    Extraction Rules:
-    - Only extract clearly stated symptoms or complaints of illness. Do not infer or assume symptoms that are not explicitly mentioned.
-    - Return symptoms exactly as stated by the user, e.g., "ear pain", "fever", "difficulty sleeping".
-    - If no explicit symptoms are present, return an empty list [].
-    - Do NOT include greetings (e.g., "Hi", "Hello"), general well-being statements (e.g., "I feel bad"), or unrelated phrases as symptoms.
-    - Provide symptoms as a JSON list of strings, no explanations or extra content.
-
-    Example outputs:
-    - User: "Hi, I have a sore throat and nasal congestion" → Symptoms: ["sore throat", "nasal congestion"]
-    - User: "My daughter is vomiting and has high fever" → Symptoms: ["vomiting", "fever"]
-    - User: "Hey!" → Symptoms: []
-    - User: "I feel terrible" → Symptoms: []
+async def openai_stream_response(chat_request, icd10):
     """
-}
-
-# Function Tool Definition
-TOOLS = [
-    {
-        "type": "function",
-        "function": {
-            "name": "extract_top_symptoms",
-            "description": "Extracts the top 3 ENT-related symptoms explicitly mentioned by the user.",
-            "parameters": {
-                "type": "object",
-                "properties": {
-                    "symptoms": {
-                        "type": "array",
-                        "items": {
-                            "type": "string",
-                            "description": "A clearly identified ENT-related symptom."
-                        },
-                        "description": "List of clearly identified ENT-related symptoms."
-                    }
-                },
-                "required": ["symptoms"]
-            }
-        }
-    }
-]
-
-async def openai_stream_response(chat_request, medical_advice_data):
+    The function `openai_stream_response` processes chat messages, extracts symptoms, maps them to
+    diagnoses, predicts ICD-10 codes, and suggests specialties for medical appointments.
+    
+    :param chat_request: The `chat_request` parameter seems to contain information related to a chat
+    conversation, including messages exchanged and accumulated symptoms. The function
+    `openai_stream_response` appears to interact with the OpenAI API to process these messages and
+    symptoms, generating responses based on the received data
+    :param icd10: The `icd10` parameter in the `openai_stream_response` function seems to be a
+    dictionary containing information related to ICD-10 coding. It likely includes the following
+    key-value pairs:
     """
-    Async generator that streams responses from OpenAI and processes function tool calls.
-    """
+
     try:
         messages = chat_request.messages
         accumulated_symptoms = chat_request.accumulated_symptoms
 
-        # logging.debug(f"Received messages: {messages}")
         logging.debug(f"Accumulated symptoms: {accumulated_symptoms}")
 
-        # ✅ Ensure messages are formatted correctly
-        tool_choice = "auto" if len(messages) < 2 else {"type": "function", "function": {"name": "extract_top_symptoms"}}
+        # Validate messages
         response = await client.chat.completions.create(
             model="gpt-4-turbo",
             messages=[SYSTEM_PROMPT, *messages],
             stream=True,
             tools=TOOLS,
-            tool_choice={"type": "function", "function": {"name": "extract_top_symptoms"}},
+            tool_choice={
+                "type": "function",
+                "function": {"name": "extract_top_symptoms"},
+            },
         )
 
         final_tool_calls = {}
@@ -131,11 +86,16 @@ async def openai_stream_response(chat_request, medical_advice_data):
                 for tool_call in tool_calls:
                     index = tool_call.index
                     if index not in final_tool_calls:
-                        final_tool_calls[index] = {"name": tool_call.function.name, "arguments": ""}
-                    
+                        final_tool_calls[index] = {
+                            "name": tool_call.function.name,
+                            "arguments": "",
+                        }
+
                     # ✅ Accumulate arguments as they come in chunks
                     if tool_call.function and tool_call.function.arguments:
-                        final_tool_calls[index]["arguments"] += tool_call.function.arguments
+                        final_tool_calls[index][
+                            "arguments"
+                        ] += tool_call.function.arguments
 
             content = getattr(delta, "content", None)
 
@@ -149,12 +109,10 @@ async def openai_stream_response(chat_request, medical_advice_data):
                 "choices": [
                     {
                         "index": choices[0].index,
-                        "delta": {
-                            "content": content if content else None
-                        },
-                        "finish_reason": choices[0].finish_reason
+                        "delta": {"content": content if content else None},
+                        "finish_reason": choices[0].finish_reason,
                     }
-                ]
+                ],
             }
 
             yield f"data: {json.dumps(response_data)}\n\n"
@@ -166,51 +124,112 @@ async def openai_stream_response(chat_request, medical_advice_data):
             if tool_call["name"] == "extract_top_symptoms":
                 try:
                     logging.debug(f"Processing tool call: {tool_call}")
-                    extracted_args = json.loads(tool_call["arguments"])  # ✅ Ensure proper JSON parsing                    
+                    extracted_args = json.loads(
+                        tool_call["arguments"]
+                    )  # ✅ Ensure proper JSON parsing
                     symptoms_list = extracted_args.get("symptoms", [])
-                    new_symptoms = [symptom for symptom in symptoms_list if symptom not in accumulated_symptoms]
+                    new_symptoms = [
+                        symptom
+                        for symptom in symptoms_list
+                        if symptom not in accumulated_symptoms
+                    ]
                     accumulated_symptoms.extend(new_symptoms)
-                    accumulated_symptoms = list(set(accumulated_symptoms))  # Remove duplicates
+                    accumulated_symptoms = list(
+                        set(accumulated_symptoms)
+                    )  # Remove duplicates
 
                     logging.debug(f"Extracted Symptoms: {symptoms_list}")
                     if not accumulated_symptoms:
                         content_string = (
-                            "Hello! If you have any symptoms related to ear, nose, or throat concerns, "
+                            "Hello! If you have any symptoms or health concerns, "
                             "please let me know so I can assist you further."
                         )
                     elif len(accumulated_symptoms) < 3:
                         content_string = (
                             f"I understand you're experiencing: {', '.join(accumulated_symptoms)}. "
-                            "Could you please tell me if you're experiencing additional symptoms?"
+                            "Could you please tell me about any other symptoms you might have?"
                         )
-                    else:    
-                        cleaned_symptoms = preprocess_text(accumulated_symptoms)
-                        predicted_disease = predict_diseases(cleaned_symptoms)
+                    else:                        
+                        # Map symptoms to detailed clinical diagnosis phrases
+                        response: ChatCompletion = await client.chat.completions.create(
+                            model="gpt-4-turbo",
+                            messages=[
+                                MAP_PROMPT,
+                                {
+                                    "role": "user",
+                                    "content": json.dumps(
+                                        {"symptoms": accumulated_symptoms}
+                                    ),
+                                },
+                            ],
+                            stream=False,
+                            tools=TOOLS,
+                            tool_choice={
+                                "type": "function",
+                                "function": {"name": "map_symptoms_to_diagnoses"},
+                            },
+                        )
+                        print(f"Response: {response.choices[0]}")
+                        resp_choice = response.choices[0]
 
-                        logging.debug(f"Predicted Disease: {predicted_disease} type: {type(predicted_disease)}")                        
+                        print(f"Response choice: {resp_choice}")
 
-                        drug_info = search_drug_info(predicted_disease, medical_advice_data, cleaned_symptoms)
+                        # 1) Try the standard function_call API first
+                        if resp_choice.message and resp_choice.message.function_call:
+                            args_str = resp_choice.message.function_call.arguments
 
-                        if not drug_info:
-                            drug_info = {
-                                "error": "No specific medications found for this condition."
-                            }
+                        # 2) Fallback to the tool_calls list if function_call is None
+                        elif resp_choice.message.tool_calls:
+                            # take the last tool_call for our mapping function
+                            tc = [
+                                tc for tc in resp_choice.message.tool_calls
+                                if tc.function.name == "map_symptoms_to_diagnoses"
+                            ]
+                            if not tc:
+                                raise ValueError("No map_symptoms_to_diagnoses tool_call found")
+                            args_str = tc[-1].function.arguments
 
-                        # Ensure the disease name is formatted correctly
-                        if isinstance(predicted_disease, np.ndarray):  # If it's a NumPy array, extract the first element
-                            predicted_disease = predicted_disease[0]
+                        else:
+                            raise ValueError("No function_call or tool_calls found in response")
 
-                        if not isinstance(predicted_disease, str):  # Final check to ensure it's a string
-                            predicted_disease = str(predicted_disease)
+    
+                        payload = json.loads(args_str)
+                        mappings = payload.get("mappings", [])
 
-                        predicted_disease = predicted_disease.strip().title()
+                        print(f"Mappings: {mappings}")
+
+                        # 4) Extract diagnosis phrases
+                        detailed_diagnoses = [m["diagnosis"] for m in mappings]
+
+                        # Use the detailed diagnosis phrases for ICD-10 mapping
+                        # predict icd10 codes for the symptoms
+                        icd_model = icd10["model"]
+                        icd_tokenizer = icd10["tokenizer"]
+                        device = icd10["device"]
+
+                        icd_10_mappings = predict_icd10(
+                            detailed_diagnoses, icd_tokenizer, icd_model, device
+                        )
+                        icd_codes = [item["icd10"] for item in icd_10_mappings]
+                        # Map ICD-10 codes to specialties
+                        specialty = map_icd10_to_specialties(icd_codes)
+
+                        appointment = {
+                            "specialty": specialty,
+                            "suggestedDate": "yet to implement",
+                            "suggestedTime": "yet to implement",
+                        }
+
 
                         content_string = {
                             "symptoms": accumulated_symptoms,
-                            "disease": predicted_disease,                            
-                            "drugs": drug_info
+                            "mappings": mappings,
+                            "detailed_diagnoses": detailed_diagnoses,
+                            "icd10": icd_10_mappings,
+                            "appointment": appointment,
+                            "disease": "",
+                            "drugs": [],
                         }
-                        logging.debug(f"Drug Info: {drug_info}")
 
                     function_response_data = {
                         "id": f"tool-call-{index}",
@@ -221,10 +240,8 @@ async def openai_stream_response(chat_request, medical_advice_data):
                         "choices": [
                             {
                                 "index": index,
-                                "delta": {
-                                    "content": content_string
-                                },
-                                "finish_reason": "stop"
+                                "delta": {"content": content_string},
+                                "finish_reason": "stop",
                             }
                         ],
                         "accumulated_symptoms": accumulated_symptoms,
@@ -248,85 +265,29 @@ async def openai_stream_response(chat_request, medical_advice_data):
 @chat_router.post("/chat")
 async def chat(request: Request, chat_request: ChatRequest):
     """
-    Endpoint for streaming OpenAI chat responses with function tooling.
-    """
+    This Python function handles POST requests to a chat endpoint, processing chat messages and
+    returning a streaming response using OpenAI and ICD-10 data.
     
+    :param request: The `request` parameter represents the incoming request to the `/chat` endpoint. It
+    contains information about the request such as headers, query parameters, and more
+    :type request: Request
+    :param chat_request: The `chat_request` parameter in the code snippet represents a data model or
+    object that contains information related to a chat request. It likely includes details such as
+    messages exchanged in the chat, user information, timestamps, or any other relevant data needed to
+    process the chat request. This parameter is used to extract
+    :type chat_request: ChatRequest
+    :return: A StreamingResponse object is being returned with the openai_stream_response function and
+    the ICD-10 data. The media type is set to "text/event-stream".
+    """
     messages = chat_request.messages
-    medical_advice_data = request.app.state.medical_advice_data
+    icd10 = request.app.state.icd10
 
     if not messages:
-        raise HTTPException(status_code=400, detail="Missing 'messages' field in request body.")
-
-    return StreamingResponse(openai_stream_response(chat_request, medical_advice_data), media_type="text/event-stream")
-
-def generate_advice(disease: str) -> str:
-    """
-    Generates medical advice based on predicted disease.
-    """
-    advice_map = {
-        "Common Cold": "Stay hydrated, rest, and take over-the-counter cold medications.",
-        "Flu": "Drink plenty of fluids, rest, and consult a doctor if symptoms persist.",
-        "Otitis Media": "If ear pain persists, consult an ENT specialist immediately.",
-        "Allergic Rhinitis": "Avoid allergens, use antihistamines, and keep indoor air clean."
-    }
-    return advice_map.get(disease, "Consult a doctor for an accurate diagnosis and treatment plan.")
-
-
-
-
-
-@chat_router.post("/transcribe_openai")
-async def transcribe_audio(file: UploadFile = File(...)):
-    """
-    Accepts audio file and returns Whisper transcription without disk I/O.
-    """
-    try:
-        audio_bytes = await file.read()
-        
-        audio_buffer = BytesIO(audio_bytes)
-        audio_buffer.name = file.filename  # Whisper API expects filename attribute
-        
-        transcript = await client.audio.transcriptions.create(
-            model="whisper-1",
-            file=audio_buffer,
-            response_format="text",
-            language="en"
+        raise HTTPException(
+            status_code=400, detail="Missing 'messages' field in request body."
         )
 
-        print(f"Transcription result: {transcript}")
-
-        logging.debug(f"Transcription result: {transcript}")
-        
-        return {"text": transcript}
-
-    except Exception as e:
-        logging.error(f"Transcription error: {e}")
-        raise HTTPException(status_code=500, detail="Transcription failed.")
-    
-
-@chat_router.post("/transcribe")
-async def transcribe_audio(file: UploadFile = File(...)):
-    """
-    Accepts audio file and returns transcription using faster-whisper.
-    """
-    try:
-        # Read audio file bytes
-        file_bytes = await file.read()
-
-        # Convert to WAV using ffmpeg in memory
-        wav_bytes = convert_to_wav_bytes(file_bytes)
-
-        # Save to temporary file for model input
-        with tempfile.NamedTemporaryFile(suffix=".wav") as temp_wav:
-            temp_wav.write(wav_bytes)
-            temp_wav.flush()
-
-            segments, _ = model.transcribe(temp_wav.name)
-            transcription = " ".join([seg.text for seg in segments])
-
-        return {"text": transcription}
-
-    except Exception as e:
-        logging.error(f"Transcription failed: {e}")
-        raise HTTPException(status_code=500, detail="Transcription failed.")
-
+    return StreamingResponse(
+        openai_stream_response(chat_request, icd10),
+        media_type="text/event-stream",
+    )

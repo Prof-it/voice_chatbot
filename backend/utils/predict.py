@@ -1,54 +1,102 @@
-import joblib
 import logging
-from .preprocess import preprocess_text
+import torch
 
 # Set up logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-model = joblib.load("models/ent_symptom_model.pkl")
-vectorizer = joblib.load("models/vectorizer.pkl")
-label_encoder = joblib.load("models/label_encoder.pkl")
-
-def predict_diseases1(symptom_texts):
+def predict_icd10(symptoms: list[str], tokenizer, model, device):
     """
-    Accepts either a single symptom string or a list of symptom strings.
-    Returns the predicted disease(s).
+    Map each symptom to an ICD-10 code.
     """
-    # Check if the input is a list of symptoms
-    logger.info(f"Received input: {symptom_texts} of type {type(symptom_texts)}")
-    
-    # If a single string is passed, convert it into a list
-    if isinstance(symptom_texts, str):
-        symptom_texts = [symptom_texts]
+    results = []
+    model.eval()
+    for symptom in symptoms:
+        inputs = tokenizer(symptom, return_tensors="pt", truncation=True)
+        inputs = {k: v.to(device) for k, v in inputs.items()}
+        with torch.no_grad():
+            outputs = model(**inputs)
+        pred_idx = int(torch.argmax(outputs.logits, dim=-1))
+        icd_code = model.config.id2label[pred_idx]
+        results.append({"symptom": symptom, "icd10": icd_code})
+    return results
 
-
-    cleaned_texts = [preprocess_text(text) for text in symptom_texts]    
-
-    # Log the cleaned texts
-    logger.info(f"Cleaned texts: {cleaned_texts}")
-
-    # Transform the list of symptom strings using the vectorizer
-    text_vectorized = vectorizer.transform(cleaned_texts)
-    # Get predictions for each text entry
-    predictions = model.predict(text_vectorized)
-    # Convert numerical labels back to disease names
-    predicted_diseases = label_encoder.inverse_transform(predictions)
-    return predicted_diseases
-
-def predict_diseases(symptom_texts):
+def map_icd10_to_specialties(icd10_codes: list[str]) -> str:
     """
-    Accepts either a single symptom string or a list of symptom strings.
-    Returns the predicted disease(s).
+    Maps ICD-10 codes to the most likely medical specialty.
+    Chooses highest count and prioritizes certain specialties.
     """
-    # If a single string is passed, convert it into a list
-    if isinstance(symptom_texts, str):
-        symptom_texts = [symptom_texts]
+    icd_specialty_map = {
+        "A": "Infectious Diseases",
+        "B": "Infectious Diseases",
+        "C": "Oncology",
+        "D": "Hematology / Oncology",
+        "E": "Endocrinology",
+        "F": "Psychiatry",
+        "G": "Neurology",
+        "H": "Otolaryngology (ENT) / Ophthalmology",
+        "I": "Cardiology",
+        "J": "Pulmonology / ENT",
+        "K": "Gastroenterology",
+        "L": "Dermatology",
+        "M": "Orthopedics / Rheumatology",
+        "N": "Nephrology / Urology",
+        "O": "Obstetrics / Gynecology",
+        "P": "Pediatrics",
+        "Q": "Genetics / Pediatrics",
+        "R": "General Practice / Diagnostics",
+        "S": "Orthopedics / Trauma",
+        "T": "Orthopedics / Trauma",
+        "Z": "Preventive Care / General Practice"
+    }
 
-    # Transform the list of symptom strings using the vectorizer
-    text_vectorized = vectorizer.transform(symptom_texts)
-    # Get predictions for each text entry
-    predictions = model.predict(text_vectorized)
-    # Convert numerical labels back to disease names
-    predicted_diseases = label_encoder.inverse_transform(predictions)
-    return predicted_diseases
+    # Specialty priority (higher index → lower priority)
+    specialty_priority = [
+        "Otolaryngology (ENT) / Ophthalmology",
+        "Pulmonology / ENT",
+        "Neurology",
+        "Cardiology",
+        "Orthopedics / Rheumatology",
+        "Gastroenterology",
+        "Dermatology",
+        "Psychiatry",
+        "Hematology / Oncology",
+        "Endocrinology",
+        "Infectious Diseases",
+        "Nephrology / Urology",
+        "Obstetrics / Gynecology",
+        "Pediatrics",
+        "Genetics / Pediatrics",
+        "Orthopedics / Trauma",
+        "Preventive Care / General Practice",
+        "General Practice / Diagnostics"
+    ]
+
+    specialty_counts = {}
+
+    for code in icd10_codes:
+        if not code:
+            continue
+        chapter = code[0].upper()
+        specialty = icd_specialty_map.get(chapter)
+        if specialty:
+            specialty_counts[specialty] = specialty_counts.get(specialty, 0) + 1
+
+    if not specialty_counts:
+        return "General Practice"
+
+    # Step 1: Find the max count specialties
+    max_count = max(specialty_counts.values())
+    top_specialties = [spec for spec, count in specialty_counts.items() if count == max_count]
+
+    # Step 2: If only one specialty, return it
+    if len(top_specialties) == 1:
+        return top_specialties[0]
+
+    # Step 3: Use priority to break tie
+    sorted_specialties = sorted(
+        top_specialties,
+        key=lambda s: specialty_priority.index(s) if s in specialty_priority else len(specialty_priority)
+    )
+
+    return sorted_specialties[0]

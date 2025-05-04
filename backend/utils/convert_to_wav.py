@@ -1,5 +1,9 @@
-import ffmpeg
+"""
+Utility module for audio conversion to WAV format using ffmpeg.
+"""
+
 import logging
+import ffmpeg
 
 logging.basicConfig(level=logging.INFO)
 
@@ -16,5 +20,5 @@ def convert_to_wav_bytes(file_bytes: bytes) -> bytes:
         )
         return out
     except ffmpeg.Error as e:
-        logging.error(f"ffmpeg error: {e.stderr.decode()}")
-        raise RuntimeError("Audio conversion failed.")
+        logging.error("ffmpeg error: %s", e.stderr.decode())
+        raise RuntimeError("Audio conversion failed.") from e
