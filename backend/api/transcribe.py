@@ -66,6 +66,7 @@ async def transcribe_audio(file: UploadFile = File(...)):
         file_bytes = await file.read()
 
         print(f"Received file: {file.filename}, size: {len(file_bytes)} bytes")
+
         # Convert to WAV using ffmpeg in memory
         wav_bytes = convert_to_wav_bytes(file_bytes)
 
@@ -75,7 +76,19 @@ async def transcribe_audio(file: UploadFile = File(...)):
             temp_wav.flush()
 
             segments, _ = model.transcribe(temp_wav.name)
-            transcription = " ".join([seg.text for seg in segments])
+
+            # ---------------------- FIX START -------------------------
+            # Limit to first 5 unique segments to avoid repetitive output
+            unique_texts = []
+            for seg in segments:
+                if seg.text not in unique_texts:
+                    unique_texts.append(seg.text)
+                if len(unique_texts) >= 5:
+                    break
+
+            transcription = " ".join(unique_texts)
+            print("Faster Whisper transcription result:", transcription)
+            # ---------------------- FIX END ---------------------------
 
         return {"text": transcription}
 
