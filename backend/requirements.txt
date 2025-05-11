@@ -33,6 +33,8 @@ tokenizers==0.13.3
 # === FastAPI Multipart Support ===
 python-multipart==0.0.9
 
-# ollama
 # === Ollama ===
 ollama==0.4.8
+
+# === FHIR Resources ===
+fhir.resources

@@ -16,8 +16,13 @@ from dotenv import load_dotenv
 from ollama import AsyncClient, ChatResponse
 from pydantic import BaseModel, ValidationError
 from typing import Literal, Dict, Any, List, AsyncGenerator
+from fhir.resources.condition import Condition
+from fhir.resources.codeableconcept import CodeableConcept
 
-# Define the schema for the response
+from fhir.resources.appointment import Appointment
+
+from datetime import datetime, timedelta
+
 class Symptom(BaseModel):
   name: str
 
@@ -33,7 +38,31 @@ class DiagnosesMappingResult(BaseModel):
     """The expected JSON structure for the result of mapping symptoms to diagnoses."""
     mappings: list[DiagnosisMapping]
 
+def symptom_to_fhir_condition(symptom_name: str) -> Condition:
+    return Condition.model_construct(
+        code=CodeableConcept.model_construct(
+            text=symptom_name
+        ),
+        clinicalStatus={"text": "active"},
+        verificationStatus={"text": "unconfirmed"}
+    )
 
+def create_fhir_appointment(specialty: str) -> Appointment:
+
+    # datetime string 2 days from now
+    start_str = datetime.now() + timedelta(days=2)
+    start_str = start_str.strftime("%Y-%m-%dT%H:%M:%S+01:00")
+    end_str = datetime.now() + timedelta(days=2, hours=1)
+    end_str = end_str.strftime("%Y-%m-%dT%H:%M:%S+01:00")
+    
+    
+    # Create a FHIR Appointment object
+    return Appointment.model_construct(
+        status="proposed",
+        description=f"Appointment for {specialty}",
+        start=start_str,
+        end=end_str,
+    )
 
 
 load_dotenv()
@@ -236,6 +265,8 @@ async def openai_stream_response(chat_request: ChatRequest, icd10_data: dict):
                         "mappings": [m.model_dump() for m in diagnoses_obj.mappings],
                         "detailed_diagnoses": detailed_diagnoses, "icd10": icd_10_list,
                         "appointment": {"specialty": specialty, "suggestedDate": "TBD", "suggestedTime": "TBD"},
+                        "symptoms_fhir": [symptom_to_fhir_condition(s).model_dump() for s in accumulated_symptoms_str_list],
+                        "appointment_fhir": create_fhir_appointment(specialty).model_dump(),
                     }
                 else: # Failed to get or parse mapping
                     raise ValueError("Failed to obtain or parse diagnoses mapping from LLM.")

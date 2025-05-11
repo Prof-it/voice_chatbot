@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from "react";
-import Message, { StructuredContent } from "./Message";
+import Message from "./Message";
 import Loader from "./Loader";
+import { StructuredContent } from "./StructuredMessageContent";
 
 
 const BACKEND_URL = process.env.BACKEND_URL || "http://localhost:8000";
