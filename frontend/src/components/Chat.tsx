@@ -43,6 +43,7 @@ const Chat = () => {
                     messages: updatedMessages,
                     accumulated_symptoms: accumulatedSymptomsRef.current,
                 }),
+    
             });
     
             if (!response.body) throw new Error("No response body from server.");
