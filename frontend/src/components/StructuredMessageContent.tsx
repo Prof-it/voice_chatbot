@@ -1,5 +1,5 @@
 import React from 'react';
-import { Typography, Divider, Paper } from '@mui/material';
+import { Typography, Divider } from '@mui/material';
 
 export interface ICD10Mapping {
   symptom: string;
