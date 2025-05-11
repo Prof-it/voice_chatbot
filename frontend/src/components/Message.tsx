@@ -14,7 +14,7 @@ interface AppointmentPrefill {
   location?: string;
 }
 
-interface StructuredContent {
+export interface StructuredContent {
   symptoms?: string[];
   mappings?: { symptom: string; diagnosis: string }[];
   icd10?: ICD10Mapping[];
@@ -114,7 +114,7 @@ const Message: React.FC<MessageProps> = ({ role, content }) => {
         }}
       >
         <Typography variant="subtitle1" component="strong" gutterBottom>
-          {isBot ? 'MediBot' : 'You'}:
+          {isBot ? 'VocaMedBot' : 'You'}:
         </Typography>
 
         {typeof content === 'string' ? (

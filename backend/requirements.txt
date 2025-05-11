@@ -1,29 +1,38 @@
 # === Core Web Framework ===
-fastapi==0.95.1
-uvicorn==0.21.1
+fastapi==0.110.0              # ✅ Fully supports Pydantic 2+
+uvicorn==0.21.1               # ✅ OK
 
 # === Machine Learning ===
 scikit-learn==1.6.1
 joblib==1.4.2
-numpy==2.0.2
+numpy==1.26.4       #
 scipy==1.15.1
-
-# torch
 torch==2.7.0
-transformers==4.39.3
 
-# Openai
+# === OpenAI API ===
 openai==1.59.8
 
 # === API Requests & Utilities ===
 httpx==0.28.1
 requests==2.32.3
 python-dotenv==1.0.1
-pydantic==1.10.21
+pydantic==2.11.4              # ✅ Already in your env
 tqdm==4.67.1
 rich==13.9.4
-python-multipart==0.0.20
 
 # === Audio Processing ===
 faster-whisper==0.10.0
 ffmpeg-python==0.2.0
+
+# === Transformers ===
+transformers==4.33.3
+
+# === Tokenizers ===
+tokenizers==0.13.3      
+
+# === FastAPI Multipart Support ===
+python-multipart==0.0.9
+
+# ollama
+# === Ollama ===
+ollama==0.4.8

@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from "react";
-import Message from "./Message";
+import Message, { StructuredContent } from "./Message";
 import Loader from "./Loader";
+
 
 const BACKEND_URL = process.env.BACKEND_URL || "http://localhost:8000";
 const API_URL = `${BACKEND_URL}/chat`;
@@ -9,7 +10,7 @@ const MAX_MESSAGES = 20;
 
 const Chat = () => {
     const accumulatedSymptomsRef = useRef<string[]>([]);
-    const [messages, setMessages] = useState<{ role: string; content: string }[]>([]);
+    const [messages, setMessages] = useState<{ role: string; content: string | StructuredContent }[]>([]);
     const [userInput, setUserInput] = useState("");
     const [loading, setLoading] = useState(false);
     const [chatLimitReached, setChatLimitReached] = useState(false);
@@ -20,81 +21,97 @@ const Chat = () => {
 
     const sendMessage = async () => {
         if (!userInput.trim() || chatLimitReached) return;
-
+    
         const userMessage = { role: "user", content: userInput };
         let updatedMessages = [...messages, userMessage];
-
+    
         if (updatedMessages.length > MAX_MESSAGES) {
             updatedMessages = updatedMessages.slice(-MAX_MESSAGES);
             setChatLimitReached(true);
         }
-
+    
         setMessages(updatedMessages);
         setUserInput("");
         setLoading(true);
-
+    
         try {
             const response = await fetch(API_URL, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ messages: updatedMessages, accumulated_symptoms: accumulatedSymptomsRef.current }),
+                body: JSON.stringify({
+                    messages: updatedMessages,
+                    accumulated_symptoms: accumulatedSymptomsRef.current,
+                }),
             });
-
+    
             if (!response.body) throw new Error("No response body from server.");
-
+    
             const reader = response.body.getReader();
             const decoder = new TextDecoder();
             let newContent = "";
-
+    
             let botMessage = { role: "assistant", content: "" };
             setMessages((prev) => [...prev, botMessage]);
-
+    
             while (true) {
                 const { done, value } = await reader.read();
                 if (done) break;
-
+    
                 const chunk = decoder.decode(value, { stream: true });
-
+    
                 chunk.split("\n").forEach((line) => {
-                    if (line.startsWith("data: ")) {
-                        const data = line.replace("data: ", "").trim();
-                        if (data === "[DONE]") return;
+                    if (!line.startsWith("data: ")) return;
+                    const data = line.replace("data: ", "").trim();
+                    if (data === "[DONE]") return;
+    
+                    try {
+                        const parsed = JSON.parse(data);
+    
+                        // Update symptom state if present
+                        if (parsed.accumulated_symptoms) {
+                            accumulatedSymptomsRef.current = parsed.accumulated_symptoms;
+                            return;
+                        }
+    
+                        const delta = parsed?.choices?.[0]?.delta;
+                        if (delta?.content !== undefined && delta.content !== null) {
+                            let content = delta.content;
+    
+                            // Attempt to parse structured JSON (e.g., symptoms)
+                            let structured: StructuredContent | null = null;
 
-                        try {
-                            const parsed = JSON.parse(data);
-
-                            if (parsed.accumulated_symptoms) {
-                                accumulatedSymptomsRef.current = parsed.accumulated_symptoms;
-                            }
-
-                            const delta = parsed?.choices?.[0]?.delta;
-
-                            if (delta?.content !== undefined && delta.content !== null) {
-                                const content = delta.content;
-
-                                if (typeof content === "string") {
-                                    newContent += content;
-
-                                    setMessages((prevMessages) => {
-                                        const updated = [...prevMessages];
-                                        updated[updated.length - 1].content = newContent;
-                                        return updated.length > MAX_MESSAGES
-                                            ? updated.slice(-MAX_MESSAGES)
-                                            : updated;
-                                    });
-                                } else if (typeof content === "object") {
-                                    setMessages((prevMessages) => {
-                                        const updated = [...prevMessages];
-                                        updated[updated.length - 1].content = content;
-                                        return updated.length > MAX_MESSAGES
-                                            ? updated.slice(-MAX_MESSAGES)
-                                            : updated;
-                                    });
+                            if (typeof content === "string") {
+                                try {
+                                    const maybeObj = JSON.parse(content);
+                                    if (
+                                        typeof maybeObj === "object" &&
+                                        (maybeObj.symptoms || maybeObj.mappings || maybeObj.icd10 || maybeObj.appointment)
+                                    ) {
+                                        structured = maybeObj;
+                                    }
+                                } catch {
+                                    // not a JSON string — treat as plain markdown
                                 }
                             }
-                        } catch (error) {
-                            console.error("Error parsing JSON:", error);
+    
+                            if (structured) {
+                                setMessages((prevMessages) => {
+                                    const updated = [...prevMessages];
+                                    updated[updated.length - 1].content = structured!;
+                                    return updated.length > MAX_MESSAGES ? updated.slice(-MAX_MESSAGES) : updated;
+                                });
+                            }
+                             else {
+                                newContent += typeof content === "string" ? content : "";
+                                setMessages((prevMessages) => {
+                                    const updated = [...prevMessages];
+                                    updated[updated.length - 1].content = newContent;
+                                    return updated.length > MAX_MESSAGES ? updated.slice(-MAX_MESSAGES) : updated;
+                                });
+                            }
                         }
+                    } catch (error) {
+                        console.error("Error parsing chunk:", error);
                     }
                 });
             }
@@ -105,6 +122,7 @@ const Chat = () => {
             setLoading(false);
         }
     };
+    
 
     const startRecording = async () => {
         const stream = await navigator.mediaDevices.getUserMedia({ audio: true });

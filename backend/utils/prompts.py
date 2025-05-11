@@ -19,6 +19,8 @@ SYSTEM_PROMPT = {
       → Symptoms: []
     - User: "I’m feeling exhausted after the workout"  
       → Symptoms: []
+
+    If the user does **not** mention any explicit symptoms, do **not** call any tool. Instead reply with a prompt to elicit more detail from the user. 
     """,
 }
 
