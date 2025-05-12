@@ -4,7 +4,7 @@ import Loader from "./Loader";
 import { StructuredContent } from "./StructuredMessageContent";
 
 
-const BACKEND_URL = process.env.VITE_API_URL || "http://voice-backend:8000";
+const BACKEND_URL = process.env.VITE_API_URL || "http://localhost:8000";
 const API_URL = `${BACKEND_URL}/chat`;
 const TRANSCRIBE_URL = `${BACKEND_URL}/transcribe`;
 const MAX_MESSAGES = 20;
