@@ -125,7 +125,7 @@ def _create_sse_data_string(
     }
     return f"data: {json.dumps(sse_obj)}\n\n"
 
-async def openai_stream_response(chat_request: ChatRequest, icd10_data: dict):
+async def llm_stream_response(chat_request: ChatRequest, icd10_data: dict):
     user_messages_for_turn = chat_request.messages # Messages from the current user turn
     accumulated_symptoms_str_list = list(chat_request.accumulated_symptoms) # Ensure it's a mutable list
 
@@ -287,7 +287,7 @@ async def openai_stream_response(chat_request: ChatRequest, icd10_data: dict):
         yield "data: [DONE]\n\n"
 
     except Exception as e:
-        logging.error(f"Unhandled error in openai_stream_response: {traceback.format_exc()}")
+        logging.error(f"Unhandled error in llm_stream_response: {traceback.format_exc()}")
         # Use the model name from the last known context if possible, else default
         err_model_name = symptoms_llm_model_name # Or a general default
         error_content = f"An unexpected server error occurred: {str(e)}"
@@ -308,7 +308,7 @@ async def chat(request: Request, chat_request: ChatRequest):
     messages exchanged in the chat, user information, timestamps, or any other relevant data needed to
     process the chat request. This parameter is used to extract
     :type chat_request: ChatRequest
-    :return: A StreamingResponse object is being returned with the openai_stream_response function and
+    :return: A StreamingResponse object is being returned with the llm_stream_response function and
     the ICD-10 data. The media type is set to "text/event-stream".
     """
     messages = chat_request.messages
@@ -320,6 +320,6 @@ async def chat(request: Request, chat_request: ChatRequest):
         )
 
     return StreamingResponse(
-        openai_stream_response(chat_request, icd10),
+        llm_stream_response(chat_request, icd10),
         media_type="text/event-stream",
     )
