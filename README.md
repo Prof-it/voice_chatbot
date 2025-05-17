@@ -1,8 +1,7 @@
-# SymptomSage 🩺🤖  
+# VoiceMedi AI 🩺🤖  
 *An Edge-AI Chatbot for Symptom Extraction and Appointment Pre-Fill*  
-*A Master's Thesis Project – “From Voice to Booking: An Edge-AI Pipeline for Symptom Extraction and Appointment Pre-Fill in Clinical Settings”*
 
-**SymptomSage** is an open-source healthcare chatbot developed as part of a Master's thesis project. It helps users describe symptoms naturally, predicts conditions using machine learning, and shares structured appointment data. This prototype serves as a core module in a broader Edge-AI pipeline aimed at automating clinical intake workflows.
+**VoiceMedi AI** is an open-source healthcare chatbot. It helps users describe symptoms naturally, predicts conditions using machine learning, and shares structured appointment data. This prototype is a core module in a broader Edge-AI pipeline to automate clinical intake workflows.
 
 ---
 
@@ -12,19 +11,14 @@
 - 💬 **Conversational Interface** – Interprets user input via OpenAI’s GPT API  
 - 📦 **Modular Design** – Can be extended to cover other medical domains and scheduling use cases  
 - ⚙️ **Modern Stack** – FastAPI backend, React frontend, containerized with Docker  
-- 🧩 **Edge-AI Ready** – Designed with edge deployment scenarios in mind  
-
----
-
-## 🎓 Project Context
-
-This project is part of the MSc Computer Science thesis at IU International University of Applied Sciences, supervised by **Prof. Dr. Tianxiang Lu**. It contributes to research on **Edge-AI in Healthcare**, especially in improving early diagnosis and automating appointment pre-fill workflows in clinical environments.
+- 🧩 **Edge-AI Ready** – Completely offline designed with edge deployment scenarios in mind  
 
 ---
 
 ## 🚀 Getting Started (with Docker)
 
 ### Prerequisites:
+- Ollama installed
 - Docker & Docker Compose installed  
 - Environment variables configured:
 
@@ -38,6 +32,27 @@ This project is part of the MSc Computer Science thesis at IU International Univ
     ```
     BACKEND_URL=http://localhost:8000  
     ```
+---
+
+## 🦙 Ollama Setup (for LLaMA 3.2:1b Model Inference)
+
+**VoiceMedi AI** uses [Ollama](https://ollama.com/) to run lightweight LLMs like **LLaMA 3.2:1b** locally or on edge devices.
+
+### 🛠️ Step 1: Install Ollama
+
+#### Linux
+```bash
+curl -fsSL https://ollama.com/install.sh | sh
+```
+#### Mac
+```bash
+brew install ollama
+```
+#### Windows
+Download the official installer:
+👉 [ollama](https://ollama.com/download/windows)
+
+
 
 ### Run the Project:
 ```bash
@@ -72,12 +87,8 @@ npm start
 ---
 
 ## 🖥️ System Architecture  
-*TBD – Will include integration flow from voice transcription to symptom interpretation and API interactions*
+![Voicehat architecture (1)](https://github.com/user-attachments/assets/656b355b-d243-425d-be91-0c86d5a4e6f7)
 
----
-
-## 🧊 Edge Deployment  
-*TBD – Will detail Raspberry Pi deployment for clinical use cases*
 
 ---
 
