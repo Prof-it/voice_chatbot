@@ -52,7 +52,16 @@ brew install ollama
 Download the official installer:
 👉 [ollama](https://ollama.com/download/windows)
 
+### 📥 Step 2: Download the LLaMA 3.2:1b Model
+```bash
+ollama pull llama3:2.1b
+```
+This will download and configure the model locally for inference.
 
+### 🚀 Step 3: Run the Model
+```bash
+ollama run llama3:2.1b
+```
 
 ### Run the Project:
 ```bash
