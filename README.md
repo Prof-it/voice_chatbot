@@ -24,7 +24,7 @@
 
   - `backend/.env`:  
     ```
-    OPENAI_API_KEY=your_openai_key  
+    OLLAMA_URL=http://host.docker.internal:11434 ## incase of local deployment, use localhost
     DEBUG=True  
     ```
 
