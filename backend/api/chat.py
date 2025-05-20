@@ -6,7 +6,7 @@ import json
 import traceback
 
 from utils.predict import predict_icd10, map_icd10_to_specialties
-from utils.prompts import MAP_PROMPT, SYSTEM_PROMPT
+from utils.prompts import MAP_PROMPT, SYMPTOM_PROMPT
 from utils.types import ChatRequest
 
 
@@ -70,12 +70,6 @@ load_dotenv()
 logging.basicConfig(level=logging.INFO)  # Debug logging enabled
 
 OLLAMA_URL = os.getenv("OLLAMA_URL", "http://host.docker.internal:11434")
-OLLAMA_KEY = os.getenv("OLLAMA_API_KEY", "ollama-openai-api-key")
-
-# Load OpenAI API Key
-OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
-if not OPENAI_API_KEY:
-    raise ValueError("Missing OpenAI API key in environment variables.")
 
 # Initialize Ollama Client
 client = AsyncClient(
@@ -141,7 +135,7 @@ async def llm_stream_response(chat_request: ChatRequest, icd10_data: dict):
         # --- Stage 1: Primary Attempt - Symptom Extraction via structured JSON ---
         logging.info("Stage 1: Attempting structured symptom extraction.") 
         symptom_extraction_llm_messages = [
-            SYSTEM_PROMPT,
+            SYMPTOM_PROMPT,
             *user_messages_for_turn
         ]
 
@@ -188,7 +182,7 @@ async def llm_stream_response(chat_request: ChatRequest, icd10_data: dict):
             yield _create_sse_data_string("info", symptoms_llm_model_name, delta_content="I'm having a little trouble pinpointing specific symptoms. Let's try a different approach.")
 
             fallback_system_prompt = (
-                SYSTEM_PROMPT["content"] +
+                SYMPTOM_PROMPT["content"] +
                 "Your previous attempt to identify symptoms in a structured way was not successful or found none. "
                 "Please respond conversationally to the user. Ask for clarification or how you can help. Avoid JSON output."
             )

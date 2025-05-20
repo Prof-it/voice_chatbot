@@ -1,4 +1,4 @@
-SYSTEM_PROMPT = {
+SYMPTOM_PROMPT = {
     "role": "system",
     "content": """
     You are a medical assistant. Extract *all* explicit symptoms or illness complaints from the user’s message, then respond *only* with a JSON array of those exact symptom phrases.
@@ -68,52 +68,3 @@ Input: `["headache", "nausea", "fever"]`
 }
 """,
 }
-
-TOOLS = [
-    {
-        "type": "function",
-        "function": {
-            "name": "extract_top_symptoms",
-            "description": "Extracts all clearly mentioned symptoms or complaints of illness explicitly stated by the user.",
-            "parameters": {
-                "type": "object",
-                "properties": {
-                    "symptoms": {
-                        "type": "array",
-                        "items": {
-                            "type": "string",
-                            "description": "A clearly identified symptom or complaint of illness.",
-                        },
-                        "description": "List of all clearly stated symptoms from the user's message.",
-                    }
-                },
-                "required": ["symptoms"],
-            },
-        },
-    },
-    {  # Mapping tool
-        "type": "function",
-        "function": {
-            "name": "map_symptoms_to_diagnoses",
-            "description": "Maps each symptom to a clinical diagnosis phrase.",
-            "parameters": {
-                "type": "object",
-                "properties": {
-                    "mappings": {
-                        "type": "array",
-                        "items": {
-                            "type": "object",
-                            "properties": {
-                                "symptom": {"type": "string"},
-                                "diagnosis": {"type": "string"},
-                            },
-                            "required": ["symptom", "diagnosis"],
-                        },
-                    }
-                },
-                "required": ["mappings"],
-            },
-        },
-    },
-]
-
