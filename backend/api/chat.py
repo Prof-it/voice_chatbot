@@ -6,7 +6,7 @@ import json
 import traceback
 
 from utils.predict import predict_icd10, map_icd10_to_specialties
-from utils.prompts import MAP_PROMPT, SYMPTOM_PROMPT
+from utils.prompts import DETECT_PROMPT, MAP_PROMPT, SYMPTOM_PROMPT
 from utils.types import ChatRequest
 
 
@@ -23,6 +23,8 @@ from fhir.resources.appointment import Appointment
 
 from datetime import datetime, timedelta
 
+class SymptomDetection(BaseModel):
+    detected: bool
 class Symptom(BaseModel):
   name: str
 
@@ -119,174 +121,192 @@ def _create_sse_data_string(
     }
     return f"data: {json.dumps(sse_obj)}\n\n"
 
-async def llm_stream_response(chat_request: ChatRequest, icd10_data: dict):
-    user_messages_for_turn = chat_request.messages # Messages from the current user turn
-    accumulated_symptoms_str_list = list(chat_request.accumulated_symptoms) # Ensure it's a mutable list
+def is_greeting(text: str) -> bool:
+    t = text.strip().lower()
+    return t in {"hi", "hello", "hey", "good morning", "good afternoon"}
 
-    logging.info(f"Processing request. Accumulated symptoms: {accumulated_symptoms_str_list}")
-    logging.info(f"Incoming messages for this turn: {user_messages_for_turn}")
+# $SELECTION_PLACEHOLDER$ replacement with logging
+async def extract_symptoms_json(messages: list, model: str) -> list[str] | None:
+    """
+    Attempts to extract symptoms as a JSON array via the LLM.
+    Returns the list of symptom strings if VALID, otherwise None.
+    """
+    logging.info(f"extract_symptoms_json: Starting with model={model}")
+    accumulator = ""
+    stream = await client.chat(
+        model=model,
+        messages=[SYMPTOM_PROMPT, *messages],
+        format=SymptomsList.model_json_schema(),
+        options={"temperature": 0},
+        stream=True
+    )
+    async for chunk in stream:
+        logging.debug(f"extract_symptoms_json: Received chunk={chunk}")
+        if content := getattr(chunk.message, "content", None):
+            accumulator += content
+            logging.debug(f"extract_symptoms_json: Accumulator updated to={accumulator!r}")
+        if getattr(chunk, "done", False):
+            logging.info("extract_symptoms_json: Stream done, validating JSON")
+            # 1) quick sanity check
+            if not accumulator.strip().startswith("{"):
+                logging.warning("extract_symptoms_json: Accumulator does not start with '[' – returning None")
+                return None
+            # 2) parse + validate
+            try:
+                obj = SymptomsList.model_validate_json(accumulator)
+                names = [s.name for s in obj.symptoms if s.name]
+                if names:
+                    logging.info(f"extract_symptoms_json: Parsed symptoms={names}")
+                    return names
+                else:
+                    logging.warning("extract_symptoms_json: No valid symptom names found – returning None")
+                    return None
+            except Exception as e:
+                logging.error(f"extract_symptoms_json: JSON validation failed: {e}")
+                return None
 
-    current_json_accumulator = ""
-    symptoms_llm_model_name = "llama3.2:1b" # Default, can be updated from chunk
-    primary_extraction_successful = False
-    extracted_symptom_names: List[str] = []
+async def fallback_clarify(messages: list):
+    logging.info("fallback_clarify: Starting fallback clarification stream")
+    prompt = SYMPTOM_PROMPT["content"] + (
+        "Your JSON extraction failed. Please ask the user to clarify their symptoms."
+    )
+    stream = await client.chat(
+        model="llama3.2:1b",
+        messages=[{"role": "system", "content": prompt}, *messages],
+        options={"temperature": 0.5},
+        stream=True
+    )
+    async for chunk in stream:
+        logging.debug(f"fallback_clarify: Received chunk={chunk}")
+        if content := getattr(chunk.message, "content", None):
+            logging.info(f"fallback_clarify: Yielding content chunk")
+            yield _create_sse_data_string("fallback", chunk.model, delta_content=content)
+        if getattr(chunk, "done", False):
+            logging.info("fallback_clarify: Stream done, sending fallback-done")
+            yield _create_sse_data_string("fallback-done", chunk.model, finish_reason="stop")
+    logging.info("fallback_clarify: Sending [DONE]")
+    yield "data: [DONE]\n\n"
 
-    try:
-        # --- Stage 1: Primary Attempt - Symptom Extraction via structured JSON ---
-        logging.info("Stage 1: Attempting structured symptom extraction.") 
-        symptom_extraction_llm_messages = [
-            SYMPTOM_PROMPT,
-            *user_messages_for_turn
-        ]
+async def map_to_diagnoses(symptoms: list[str]) -> DiagnosesMappingResult:
+    logging.info(f"map_to_diagnoses: Mapping symptoms={symptoms}")
+    system = (
+        MAP_PROMPT["content"] +
+        f"Map these symptoms: {json.dumps(symptoms)}. Output ONLY valid JSON per schema."
+    )
+    messages = [
+        {"role": "system", "content": system},
+        {"role": "user", "content": "Provide diagnoses for: " + ", ".join(symptoms)}
+    ]
+    stream = await client.chat(
+        model="llama3.2:1b",
+        messages=messages,
+        format=DiagnosesMappingResult.model_json_schema(),
+        options={"temperature": 0},
+        stream=False  # single response
+    )
+    content = stream["message"]["content"]
+    logging.debug(f"map_to_diagnoses: Received content={content}")
+    result = DiagnosesMappingResult.model_validate_json(content)
+    logging.info(f"map_to_diagnoses: Parsed mapping={result.mappings}")
+    return result
 
-        symptom_stream: AsyncGenerator[ChatResponse, None] = await client.chat(
-            model=symptoms_llm_model_name,
-            messages=symptom_extraction_llm_messages,
-            format=SymptomsList.model_json_schema(),
-            options={'temperature': 0},
-            stream=True
+async def llm_stream_response(chat_request: ChatRequest, icd10_data):
+    logging.info("llm_stream_response: Starting response stream")
+    msgs = chat_request.messages
+    accu = list(chat_request.accumulated_symptoms)
+    logging.debug(f"llm_stream_response: Initial accumulated_symptoms={accu}")
+
+
+    user_text = msgs[-1].content if msgs else ""
+    logging.info(f"llm_stream_response: User text={user_text!r}")
+
+    # 1) DETECTION CALL
+    det_resp = await client.chat(
+        model="llama3.2:1b",
+        messages=[DETECT_PROMPT, *msgs],
+        format=SymptomDetection.model_json_schema(),
+        options={"temperature": 0.3},
+        stream=False
+    )
+    # extract content & parse
+    det_json = det_resp["message"]["content"]
+    det_obj = SymptomDetection.model_validate_json(det_json)
+
+    if not det_obj.detected:
+        # short-circuit for non-symptom turns
+        yield _create_sse_data_string(
+            "assistant",
+            "llama3.2:1b",
+            delta_content="Hi! What symptoms are you experiencing today?",
+            finish_reason="stop"
         )
+        # 2) emit metadata (empty)
+        yield f"data: {json.dumps({'type':'final_metadata','accumulated_symptoms':[]})}\n\n"
 
-        async for chunk in symptom_stream:
-            symptoms_llm_model_name = getattr(chunk, 'model', symptoms_llm_model_name)
-            message_data = getattr(chunk, 'message', None)
-            
-            if message_data and (content_part := getattr(message_data, 'content', None)):
-                current_json_accumulator += content_part
-                # yield _create_sse_data_string("symptom-json", symptoms_llm_model_name, delta_content=content_part)
+        yield "data: [DONE]\n\n"
+        return
 
-            if getattr(chunk, 'done', False):
-                logging.info(f"Symptom extraction stream finished. Accumulated JSON: '{current_json_accumulator}'")
-                symptoms_obj: SymptomsList | None = None
-                try:
-                    symptoms_obj = SymptomsList.model_validate_json(current_json_accumulator)
-                    if symptoms_obj.symptoms and all(hasattr(s, 'name') and s.name for s in symptoms_obj.symptoms):
-                        extracted_symptom_names = [s.name for s in symptoms_obj.symptoms if s.name]
-                        primary_extraction_successful = True
-                        logging.info(f"Successfully parsed and validated symptoms: {extracted_symptom_names}")
-                    else:
-                        logging.info("Parsed SymptomsList, but it effectively contains no named symptoms.")
-                        extracted_symptom_names = [] # Ensure empty list
-                        # primary_extraction_successful remains False if list is empty or items lack names
-                except (ValidationError, json.JSONDecodeError) as e_parse:
-                    logging.error(f"Failed to parse/validate symptoms JSON: '{current_json_accumulator}'. Error: {e_parse}")
-                
-                finish_reason = "stop" if primary_extraction_successful and extracted_symptom_names else "error"
-                yield _create_sse_data_string("symptom-json-done", symptoms_llm_model_name, finish_reason=finish_reason)
-                break # Exit symptom extraction stream loop
+    # 2) Extract
+    names = await extract_symptoms_json(msgs, "llama3.2:1b")
+    if not names:
+        logging.warning("llm_stream_response: Symptom extraction failed, using fallback_clarify")
+        async for sse in fallback_clarify(msgs):
+            yield sse
+        return
+    logging.info(f"llm_stream_response: Extracted names={names}")
 
-        # --- Fallback or Proceed Logic ---
-        # also check if its the user's first message
-        if not primary_extraction_successful and len(user_messages_for_turn) != 1:
-            logging.warning("Primary symptom extraction failed or yielded no valid symptoms. Initiating fallback.")
-            yield _create_sse_data_string("info", symptoms_llm_model_name, delta_content="I'm having a little trouble pinpointing specific symptoms. Let's try a different approach.")
+    # 2) Merge new
+    new = [n for n in names if n not in accu]
+    if new:
+        logging.info(f"llm_stream_response: New symptoms to add={new}")
+    accu += new
+    logging.debug(f"llm_stream_response: Updated accumulated_symptoms={accu}")
 
-            fallback_system_prompt = (
-                SYMPTOM_PROMPT["content"] +
-                "Your previous attempt to identify symptoms in a structured way was not successful or found none. "
-                "Please respond conversationally to the user. Ask for clarification or how you can help. Avoid JSON output."
-            )
-
-            fallback_llm_messages = [{
-                'role': 'system',
-                'content': fallback_system_prompt
-            }, *user_messages_for_turn]
-            
-            fallback_llm_model_name = "llama3.2:1b" # Reset or use specific model
-            fallback_stream: AsyncGenerator[ChatResponse, None] = await client.chat(
-                model=fallback_llm_model_name, messages=fallback_llm_messages, options={'temperature': 0.5}, stream=True
-            )
-            async for fb_chunk in fallback_stream:
-                fallback_llm_model_name = getattr(fb_chunk, 'model', fallback_llm_model_name)
-                fb_message_data = getattr(fb_chunk, 'message', None)
-                if fb_message_data and (fb_content := getattr(fb_message_data, 'content', None)):
-                    yield _create_sse_data_string("fallback", fallback_llm_model_name, delta_content=fb_content)
-                if getattr(fb_chunk, 'done', False):
-                    yield _create_sse_data_string("fallback-done", fallback_llm_model_name, finish_reason="stop")
-            yield "data: [DONE]\n\n"
-            return # End function after fallback
-
-        # --- Primary Extraction Succeeded: Update accumulated symptoms ---
-        new_symptoms = [name for name in extracted_symptom_names if name not in accumulated_symptoms_str_list]
-        if new_symptoms:
-            accumulated_symptoms_str_list.extend(new_symptoms)
-            accumulated_symptoms_str_list = sorted(list(set(accumulated_symptoms_str_list)))
-        logging.info(f"Updated accumulated symptoms: {accumulated_symptoms_str_list}")
-
-        # --- Stage 1.5: Conversational Response or Proceed to Stage 2 (Mapping) ---
-        final_response_payload: Any # This will hold string or dict for the final SSE content
-        current_llm_model_name = symptoms_llm_model_name # Model used for the last successful interaction
-
-        if not accumulated_symptoms_str_list:
-            final_response_payload = "Hello! If you have any symptoms or health concerns, please let me know so I can assist you further."
-        elif len(accumulated_symptoms_str_list) < 3:
-            final_response_payload = (
-                f"I understand you're experiencing: {', '.join(accumulated_symptoms_str_list)}. "
+    # 3) If <3 symptoms, ask for more
+    if len(accu) < 3:
+        text = (
+                f"I understand you're experiencing: {', '.join(accu)}. "
                 "Could you please tell me about any other symptoms you might have?"
             )
-        else:
-            # --- Stage 2: Sufficient symptoms, proceed to mapping ---
-            logging.info(f"Stage 2: Mapping symptoms to diagnoses for: {accumulated_symptoms_str_list}")
-            mapping_llm_model_name = "llama3.2:1b" # Or a dedicated model
-            diagnoses_mapping_system_prompt = (
-                MAP_PROMPT["content"] +
-                f"\nMap the given symptoms: {json.dumps(accumulated_symptoms_str_list)} to clinical diagnoses. "
-                f"Respond ONLY with a valid JSON object adhering to this schema: {DiagnosesMappingResult.model_json_schema()}."
-            )
-            map_llm_messages = [
-                {'role': 'system', 'content': diagnoses_mapping_system_prompt},
-                {'role': 'user', 'content': f"Provide diagnoses for: {', '.join(accumulated_symptoms_str_list)}."}
-            ]
+        logging.info("llm_stream_response: Asking user for more symptoms")
+        yield _create_sse_data_string("assistant", "llama3.2:1b", delta_content=text, finish_reason="stop")
 
-            try:
-                map_response_ollama : AsyncGenerator[ChatResponse] = await client.chat(
-                    model=mapping_llm_model_name, messages=map_llm_messages, format=DiagnosesMappingResult.model_json_schema(), options={'temperature': 0}
-                )
-                current_llm_model_name = getattr(map_response_ollama, 'model', mapping_llm_model_name)
-                logging.debug(f"Ollama mapping response (raw): {map_response_ollama}")
-
-                diagnoses_obj: DiagnosesMappingResult | None = None
-                if map_response_ollama and (map_content := map_response_ollama.get('message', {}).get('content')):
-                    diagnoses_obj = DiagnosesMappingResult.model_validate_json(map_content)
-                    logging.info(f"Successfully parsed diagnoses mapping: {diagnoses_obj.mappings}")
-                
-                if diagnoses_obj:
-                    detailed_diagnoses = [m.diagnosis for m in diagnoses_obj.mappings if m.diagnosis]
-                    icd_10_list = predict_icd10(detailed_diagnoses, icd10_data["tokenizer"], icd10_data["model"], icd10_data["device"])
-                    specialty = map_icd10_to_specialties([item.get("icd10") for item in icd_10_list if item.get("icd10")])
-                    final_response_payload = {
-                        "symptoms": accumulated_symptoms_str_list,
-                        "mappings": [m.model_dump() for m in diagnoses_obj.mappings],
-                        "detailed_diagnoses": detailed_diagnoses, "icd10": icd_10_list,
-                        "appointment": {"specialty": specialty, "suggestedDate": "TBD", "suggestedTime": "TBD"},
-                        "symptoms_fhir": [symptom_to_fhir_condition(s).model_dump() for s in accumulated_symptoms_str_list],
-                        "appointment_fhir": create_fhir_appointment(specialty).model_dump(),
-                    }
-                else: # Failed to get or parse mapping
-                    raise ValueError("Failed to obtain or parse diagnoses mapping from LLM.")
-            except (ValidationError, json.JSONDecodeError, ValueError) as e_map:
-                logging.error(f"Error during Stage 2 (mapping): {e_map}")
-                final_response_payload = {
-                    "symptoms": accumulated_symptoms_str_list,
-                    "error_message": "I identified your symptoms, but encountered an issue providing detailed mappings. Please consult a healthcare professional.",
-                    "icd10": [], "appointment": {}
-                }
-            current_llm_model_name = mapping_llm_model_name # Model used for this stage
-
-        # --- Stage 3: Yield the final response ---
-        final_content_str = json.dumps(final_response_payload) if isinstance(final_response_payload, dict) else final_response_payload
-        yield _create_sse_data_string("final", current_llm_model_name, delta_content=final_content_str, finish_reason="stop")
-        # Optionally, send accumulated_symptoms as separate metadata if client needs it before [DONE]
-        yield f"data: {json.dumps({'type': 'final_metadata', 'accumulated_symptoms': accumulated_symptoms_str_list})}\n\n"
+        # 2) emit metadata (updated)
+        yield f"data: {json.dumps({'type': 'final_metadata', 'accumulated_symptoms': accu})}\n\n"
         yield "data: [DONE]\n\n"
+        logging.info("llm_stream_response: Sent metadata and [DONE] after asking for more symptoms")
+        return
 
+    # 4) Map to diagnoses
+    logging.info(f"llm_stream_response: Proceeding to map {accu} to diagnoses")
+    try:
+        mapping = await map_to_diagnoses(accu)
+        detailed = [m.diagnosis for m in mapping.mappings if m.diagnosis]
+        icd10_list = predict_icd10(detailed, icd10_data["tokenizer"], icd10_data["model"], icd10_data["device"])
+        specialty = map_icd10_to_specialties([item.get("icd10") for item in icd10_list if item.get("icd10")])
+        final = {
+            "symptoms": accu,
+            "mappings": [m.model_dump() for m in mapping.mappings],
+            "detailed_diagnoses": detailed,
+            "icd10": icd10_list,
+            "appointment": {
+                "specialty": specialty,
+                "suggestedDate": "TBD",
+                "suggestedTime": "TBD"
+            },
+            "symptoms_fhir": [symptom_to_fhir_condition(s).model_dump() for s in accu],
+            "appointment_fhir": create_fhir_appointment(specialty).model_dump(),
+        }
+        logging.info("llm_stream_response: Final payload prepared successfully")
     except Exception as e:
-        logging.error(f"Unhandled error in llm_stream_response: {traceback.format_exc()}")
-        # Use the model name from the last known context if possible, else default
-        err_model_name = symptoms_llm_model_name # Or a general default
-        error_content = f"An unexpected server error occurred: {str(e)}"
-        yield _create_sse_data_string("error", err_model_name, delta_content=error_content, finish_reason="error")
-        yield "data: [DONE]\n\n"
+        logging.error(f"llm_stream_response: Error during mapping or payload creation: {e}")
+        final = {"symptoms": accu, "error_message": str(e)}
+
+    yield _create_sse_data_string("final", "llama3.2:1b", delta_content=json.dumps(final), finish_reason="stop")
+    logging.info("llm_stream_response: Sending final_metadata and [DONE]")
+    yield f"data: {json.dumps({'type': 'final_metadata', 'accumulated_symptoms': accu})}\n\n"
+    yield "data: [DONE]\n\n"
+
 
 @chat_router.post("/chat")
 async def chat(request: Request, chat_request: ChatRequest):

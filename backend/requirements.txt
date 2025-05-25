@@ -7,10 +7,15 @@ scikit-learn==1.6.1
 joblib==1.4.2
 numpy==1.26.4       #
 scipy==1.15.1
-torch==2.7.0
+
+--extra-index-url https://download.pytorch.org/whl/cpu          # add this line once
+torch==2.7.0+cpu    
 
 # === OpenAI API ===
 openai==1.59.8
+
+# vosk ===
+vosk==0.3.44 
 
 # === API Requests & Utilities ===
 httpx==0.28.1
@@ -38,3 +43,4 @@ ollama==0.4.8
 
 # === FHIR Resources ===
 fhir.resources
+
