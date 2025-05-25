@@ -50,7 +50,7 @@ async def test_transcribe_success(dummy_audio_file):
 
         async with AsyncClient(app=app, base_url="http://test") as ac:
             response = await ac.post(
-                "/transcribe_faster_whisper",
+                "/transcribe_vosk",
                 files={"file": (filename, audio_data, "audio/mpeg")}
             )
 
@@ -69,7 +69,7 @@ async def test_transcribe_openai_no_file():
 @pytest.mark.asyncio
 async def test_transcribe_no_file():
     async with AsyncClient(app=app, base_url="http://test") as ac:
-        response = await ac.post("/transcribe_faster_whisper", files={})
+        response = await ac.post("/transcribe_vosk", files={})
 
     assert response.status_code == status.HTTP_422_UNPROCESSABLE_ENTITY
 
@@ -104,7 +104,7 @@ async def test_transcribe_faster_whisper_real_audio(real_audio_file):
 
     async with AsyncClient(app=app, base_url="http://test") as ac:
         response = await ac.post(
-            "/transcribe_faster_whisper",
+            "/transcribe_vosk",
             files={"file": (filename, audio_data, "audio/wav")}
         )
 
