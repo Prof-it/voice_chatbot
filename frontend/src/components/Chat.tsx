@@ -6,7 +6,8 @@ import { StructuredContent } from "./StructuredMessageContent";
 
 const BACKEND_URL = process.env.VITE_API_URL || "http://localhost:8000";
 const API_URL = `${BACKEND_URL}/chat`;
-const TRANSCRIBE_URL = `${BACKEND_URL}/transcribe`;
+const TRANSCRIBE_URL = `${BACKEND_URL}/transcribe_faster_whisper`;
+// const TRANSCRIBE_URL = `${BACKEND_URL}/transcribe_vosk`;
 const MAX_MESSAGES = 20;
 
 const Chat = () => {

@@ -11,7 +11,7 @@ const HomePage = () => {
       {/* Hero Section */}
       <Box sx={{ my: 4 }}>
         <Typography variant="h3" gutterBottom>
-          From Voice to Booking
+          VoiceMedi AI
         </Typography>
         <Typography variant="h6" color="textSecondary" gutterBottom>
           A real-time edge AI assistant for symptom extraction and clinical appointment pre-fill.
