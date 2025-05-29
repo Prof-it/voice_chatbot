@@ -1,0 +1,915 @@
+utterance,llm_actual,GT_has_symptom,Pred_has_symptom,Outcome
+"Sure, I'm I'm just having a lot of chest pain and and so I thought I should get it checked out.",['chest pain'],TRUE,TRUE,TP
+"Sure 39, I'm a male.","['Fatigue', 'Headache']",FALSE,TRUE,FP
+"It started last night, but it's becoming sharper.","['Sharp pain in the chest', 'Rapid heartbeat']",TRUE,TRUE,TP
+It's located on the left side of my chest.,['Left-sided chest pain'],TRUE,TRUE,TP
+"So I guess it would be a couple of hours now, maybe like 8.",[],FALSE,FALSE,TN
+"I would say it's been pretty constant, yeah.",[],FALSE,FALSE,TN
+"I'd say it's pretty sharp, yeah.",[],FALSE,FALSE,TN
+Um not laying down helps.,[],FALSE,FALSE,TN
+"Yes, definitely.",[],FALSE,FALSE,TN
+No.,[],FALSE,FALSE,TN
+"Not that I've noticed, no.",[],FALSE,FALSE,TN
+Maybe taking a deep breath. Yeah.,[],FALSE,FALSE,TN
+"I mean, I was moving some furniture around, but, that I've done that before.",[],FALSE,FALSE,TN
+I'd say it's like a seven or eight. It's pretty bad.,[],FALSE,FALSE,TN
+I feel a little lightheaded and I'm having some trouble breathing.,"['Lightheadedness', 'Trouble Breathing']",TRUE,TRUE,TP
+"Um, a little bit, yeah.",[],FALSE,FALSE,TN
+Just from the from having issues breathing.,['Difficulty breathing'],TRUE,TRUE,TP
+Yes.,[],FALSE,FALSE,TN
+No no.,[],FALSE,FALSE,TN
+"No, not that I've heard.",[],FALSE,FALSE,TN
+"No. Well, I guess if when I'm really having trouble breathing, yeah.",[],FALSE,FALSE,TN
+"No rashes, but I guess like my neck seems to be a little swollen.",['neck swelling'],TRUE,TRUE,FP
+None.,[],FALSE,FALSE,TN
+They are all up to date.,[],FALSE,FALSE,TN
+"Sure, I live in an apartment by myself. I, uh, yep, that's about it.",[],FALSE,FALSE,TN
+I'm an accountant.,[],FALSE,FALSE,TN
+I do.,[],FALSE,FALSE,TN
+I smoke about a pack a day.,[],FALSE,FALSE,TN
+For the past 10 to 15 years.,[],FALSE,FALSE,TN
+Uh sometimes.,[],FALSE,FALSE,TN
+"Per week, maybe about 5 milligrams. Not that much.",[],FALSE,FALSE,TN
+"Uhm about I would say I have like one or two drinks a day, so about 10 drinks a week.",[],FALSE,FALSE,TN
+"Sure, I try to eat healthy for dinner at least, but most of my lunches are, uh I eat out. And then in terms of exercise, I try to exercise every other day, I run for about half an hour. D; OK, well that's great that you've been working on the the activity and the diet as well. So has anything like this happened in your family before?",[],FALSE,FALSE,TN
+"Actually, yes, my father had a heart attack when he was 45.",[],FALSE,FALSE,TN
+I think my father did.,"['headache', 'fatigue']",FALSE,TRUE,FP
+No strokes.,['No strokes'],TRUE,TRUE,TP
+"No, I don't think so. I think you asked me everything.",[],FALSE,FALSE,TN
+"Yeah, I have this pain in my chest.",['Chest pain'],TRUE,TRUE,TP
+It's just right over on the on the left side.,[],FALSE,FALSE,TN
+It started just 30 minutes ago.,"['Fatigue', 'Headache']",FALSE,TRUE,FP
+I was just shovelling the driveway and it came on.,[],FALSE,FALSE,TN
+"No, it just came on suddenly and it's uh, uh, I'm sorry. Yeah the pain has been there this whole time and it's gotten worse ever since it started.",[],FALSE,FALSE,TN
+It feels dull. I feel like there's a lot of pressure on my chest.,['chest pressure'],TRUE,TRUE,TP
+"Uh, seven.",[],FALSE,FALSE,TN
+"No, I've never had any chest pain before.",[],FALSE,FALSE,TN
+"No, I'm kind of just feeling it right here. On the left side.",[],FALSE,FALSE,TN
+"Uh. I think it's a bit bit worse if I'm moving around or when I was walking in here. I think it it made it a bit worse, but nothing has seemed to make it any better since it starting.",[],FALSE,FALSE,TN
+I think it's a little bit worse when I when I'm laying down.,['Lying down worsens symptoms'],TRUE,TRUE,TP
+"Uh, I've felt a little bit uh short of breath or having difficulty breathing since yesterday when the sorry since the pain started, but uh just the difficulty breathing.",[],TRUE,FALSE,FN
+I do I play rugby and was tackled by another player yesterday. But but my chest felt fine after that.,[],FALSE,FALSE,TN
+"No, been at home.","['feeling unwell', 'experiencing fatigue']",FALSE,TRUE,FP
+"No nausea or vomiting, but I do feel a little bit hot today.",['feeling hot'],TRUE,TRUE,TP
+Uh I did and it was 38 degrees.,[],FALSE,FALSE,TN
+"Uh, no swelling in my legs.",['no swelling in the legs'],TRUE,TRUE,TP
+"No, my energy has been good. D; Have you been having any kind of thumping or palpitations or feel like your heart has been racing at all?",[],FALSE,FALSE,TN
+It uhh it does feel like it's beating faster right now. It usually only feels like this when I'm playing sports.,[],FALSE,FALSE,TN
+No rashes.,['no rash'],TRUE,TRUE,TP
+"Uh few weeks ago I was a little runny, but that went away on its own. I haven't had any cough.",[],FALSE,FALSE,TN
+No dizziness and uh no I haven't fainted at all.,[],FALSE,FALSE,TN
+"Yeah, I've been told I have high cholesterol and high blood pressure.","['High Cholesterol', 'High Blood Pressure']",TRUE,TRUE,TP
+"Um, I do take medications for both blood pressure and cholesterol, Rosuvastatin and um Lisinopril and I take a multi vitamin.",[],TRUE,FALSE,FN
+No allergies.,[],FALSE,FALSE,TN
+No hospitalizations.,"['Fatigue', 'Headache']",FALSE,TRUE,FP
+"I I live in a house with um, my parents.",[],FALSE,FALSE,TN
+"Yeah, I I drive a bus for the city.",[],FALSE,FALSE,TN
+"Uhh yeah, usually on Sundays I'll go for a run.",[],FALSE,FALSE,TN
+"Uhh, usually I feel like it's fairly balanced overall, I might I eat out a little bit too often, but try to eat as many vegetables as I can.",[],FALSE,FALSE,TN
+I do yes. Been smoking for the last 20 years roughly.,['Smoking-related health issues'],TRUE,TRUE,TP
+About a half a pack to a pack a day.,[],FALSE,FALSE,TN
+No alcohol.,"['headache', 'fatigue']",FALSE,TRUE,FP
+"Um, no marijuana, but I have used crystal meth in the past.",[],FALSE,FALSE,TN
+"Um, six days ago.",[],FALSE,FALSE,TN
+"Um, I would say a couple of times a month.",[],FALSE,FALSE,TN
+Uh for the last seven years.,[],FALSE,FALSE,TN
+"Yeah, I've just been feeling breathless and it's getting worse. So I wanted to check it out.",[],FALSE,FALSE,TN
+About two months ago.,"['Fatigue', 'Headache']",FALSE,TRUE,FP
+"I guess gradually, yeah.",[],FALSE,FALSE,TN
+"I'd say it's worse when I when I walk more than 50 meters. That's kind of the main like that's kind of the main trigger, just exertion.",[],FALSE,FALSE,TN
+"Yeah, three months ago I was fine.",[],FALSE,FALSE,TN
+"I have a cough sometimes, yeah.",[],TRUE,FALSE,FN
+"Yeah, I guess I'd say I have this frothy sputum.",[],FALSE,FALSE,TN
+"I would say so, yes.",[],FALSE,FALSE,TN
+"Uh, I don't think so.",[],FALSE,FALSE,TN
+"I would say so, yes. Yeah, I'm basically gasping for air when I lay down.",[],FALSE,FALSE,TN
+I guess it's worse at night because I'm laying down.,[],FALSE,FALSE,TN
+I would say like 3/4.,[],FALSE,FALSE,TN
+"No, nothing like that.",[],FALSE,FALSE,TN
+Prior to 2 months? No.,"['Fatigue', 'Headache']",FALSE,TRUE,FP
+"I guess when I I'm not laying down or when I'm laying down, I try to add pillows, stack pillows so that it gets better.",[],FALSE,FALSE,TN
+"No recent surgeries, no.",[],FALSE,FALSE,TN
+"Um, no.",[],FALSE,FALSE,TN
+"Uh, I would say so, yeah.",[],FALSE,FALSE,TN
+"No, no chest pain.",['chest pain'],TRUE,TRUE,TP
+There is some swelling.,['swelling'],TRUE,TRUE,TP
+Around my legs.,['pain in the legs'],TRUE,TRUE,TP
+Around the same time actually two months ago.,"['Fatigue', 'Headache']",FALSE,TRUE,FP
+Nope.,[],FALSE,FALSE,TN
+Not that I know of.,[],FALSE,FALSE,TN
+"No, no.",[],FALSE,FALSE,TN
+"Um so, yeah, so I have high blood pressure, diabetes and high cholesterol.","['High Blood Pressure', 'Diabetes', 'High Cholesterol']",TRUE,TRUE,TP
+"Yep, so I take aspirin, ramipril and simvastatin.",[],FALSE,FALSE,TN
+"Yeah, actually I had a heart attack four years ago.",[],FALSE,FALSE,TN
+Something like a stent or something.,[],FALSE,FALSE,TN
+"Um, I guess the stenting.",[],FALSE,FALSE,TN
+"Um, my father died of a heart attack when he was 60.",[],FALSE,FALSE,TN
+"I do, um, I work as a cashier.",[],FALSE,FALSE,TN
+"Yeah, I would say so. It's been hard to make it to work and then standing around all day or if I have to go help out with something and exert myself too much, I get short of breath.",['Shortness of breath'],TRUE,TRUE,TP
+I live by myself.,[],FALSE,FALSE,TN
+I live in an apartment.,['Noise from neighbors'],FALSE,TRUE,FP
+Not right now. I used to smoke. I used to smoke 10 a day for like 40 years.,[],FALSE,FALSE,TN
+I wouldn't say well balanced. I'm trying to eat healthier but doesn't always happen.,[],FALSE,FALSE,TN
+"No, I don't think so.",[],FALSE,FALSE,TN
+I'm just having this really sharp pain in my chest and I'm scared. I think I'm having a heart attack.,['sharp pain in the chest'],TRUE,TRUE,TP
+So about 3 days ago.,[],FALSE,FALSE,TN
+"It's kind of right here, right over my heart I think, that's where it's the worst.",['heart palpitations'],TRUE,TRUE,TP
+I would say it's a sharp pain.,['sharp pain'],TRUE,TRUE,TP
+It just lasts for a few seconds and then it goes away.,[],FALSE,FALSE,TN
+"Oh, it's usually worse when I'm coughing or laying down. Yeah, yeah.",[],FALSE,FALSE,TN
+"When I when I lean forward, it actually does get better. I think about it, yeah.",[],FALSE,FALSE,TN
+"No, no it hasn't.",[],FALSE,FALSE,TN
+I would say a 6 out of 10.,[],FALSE,FALSE,TN
+"Yeah, I think it kind of goes to my neck sometimes.",[],FALSE,FALSE,TN
+"No, I don't.",[],FALSE,FALSE,TN
+"No, no, nothing else, that's it, just have these sharp episodes of pain that last a couple of seconds.",['sharp episodes of pain'],TRUE,TRUE,TP
+"Yeah, I took some um, I took some Tylenol and that did help.",[],FALSE,FALSE,TN
+I took it once yesterday.,"['Nausea', 'Vomiting']",FALSE,TRUE,FP
+"No, no I haven't.",[],FALSE,FALSE,TN
+"No, well not right now, but I did have a, I did have a flu last week. I had a fever, had a runny nose. I did have a bit of a cough and I was feeling super tired, but not anymore. I'm OK now.","['fever', 'runny nose', 'cough', 'tiredness']",TRUE,TRUE,TP
+No. I'm a pretty healthy 25 year old.,[],FALSE,FALSE,TN
+I sometimes take Tylenol.,[],FALSE,FALSE,TN
+"No no, no surgeries.",[],FALSE,FALSE,TN
+"Yeah, my father, he he had a heart attack two weeks ago and he and he passed away. And I'm worried I am having a heart attack too.",[],FALSE,FALSE,TN
+Yeah.,[],FALSE,FALSE,TN
+"No, I'm a student. I, well as a part time job, I do work as a post man.",[],FALSE,FALSE,TN
+I'm studying engineering at Western.,[],FALSE,FALSE,TN
+"I live with my parents, well my mom now, in a house.",[],FALSE,FALSE,TN
+"I drink occasionally, maybe one or two drinks on the weekends.",[],FALSE,FALSE,TN
+Thank you.,[],FALSE,FALSE,TN
+"Yeah, so this chest pain has just been coming on for the last couple of weeks now.",[],TRUE,FALSE,FN
+"Um yeah, I'm I'm just feeling this chest discomfort, sort of over on the left side.",['Chest discomfort'],TRUE,TRUE,TP
+"No, I don't really feel it anywhere else. Yeah, I just feel it in that one spot on the left side.",[],FALSE,FALSE,TN
+It feels pretty sharp.,[],FALSE,FALSE,TN
+It comes and goes. I would say I it might last for um 20-30 minutes at a time and then it goes away.,[],FALSE,FALSE,TN
+"Uh, no. It's been about the same.",[],FALSE,FALSE,TN
+"No, it's happened about two or three times during the 2 weeks.",[],FALSE,FALSE,TN
+I would say a 4 out of 10.,[],FALSE,FALSE,TN
+"Um, I don't know I've separated from my husband 2 two years ago which has been really stressful but other than that I mean I can't really think of any changes to my health or anything like that recently.",[],FALSE,FALSE,TN
+"Uh, yeah the last couple of years have been a lot more stressful because of those issues in my personal life.",[],FALSE,FALSE,TN
+"Uhm, I've tried some Advil, some Tylenol and actually some Tums as well, and it hasn't really helped.",[],FALSE,FALSE,TN
+"Oh, it actually I I feel like it happens most of the time when I'm either at work or or driving.",[],FALSE,FALSE,TN
+"No, I haven't had anything like this happen before.",[],FALSE,FALSE,TN
+"No, previously healthy.",[],FALSE,FALSE,TN
+"No, I haven't.",[],FALSE,FALSE,TN
+"Uh, no, no fevers.",[],FALSE,FALSE,TN
+"Uhm, no, I haven't.",[],FALSE,FALSE,TN
+"No, I've been home.",[],FALSE,FALSE,TN
+"Uhm, I do not, no medications, just the Tylenol and Advil I tried for the pain.",[],FALSE,FALSE,TN
+"Yeah, my father had a heart attack when he was 60 just last year and it's actually one of the reasons what concerns me about the chest pain that I thought I was having.",['chest pain'],TRUE,TRUE,TP
+"Yeah, I smoke about half a pack to a pack per day. I've been trying to quit and I was smoking more one pack per day, but so it is down a little bit, but, It's still something I'm trying to work on.",[],FALSE,FALSE,TN
+"Um, I do, but, uh, I'll have maybe one or two glasses of wine on the weekend.",[],FALSE,FALSE,TN
+Uh no.,[],FALSE,FALSE,TN
+"No, I've never been told I've I've had high blood pressure.",[],FALSE,FALSE,TN
+"I haven't, but I've actually never been tested either.",[],FALSE,FALSE,TN
+"Yeah, actually, I'll either do some running or cycling, probably three or four days per week and I haven't had any chest pain or or problems exercising.",[],FALSE,FALSE,TN
+"Uh. I don't think so, no.",[],FALSE,FALSE,TN
+"Right, yeah exactly.",[],FALSE,FALSE,TN
+"Uh, no, I think that's um, yeah, I think that's all that I wanted to talk about today.",[],FALSE,FALSE,TN
+"Awesome, thank you.",[],FALSE,FALSE,TN
+"Hey Doc, I'm a 45 year old man coming in, I'm worried there's a little old rash on my leg that I'm getting nervous about.",[],TRUE,FALSE,FN
+"I don't really know what I would call it. That's what I told the nurse when I came in, but it more hurts than anything.",[],FALSE,FALSE,TN
+"Ah, it's been it's been looking weird for about a week, but only yes, it started hurting yesterday and started looking strange and I just wanted to come in to get it checked out.",[],FALSE,FALSE,TN
+"Swollen, it looks bigger than it did before, and meaner, if that makes sense.",[],FALSE,FALSE,TN
+"Yeah, it's red, it's turning more red, kind of in the area around it. I've got these I got these scabs. I've got diabetes and I'm not exactly the best with it and scratching at it, and normally it's not that bad, but this is just strange looking and there's no other word for it.",[],FALSE,FALSE,TN
+"No no. Well I've had, I have occasional ulcers and sometimes I have banged my toe when I'm not exactly the best taking care of my feet, but this is the first time I've gotten something that I don't know, I've just never seen it before.","['occasional ulcers', 'banged toe']",TRUE,TRUE,TP
+"Let me see. I think so, when's the last time I saw the family doc? I think I've got an ulcer on my left heel, but I think it's doing alright.",[],FALSE,FALSE,TN
+"Right now it's on my right, so my ankle.",['ankle pain'],TRUE,TRUE,TP
+"I stopped measuring them. Yeah, last time I measured it was pretty bad. I think my A1C last time was like 9 something. I'm trying, I'm trying better to be with it. It's hard with work you know?",[],FALSE,FALSE,TN
+"Yeah, actually I have gained more, feel hungry, sometimes just tired, but it's hard to tell. There's an awful lot going on in my life right now with the kids, but, It's hard to tell I think. Yeah, I need to see my family doc.",[],TRUE,FALSE,FN
+"Symptoms? Um, I feel a little hot actually. When the swelling started it's it also started leaking this like white stuff from one of the one of what used to be a scab so now like kind of an open wound now.","['feeling hot', 'swelling with leakage of white stuff']",TRUE,TRUE,TP
+"Honestly, last 12 hours.","['Fatigue', 'Headache', 'Sore throat']",FALSE,TRUE,FP
+"No, I don't have a thermometer at home.",[],FALSE,FALSE,TN
+"Yeah, yeah it does. Actually changing socks the other day, yeah.",[],FALSE,FALSE,TN
+"Aside from just feeling overall crummy last couple weeks, no don't really, less energy today, but I was up last night thinking about this and yeah wanted to come in and talk.",[],FALSE,FALSE,TN
+"Yeah, maybe not so much when I touch it. When I walk with it and I start flexing it it, it doesn't like that.",[],FALSE,FALSE,TN
+"Just resting it right now, it feels fine.",[],FALSE,FALSE,TN
+"Chronic condition? I see the family doc about cholesterol. I'm on a pill for that. Uhm, I had asthma as a kid, not too much of an issue now. And my back, I've had back pain for the last 10 years, but all I really take for it is Tylenol Advil for that.",[],FALSE,FALSE,TN
+"It kind of is like a dull ache sometimes when I touch it. But, no like, in the area, the ankle no, but definitely on my feet, like over the years I've noticed I feel less on it compared to what I did previously, yeah.",[],FALSE,FALSE,TN
+"I'm taking 4 pills right now. One of them is for the cholesterol. I think it's called. rosuvastatin. The other three, they're all diabetes medications, but I don't remember. Metformin is one of them. Sidas...something I have a list somewhere. I'll give it to you later.","['taking 4 pills right now', 'rosuvastatin', 'metformin']",TRUE,TRUE,TP
+"No no, but had them for about a year now.",[],FALSE,FALSE,TN
+"Um, yeah, I do actually. Penicillin, can't take that.",[],FALSE,FALSE,TN
+"It's been a while, as a kid apparently like my face got bloated and I was having a hard time breathing so...",[],FALSE,FALSE,TN
+"Oh yeah, uh, what was it? I had my sinuses, had some pretty bad sinusitis when I was in my teens and they went in and kind of carved a little space out.",['Sinusitis'],TRUE,TRUE,TP
+"Yep, mom's side of the family, very much everyone has diabetes, high blood pressure, cholesterol. Dad's side of the the family is pretty healthy. I think maybe one of my aunts had lung cancer, but she's a pretty big smoker too.",[],FALSE,FALSE,TN
+"Yeah, I do.",[],FALSE,FALSE,TN
+I live in town. I see my kids every two weeks.,[],FALSE,FALSE,TN
+"No, I'm currently unemployed and looking for work, partially employed, I suppose we should say I have my own business.",[],FALSE,FALSE,TN
+"When I am working, I'm an accountant.","['Fatigue', 'Headache']",FALSE,TRUE,FP
+"Yeah once in a while, yeah, when I'm stressed.",[],FALSE,FALSE,TN
+"Last couple of weeks, I've been smoking more, maybe like 2 packs a week.",[],FALSE,FALSE,TN
+Yeah yeah.,[],FALSE,FALSE,TN
+"Average week, maybe a 2 4.",[],FALSE,FALSE,TN
+"Yeah, if you average out I mainly go through the two four in a weekend to be honest.",[],FALSE,FALSE,TN
+Mhm.,[],FALSE,FALSE,TN
+No I just want to get this figured out.,[],FALSE,FALSE,TN
+"Thank you doc, yeah sounds great.",[],FALSE,FALSE,TN
+"I've just been feeling like very nauseated for, it feels like all the time right now.",[],FALSE,FALSE,TN
+"It's been over a week. Maybe not quite two weeks, but like around then. Yeah, maybe like 9 days.",[],FALSE,FALSE,TN
+"Oh, I think it's like worse when I am smelling something really bad, and it's worse in the morning. But I feel like it's always kind of there.",[],FALSE,FALSE,TN
+"Uh, yeah, like um, yeah, like a lot of days I'll throw up like once or twice.",[],FALSE,FALSE,TN
+"Oh no, just, well, like I feel like I've I've had to pee a lot more. Um, but I don't, I don't think that's like related. I think maybe I have just been drinking a lot of water, so yeah.",[],FALSE,FALSE,TN
+"Oh, like, I feel like every couple hours right now.",[],FALSE,FALSE,TN
+"Probably every probably every like 2, maybe, maybe every hour I get certain times in a day.",[],FALSE,FALSE,TN
+"Oh, like it doesn't wake me up but it's like I wake up because I hear something. Then I'll be like, oh I think I should probably go to the bathroom.",[],FALSE,FALSE,TN
+Oh I I I can control it. It's just like uncomfortable right?,[],FALSE,FALSE,TN
+"No, I don't feel like that.",[],FALSE,FALSE,TN
+"I think, I think just 'cause like I was getting I was like throwing up like so like I feel like I was a little dehydrated.",[],FALSE,FALSE,TN
+"Ah no, I don't think so, well my stomach has been like it feels like a little crampy. I thought that maybe it could be my period but like I'm not on my period.",[],FALSE,FALSE,TN
+"Oh well, let me think. Um, like six weeks ago. I guess that would be, I don't know. I don't really like keep track.",[],FALSE,FALSE,TN
+"I think they're I think they're usually pretty regular, but I don't I don't like I don't calculate it like to the day.",[],FALSE,FALSE,TN
+"Oh, come to think of it, I don't, I don't think so.",[],FALSE,FALSE,TN
+I don't think so.,[],FALSE,FALSE,TN
+Oh no.,[],FALSE,FALSE,TN
+"Uh, nothing, nothing really.",[],FALSE,FALSE,TN
+"No, I mean, I've been taking like like I've been chewing like those ginger things that are supposed to help with nausea, but they weren't really helpful.",[],FALSE,FALSE,TN
+"So just like nickel, like in jewelry, if I wear not real jewellery, it'll give me a rash, but it's not food or like or medications or anything.",[],FALSE,FALSE,TN
+"Um, like I I just I live with one roommate.",[],FALSE,FALSE,TN
+"Uh, no, very rarely because I always get a headache.",[],TRUE,FALSE,FN
+"Oh gosh, like like a month ago probably.","['Fatigue', 'Headache']",FALSE,TRUE,FP
+Yeah just like with my boyfriend.,[],FALSE,FALSE,TN
+"Yeah, we we just use condoms. I used to be on birth control but it always made me feel like like kind of sick so I don't use that anymore.",[],FALSE,FALSE,TN
+"Uh, like I don't, I don't think so. I guess my dad my dad has like high blood pressure, yeah, I don't think there's anything else.",[],FALSE,FALSE,TN
+"OK, thank you.",[],FALSE,FALSE,TN
+"Yeah, so nice to meet you. I've been having this pain right in my abdomen. It's kind of like in the upper right area.",[],TRUE,FALSE,FN
+"So it's just in the upper right corner of my abdomen, right below where the lungs are, and it, yeah, it's just I have this severe pain that's going on.",['Abdominal pain located below the lungs'],TRUE,TRUE,TP
+So it's been going on for the last few days and it got worse today.,"['Fatigue', 'Headache']",FALSE,TRUE,FP
+"So I would say it got worse, just three or four hours ago before I came to the Emergency Department.","['Worsening condition', 'Increased severity']",TRUE,TRUE,TP
+"Uh no, it stays right in the in the spot that I told you right in the right upper corner.",[],FALSE,FALSE,TN
+So I think it started after just three days ago after I had a meal like I I think it was after lunch around half an hour or an hour after lunch.,[],FALSE,FALSE,TN
+"I think it's gotten, it was, it's the worst today, like especially like a few hours ago like 3 hours ago, it was much worse than the other two days.","['feeling unwell', 'worse symptoms']",TRUE,TRUE,TP
+"So it's like a sharp, I would describe it as like a sharp pain.",['sharp pain'],TRUE,TRUE,TP
+"I would rate it as, right now I would rate it as an 8.",[],FALSE,FALSE,TN
+"I think it happened to me a few years back, where I had this pain and then it just kind of went away on its own. I didn't go to the Emergency Department then though.",[],FALSE,FALSE,TN
+"I tried taking just like Advil and Tylenol, but it didn't really seem to help the pain too much.",[],TRUE,FALSE,FN
+"I've I've had some nausea over the past few days, but I haven't vomited anything.",['nausea'],TRUE,TRUE,TP
+"Uh, yeah.",[],FALSE,FALSE,TN
+Uh no like we haven't traveled anywhere recently.,[],FALSE,FALSE,TN
+"Uh, energy uh when it's hurting a lot like today I've been it's been difficult to move around, I've been pretty drained from the pain but uh otherwise over the last few days it hasn't affected me too much, but today I would say my energy levels are down.","['energy levels', 'pain']",TRUE,TRUE,TP
+"I don't think so. I mean, I don't think I've noticed any kind of skin changes.",[],FALSE,FALSE,TN
+"No no, no changes.",[],FALSE,FALSE,TN
+"No, I don't think so. No changes that I've noticed.",[],FALSE,FALSE,TN
+"No, no blood.",['no blood in urine'],FALSE,TRUE,FP
+"It's it was around the same before the pain actually started getting worse, so today I didn't really feel like eating. I did have nausea over the past few days, but my appetite I would say is the worst today.",[],TRUE,FALSE,FN
+"No, no, I don't think so.",[],FALSE,FALSE,TN
+"No, not not that I know of.",[],FALSE,FALSE,TN
+"Uh so, I think the only thing is my doctor told me that I should lose some weight, but other than that no medical history.",[],FALSE,FALSE,TN
+"Uh no, no allergies.",[],FALSE,FALSE,TN
+"Uh not prescribed, sometimes I take like some antacids when I get heartburn. But this is just like a couple times a month after dinner, sometimes at night, but that's about it.",[],FALSE,FALSE,TN
+"Just for just when I had my children, at the time of their birth, but that's it.",[],FALSE,FALSE,TN
+"Nope, no prior surgeries.",[],FALSE,FALSE,TN
+"Um, so my father died of a stroke when he was in his 60s, my mother does have gallstones.",[],FALSE,FALSE,TN
+So I work in at the bank as a consultant.,[],FALSE,FALSE,TN
+"Uh, yeah sometimes, maybe one or two glasses of wine every night.",[],FALSE,FALSE,TN
+"No, not really.",[],FALSE,FALSE,TN
+Uh No.,[],FALSE,FALSE,TN
+"Uh no, so should I be?",[],FALSE,FALSE,TN
+"Uh no, no I've never drank, I don't drink in the morning.",[],FALSE,FALSE,TN
+"Uh, no never.",[],FALSE,FALSE,TN
+And so I'm living with my two children and my partner.,"['Stress levels high due to family responsibilities', 'Sleep deprivation due to late-night childcare duties']",FALSE,TRUE,FP
+"Yeah, the home situation is fine, like kids are doing great and my partner is very supportive. No, no issues that I can think of at home.",[],FALSE,FALSE,TN
+"Yeah hi, I'm I I have a pain in my belly. It started a couple hours ago.",[],TRUE,FALSE,FN
+It's mostly up here on the right side.,[],FALSE,FALSE,TN
+"Oh I guess it's a, it's an aching pain I'd say. It kind of just, um, it would initially just come and go, but now it's just it's staying. It's not going away.",[],TRUE,FALSE,FN
+"It's about to a 10, an 8 maybe.",[],FALSE,FALSE,TN
+About 8 hours ago.,[],FALSE,FALSE,TN
+I was just about to go to sleep. I wasn't doing anything in particular at the time.,[],FALSE,FALSE,TN
+"Oh yeah, definitely it would come and go, but now for the past I'd say five to six hours, it's been constant, just there all the time.",[],FALSE,FALSE,TN
+"Yeah, uh I I have the same pain that sort of comes and goes after I eat. Usually after I've had something like a something fatty, something from outdoors, maybe like a burger or fries or something. I initially thought it was indigestion, but I don't I don't know what's going on now.",[],TRUE,FALSE,FN
+"Well, I guess eating sometimes makes it worse, um, but I don't I don't think there's anything that's making it better.",[],FALSE,FALSE,TN
+I tried Tylenol but that didn't do anything.,[],FALSE,FALSE,TN
+"I am a little nauseous, but no, I didn't, haven't had I haven't vomited yet, no.",[],FALSE,FALSE,TN
+I don't think so. I haven't checked. I don't feel feverish.,[],FALSE,FALSE,TN
+"Well the pain is making it difficult for me to do things, um, but I I guess I'm not, uh a little fatigued maybe.",[],FALSE,FALSE,TN
+"Nothing that I've noticed, no, I don't think so.",[],FALSE,FALSE,TN
+"I have not, no.",[],FALSE,FALSE,TN
+"Well, I guess because it's this thing happens usually happens after I eat, I think I've been eating less than usual, just because I don't, I don't want to, you know, I don't like the pain.",[],TRUE,FALSE,FN
+I do have diabetes but that's about it I think.,[],FALSE,FALSE,TN
+I take metformin.,"['nausea', 'abdominal pain']",TRUE,TRUE,TP
+"No, I don't, sorry, no.",[],FALSE,FALSE,TN
+"No no, no, I don't.",[],FALSE,FALSE,TN
+"No, no I haven't ever. I've been very uh healthy. No hospitalizations.",[],FALSE,FALSE,TN
+I got my wisdom teeth removed when I was a teenager.,[],FALSE,FALSE,TN
+"No, not that I know of.",[],FALSE,FALSE,TN
+My dad had a heart attack when he was in his 60s. But that's it.,[],FALSE,FALSE,TN
+What do you mean?,[],FALSE,FALSE,TN
+"I usually go out for a run, especially when it's a little bit warmer, which it now is.",[],FALSE,FALSE,TN
+"Uh, sometimes.",[],FALSE,FALSE,TN
+One to two drinks a day.,[],FALSE,FALSE,TN
+"I'll just drink a glass of wine at night, just helps me relax.",[],FALSE,FALSE,TN
+"I don't, no.",[],FALSE,FALSE,TN
+"Yes, so initially it would come and go, but now, so for the first 2 hours it would come and go. And when I would have this pain when I was eating, it would come and go. But over the past six hours it's just been constant.",[],TRUE,FALSE,FN
+"Yeah, sure I had, I've been having diarrhea for the past three to four days, and it's been pretty bad. I couldn't go, uh I couldn't go to my classes, had to skip because it was just it was just embarrassing.",['diarrhea'],TRUE,TRUE,TP
+"Um, have I experienced something like this before? Uhm no, I don't think so.",[],FALSE,FALSE,TN
+"I think they've mostly been loose. I think they've all been loose actually, if I think about it.",[],FALSE,FALSE,TN
+"Oh my god, I have I've lost count. I'm going every every hour.",[],FALSE,FALSE,TN
+"No, it's brown.",[],FALSE,FALSE,TN
+Um not really. I don't think so. I don't look that much to be honest.,[],FALSE,FALSE,TN
+"Well, I didn't start off with pain, but I I I do have a bit of a cramp now since yesterday. It's just it hurts. Yeah, it hurts sometimes, it comes and goes.",[],FALSE,FALSE,TN
+"Uh no I do get a warning, but it's just I I do need to get to the toilet really fast, yeah.",[],FALSE,FALSE,TN
+"Um, I I did go to um, I did go to a new restaurant 5 days ago.",[],FALSE,FALSE,TN
+"Um I I just got some rice with chicken Manchurian, it was a nice little Chinese restaurant, and yeah.",[],FALSE,FALSE,TN
+"Um, no not really, I went with my friend and I haven't really, haven't talked to her about this. I never really thought that these were related, that this was related to that.",[],FALSE,FALSE,TN
+"Yeah yeah, I have actually, but it's not been as bad as the diarrhea. I didn't even yeah, I didn't, I wasn't even thinking about that. Yeah, I I did vomit, I think twice yesterday.",[],FALSE,FALSE,TN
+"No, it's just watery.",[],FALSE,FALSE,TN
+It's on and off.,[],FALSE,FALSE,TN
+"Uh, not really. I was just trying to drink a lot of water, 'cause I I know that I can get dehydrated so just drinking lots of water.",[],FALSE,FALSE,TN
+I have been eating less specially since yesterday when I had my these abdominal cramps started. I just don't feel like eating.,"['Abdominal cramps', 'Eating less']",TRUE,TRUE,TP
+Making what worse?,[],FALSE,FALSE,TN
+"Not really, I don't think so.",[],FALSE,FALSE,TN
+"Um, I've just been feeling really tired and and, I don't know, maybe I haven't checked my checked my temperature.",[],FALSE,FALSE,TN
+"I actually haven't weighed myself in the past five days, so I don't, I don't know.",[],FALSE,FALSE,TN
+I have asthma.,['Asthma'],TRUE,TRUE,TP
+"Yeah, I've got some puffers that my family doc gave me.",[],FALSE,FALSE,TN
+"No, that's it.",[],FALSE,FALSE,TN
+"Um, no I don't.",[],FALSE,FALSE,TN
+"I'm sorry, can you say that again?",[],FALSE,FALSE,TN
+"Um? I had my wisdom teeth removed. But no, I like I wasn't hospitalized, no.",[],FALSE,FALSE,TN
+"Nope, I don't think so.",[],FALSE,FALSE,TN
+I live with two roommates.,[],FALSE,FALSE,TN
+"Um, sometimes.",[],FALSE,FALSE,TN
+I might have like a glass or two on the weekends.,[],FALSE,FALSE,TN
+"Oh gosh, um well, I like to have oatmeal for breakfast. I usually make something quick for lunch, maybe like a salad, and then I might have my, I'll probably just like eat out at night, maybe get like a burger or fries or something.",[],FALSE,FALSE,TN
+"My brother had appendicitis when he was young. Um, my mom has had a hysterectomy if that counts. Yeah, nothing else.",[],FALSE,FALSE,TN
+"Yeah, so I'm just coming in with my son. He's six years old and yeah, just over the last few days he's not been himself and he's been having this stomach ache. Uh, so it started around like I would say 3 days ago and then he's also having vomiting for the last two days, he's vomited in total six times over the last two days and then yesterday he also developed a fever as well. I managed to measure it and it was 38.3 degrees Celsius.","['stomach ache', 'vomiting', 'fever']",TRUE,TRUE,TP
+"No, we've been strictly home food during like a pandemic like no, no real changes.",[],FALSE,FALSE,TN
+"Yeah, so at first with the stomach pain he was a bit just irritable and just not himself, but especially yesterday with the fever just been very quiet and just kind of sleeping pretty much the whole day.",[],FALSE,FALSE,TN
+"Yes, so vomit like, it started two days ago. The first day it was just like he puked up the things that he had eaten, but yesterday it was it was mainly just like uh just yellowish material, I couldn't really tell if it was food or not.",[],FALSE,FALSE,TN
+"Uh no I didn't notice any blood and I didn't notice any green material. It was mainly just like like normal vomit, like yellowish color.",[],FALSE,FALSE,TN
+"Uhm? Yeah, two days ago it was it was after after lunch when he first vomited. But after that it's just been kind of random.",[],FALSE,FALSE,TN
+"No, no, I didn't notice any blood at all. It's definitely just very very watery and he's had to go probably even just in the last day, probably around like six or seven times.",[],FALSE,FALSE,TN
+So in total I can count 6 times.,[],FALSE,FALSE,TN
+"No, not that I know.",[],FALSE,FALSE,TN
+"No, not that he's mentioned to me.",[],FALSE,FALSE,TN
+"Uh no, not that he has mentioned to me now.",[],FALSE,FALSE,TN
+"Uh, no, not really.",[],FALSE,FALSE,TN
+"Um, he did, he did point to his stomach like it seems like he was having with all the vomiting like, he was having some stomach pain as well.","['stomach pain', 'vomiting']",TRUE,TRUE,TP
+"Well, it's hard to say. He was just pointing at the center of his belly like, I don't know if it's like, I tried pressing on it and he didn't feel any pain then, but I think it's just kind of all over his stomach.",[],FALSE,FALSE,TN
+"No, that's been OK.",[],FALSE,FALSE,TN
+"Uh, no, not not really, no.",[],FALSE,FALSE,TN
+"No, no he hasn't mentioned anything like that.",[],FALSE,FALSE,TN
+"Yeah, so that's that's what I, that prompted me to take his temperature yesterday around the afternoon, like we had to wrap him up with like more than two blankets and he was still feeling cold so, yeah, definitely was having chills.",[],FALSE,FALSE,TN
+"So he's been going along the charts pretty well, like no concerns during his growth. Otherwise, he's a very healthy child.",[],FALSE,FALSE,TN
+No nothing like that.,[],FALSE,FALSE,TN
+"Yeah yeah, he didn't have any issues with walking, running, he's pretty social with all his peers. He's doing well at school, no complaints.",[],FALSE,FALSE,TN
+"No, not at all. We, yeah, we haven't really gone to the doctor with him after like all those vaccinations that he had to do, so he's been good.",[],FALSE,FALSE,TN
+"Yeah, immunizations all up to date.",[],FALSE,FALSE,TN
+"Uh, no, uh, not not anything that we know of yet.",[],FALSE,FALSE,TN
+"No, so it was a normal vaginal delivery, uh no issues, uh he was born at 39 weeks, didn't need to stay in the hospital at all. Yeah, it was a pretty smooth pregnancy compared to some of the other ones.",[],FALSE,FALSE,TN
+"Uhm, I don't exactly remember his Apgar scores, I think they were like just just they they were normal like there was nothing concerning about them, and birth weight I think he was probably around 3 kilograms.",[],FALSE,FALSE,TN
+"No, no medications.",[],FALSE,FALSE,TN
+"Yeah, so he's living with myself, his mother and, and then my husband, and he has two older siblings. One is a boy, seven years old, and another one like a 10 year old girl.",[],FALSE,FALSE,TN
+"Uh no, no one has been sick recently, however he does, they did let them go back into school at one point, so I don't know, I don't know, so that was just last week, so I don't know if he caught something from school.",[],FALSE,FALSE,TN
+"No, we've been, we've been at home.",[],FALSE,FALSE,TN
+"No, that's been fine.",[],FALSE,FALSE,TN
+"No, no concerns like that.",[],FALSE,FALSE,TN
+"No, no, we don't smoke.",[],FALSE,FALSE,TN
+"Uh, we are getting the 10 year old tested for just uh, asthma.",[],FALSE,FALSE,TN
+"But nothing diagnosed yet, no.",[],FALSE,FALSE,TN
+"No, no, uh no history of any kind of bowel diseases.",[],FALSE,FALSE,TN
+"Uh, yeah, no it's, it's also just like I was just reading up like, can it be like I don't know if it can be COVID as well, if it can, it can do this as well?",[],FALSE,FALSE,TN
+"Alright, sounds good. Thank you so much.",[],FALSE,FALSE,TN
+"Yeah yeah stomach hurt, started hurting more last couple of days, maybe 3 days ago I think.",[],FALSE,FALSE,TN
+"It felt weird, like crampy. I just, I just thought I was constipated, 'cause I've been haven't been able to be able to go to the bathroom as well. I just thought I was kind of bloated a bit, but yeah, about about that time, started to feel a little bit more painful.",[],FALSE,FALSE,TN
+"Yeah, kinda like near my right hip like lower where my stomach is that kind of right and below my belly button. Sometimes a little bit on the top just below my belly button, but mainly just in that right lower side yeah.",[],FALSE,FALSE,TN
+"No, never.",[],FALSE,FALSE,TN
+I feel it's been getting worse to be honest.,[],FALSE,FALSE,TN
+"Honestly, just resting flat makes it feel a little bit better, but nothing much, no.",[],FALSE,FALSE,TN
+"Touching it. Also I puked the the other day and that made it definitely feel worse, just that whole contraction in my body was nasty.",[],FALSE,FALSE,TN
+"Mhm, mhm.",[],FALSE,FALSE,TN
+"It has pretty much stayed in that one spot, yeah.",[],FALSE,FALSE,TN
+"Felt a bit hot the other day, didn't take a temperature though.",[],FALSE,FALSE,TN
+"I thought it was just going to get better when it first started. Maybe just a bit of gas, but here we are kind of Thursday now and it's still pretty bad.",[],FALSE,FALSE,TN
+"Not off the top of my head, no.",[],FALSE,FALSE,TN
+"Yeah, yeah. Before it was fairly regular, about once a day. Five days ago, I started getting constipated, it backed up and pretty much the picture I think last time I went to the bathroom was two days ago I think, yeah.",['constipation'],TRUE,TRUE,TP
+"I got diabetes, type 2.","['Increased thirst and urination', 'Fatigue', 'Weight loss despite eating normally']",TRUE,TRUE,TP
+"Most part, doctor checks my sugars. I'm not too regular on them myself, but last time he changed medications was a couple years back and I've just been on the same ones ever since.",[],FALSE,FALSE,TN
+Metformin? Metformin.,"['nausea', 'abdominal pain']",TRUE,TRUE,TP
+"No, I had my teeth pulled as a kid, but no.",[],FALSE,FALSE,TN
+"Yeah, yeah, I never had that problem as a kid.",[],FALSE,FALSE,TN
+"No, sometimes get a little bit congested during the fall, but that's it.",[],FALSE,FALSE,TN
+"Gas, like no. I think my grandma died of breast cancer fairly early, but no, not not that not that I can think of.",[],FALSE,FALSE,TN
+"Yeah yeah, I live here.",[],FALSE,FALSE,TN
+"No, no, I got family. Me, the wife, got two kids, one of them is college bound now but yeah.",[],FALSE,FALSE,TN
+"I'm still working, I am a production overseer, production manager over at Fairbanks.",[],FALSE,FALSE,TN
+It took awhile to get here.,[],FALSE,FALSE,TN
+"Oh yeah, like, well, plan on drinking on the two four but not regular, special occasions mainly. Hot days, sometimes I'll have a beer or two.",[],FALSE,FALSE,TN
+"No, just hoping to get an answer to whatever is going on.",[],FALSE,FALSE,TN
+Thanks doc.,[],FALSE,FALSE,TN
+"Hi, so I feel like I might have a bladder infection. I see a urologist because I've had some issues with like an overactive bladder for awhile. I've had a few bladder infections in the past and this is usually how how they feel. I feel like a little bit of burning when I go to the bathroom and I have to go like a lot right now. But then also sometimes it means that like it gets like this when I have my period and I don't have my period right now, but I you know I I could be getting it, but I also just don't wanna let it go keep going if I do have an infection. I just like rather get it like treated if I do.","['burning sensation while urinating', 'frequent urination despite adequate fluid intake']",TRUE,TRUE,TP
+"Um, like 2 weeks ago.",[],FALSE,FALSE,TN
+"Like yes and no, it's. I'm I'm not super irregular, but I I sometimes have like basically it's like I alternate sometimes. I my cycles like 4 weeks and sometimes it's more like 5.",[],FALSE,FALSE,TN
+Yeah I'm 30.,[],FALSE,FALSE,TN
+"Uh, no, I'm not.",[],FALSE,FALSE,TN
+I had one like 3 months ago maybe.,"['Fatigue', 'Headache']",FALSE,TRUE,FP
+"Yeah yeah it went away like I always I always have an overactive bladder and I always have to go pretty frequently, like every hour, sometimes half hour. But so that's still there, but like it hasn't ever since then, I haven't had any like pain with it.","['overactive bladder', 'frequent urination']",TRUE,TRUE,TP
+"Exactly like for the past couple days, it's felt like that.","['Fatigue', 'Headache']",FALSE,TRUE,FP
+"Um, maybe a little bit I I feel like now I can recognize it pretty early when it's not too bad to kind of get ahead of it.",[],FALSE,FALSE,TN
+"Sorry, can you repeat that?",[],FALSE,FALSE,TN
+Not that I can think of.,[],FALSE,FALSE,TN
+"It maybe looked like a little cloudy. But nothing, nothing else out of the ordinary like I've never had blood in it or anything.",[],FALSE,FALSE,TN
+"No, not that I can think of.",[],FALSE,FALSE,TN
+"No, and like I haven't had like had a sexual partner in a few years.",[],FALSE,FALSE,TN
+"Oh yeah, I can feel everything.",[],FALSE,FALSE,TN
+"No, nothing, pretty normal.",[],FALSE,FALSE,TN
+"I, I mean, I feel I feel a little tired, felt like a little hot yesterday. I don't have a thermometer so like I didn't take my temperature but, you know, sometimes I feel a little hot like when I've had the infections before.",[],FALSE,FALSE,TN
+"Like my mom said, I, I I saw my mom earlier and she said I looked like a little flushed but it's not not like a rash or anything.",[],FALSE,FALSE,TN
+"No, just this like overactive bladder thing.",['overactive bladder'],TRUE,TRUE,TP
+"We tried a few different ones before, now I get I get Botox injections into the bladder like maybe twice a year.",[],FALSE,FALSE,TN
+"No, nothing no nothing else. Yeah, I guess I have like I have an inhaler but I don't use it all the time like I haven't had to.",[],FALSE,FALSE,TN
+"Yeah, like I honestly don't feel like I have it very much now, but I still have like I still have the inhaler.",[],FALSE,FALSE,TN
+"Oh, I used to take birth control, like the the pill but like I just I don't have a boyfriend right now and I just didn't really feel like I needed it otherwise.",[],FALSE,FALSE,TN
+"Um, I had my appendix out when I was 24. That's it though.",[],FALSE,FALSE,TN
+Yeah yeah I do.,[],FALSE,FALSE,TN
+I work at a bank.,[],FALSE,FALSE,TN
+Like sometimes in the spring I'll get like a little stuffy but...,[],FALSE,FALSE,TN
+"No like, yeah...",[],FALSE,FALSE,TN
+"Cool, thank you.",[],FALSE,FALSE,TN
+Low back pain.,['low back pain'],TRUE,TRUE,TP
+So the pain's just right in the in the lower back.,[],FALSE,FALSE,TN
+I'm not sure. I just noticed the pain after um after that.,[],FALSE,FALSE,TN
+It feels like it's stabbing just right in my lower back.,['Lower Back Pain'],TRUE,TRUE,TP
+"If I'm sitting, uh completely still like like I am right now, it's a 2 out of 10.",[],FALSE,FALSE,TN
+Uh anytime I I move or bend my back or uh even cough it it worsens the pain significantly.,['Back pain worsening with movement and bending'],TRUE,TRUE,TP
+"No, it's been this same awful pain this whole time.",['Pain'],TRUE,TRUE,TP
+"I've had back pain uh over the years, but nothing like this before.",[],FALSE,FALSE,TN
+I also feel the pain uh into my right leg.,['pain in the right leg'],TRUE,TRUE,TP
+"Uh it's it's a, uh, an aching pain.",[],FALSE,FALSE,TN
+Uh no it's just the uh the low back pain.,[],FALSE,FALSE,TN
+"No, I can't remember any injuries like that in the past.",[],FALSE,FALSE,TN
+"Um no fever, uh no chills, no night sweats.",[],FALSE,FALSE,TN
+"Uh no, I've been OK recently.",[],FALSE,FALSE,TN
+Uh just the back pain.,['Back pain'],TRUE,TRUE,TP
+"Nothing like that, been regular.",[],FALSE,FALSE,TN
+"Uh no, nothing to report there.",[],FALSE,FALSE,TN
+Uh appetite's been normal.,[],FALSE,FALSE,TN
+"No, the weight's been about the same.",[],FALSE,FALSE,TN
+"No, I've been feeling well otherwise.",[],FALSE,FALSE,TN
+Uh no numbness or tingling.,['numbness or tingling'],TRUE,TRUE,TP
+Uh no muscle weakness.,['Muscle weakness'],TRUE,TRUE,TP
+Uh no concerns with uh erectile dysfunction.,[],FALSE,FALSE,TN
+"Uh no, I haven't had any problems with bowel or bladder incontinence.",[],FALSE,FALSE,TN
+Uh type 2 diabetes.,"['Increased thirst and urination', 'Frequent urination at night']",TRUE,TRUE,TP
+"Uh I, um insulin for diabetes.","['high blood sugar levels', 'increased thirst and urination']",TRUE,TRUE,TP
+Uh just been taking Tylenol for the the back pain.,['back pain'],TRUE,TRUE,TP
+"Uh maybe it's taking the edge off a little bit, but it hasn't done too much uh to help the pain.",[],FALSE,FALSE,TN
+Uh nope.,[],FALSE,FALSE,TN
+Uh I had hemorrhoids removed three years ago.,['pain in the rectum'],TRUE,TRUE,TP
+"Uh no, it was just day surgery,",[],FALSE,FALSE,TN
+Uh my father had prostate cancer.,['prostate cancer'],TRUE,TRUE,TP
+Uh I'm a retired school teacher.,"['Fatigue', 'Headache']",FALSE,TRUE,FP
+"I live alone um in a in a house uh not too far from here, actually.",[],FALSE,FALSE,TN
+"Um occasionally uh maybe I'll have a glass of red wine on the weekend or something like that, but uh not too often.",[],FALSE,FALSE,TN
+"Uh, I've smoked um yeah, I smoke a pack of cigarettes uh per day.",[],FALSE,FALSE,TN
+Uh about 40 years.,[],FALSE,FALSE,TN
+Uh never.,[],FALSE,FALSE,TN
+"I feel like it's uh pretty normal, mostly home cooked meals with some variety, vegetable, vegetables, other meats, and fish. I would say it's pretty balanced.",[],FALSE,FALSE,TN
+"Yes, I am.",[],FALSE,FALSE,TN
+"Uh no new partners, um just my girlfriend, uh.",[],FALSE,FALSE,TN
+Um just my my girlfriend recently.,[],FALSE,FALSE,TN
+"Uh yes, I have, um um two women over the past year.",[],FALSE,FALSE,TN
+"Yes, always use uh condoms.",[],FALSE,FALSE,TN
+"My back, it just really hurts. I feel really stiff in the morning and um yeah, it's just been going on for a few months now.",[],FALSE,FALSE,TN
+"It kinda hurts all over. I can't really pinpoint any specific locations that hurts most, kind of hurts like all down my my back.",[],FALSE,FALSE,TN
+"So I wouldn't really say the neck, and I guess more of the the lower parts. Maybe like the middle of my back and...",[],FALSE,FALSE,TN
+And down.,[],FALSE,FALSE,TN
+It's a dull pain.,[],TRUE,FALSE,FN
+"It's about a four or five. I mean some days it can be better, but yeah, some days it can be worse.",[],FALSE,FALSE,TN
+"I think this started about like four or five months ago. It's been going on, yeah, for probably about half a year now.","['Fatigue', 'Weight loss despite eating normally', 'Loss of appetite']",TRUE,TRUE,TP
+"No, nothing that it's I I can think of. It's sort of it's come on so slowly like when I first started noticing the back pain it it was maybe like a 0 to a one. I didn't really notice it too much, but over these last 5, 6 months it has gotten has gotten a bit worse.",['back pain'],TRUE,TRUE,TP
+"Right, yeah, it's been getting worse.",[],FALSE,FALSE,TN
+"Uh, not not in my back pain. I do get pain in my right knee and in my hands sometimes. But those pains just kind of come and go.",[],TRUE,FALSE,FN
+"Uhm, those ones started, probably similar timeline around six months ago.",[],FALSE,FALSE,TN
+"No, I don't feel it anywhere else.",[],FALSE,FALSE,TN
+"Yeah, I've tried some Tylenol and Advil, and that the Advil is actually helped taking the edge off a little bit, but the next morning I I have the stiffness and and pain again.","['stiffness', 'pain']",TRUE,TRUE,TP
+Uh no nothing that I can think of that really makes it any worse.,[],FALSE,FALSE,TN
+"It's worse in the morning. It gets a bit better as the day goes on. I asked about it, an hour into the day, I feel my best. It takes a little bit of time to to move around a little bit first.","['Morning worsening', 'Daytime improvement']",TRUE,TRUE,TP
+I would say maybe 30 to 60 minutes.,[],FALSE,FALSE,TN
+No trauma or injuries.,"['Fatigue', 'Headache']",FALSE,TRUE,FP
+"Yeah, I have been a bit more fatigued than usual, and yeah, I I've had some malaise as well.",[],FALSE,FALSE,TN
+"It's been similarly getting a little bit more progressive. I mean some days I'm just feeling like I just want to lay around and rest 'cause I'm feeling just so burnt out and other days I'm ok but, I'm certainly more tired than usual.",[],TRUE,FALSE,FN
+"Uhm, no, I haven't noticed any any rashes or any nail changes.",[],FALSE,FALSE,TN
+"No, I haven't had any diarrhea or any any urinary problems.",[],FALSE,FALSE,TN
+"No, my appetite's been normal and my weight's been stable.",[],FALSE,FALSE,TN
+"No, I haven't noticed anything like that.",[],FALSE,FALSE,TN
+"No, no tingling or numbness.",['no tingling or numbness'],TRUE,TRUE,TP
+"Nope, I haven't noticed any muscle weakness.",[],TRUE,FALSE,FN
+"Um I had a uh, and then I was diarrhea like several months ago and I had some antibiotics, but that was a yeah, so a few months ago.",[],FALSE,FALSE,TN
+"Yes I am uh I I have a girlfriend then we've, uh, we started dating about about, uh, six months ago.",[],FALSE,FALSE,TN
+"Uh, no history of STIs.",[],FALSE,FALSE,TN
+"No, she she hasn't been having any symptoms then we we've been using a condom mostly.",[],FALSE,FALSE,TN
+"Uhm, yeah, I'm I'm generally alright. I do have asthma actually and just, I had diarrhea a few months ago after eating at a buffet. So I think maybe it yeah, it was food poisoning or maybe something like that.","['asthma', 'diarrhea']",TRUE,TRUE,TP
+"But yeah, so asthma and that's it.",['Asthma'],TRUE,TRUE,TP
+"Yeah, use that blue inhaler sometimes. I guess that just when I when I need it, but that hasn't been very often.",[],FALSE,FALSE,TN
+"I do have environmental allergies, I I'm not sure if it's like ragweed or or pollen, but something like that.",[],FALSE,FALSE,TN
+"Uhm, never.",[],FALSE,FALSE,TN
+Yeah my mother has a uh psoriasis.,[],FALSE,FALSE,TN
+"Yeah, and so she's had to, I know use like like creams and stuff like that for her skin.",[],FALSE,FALSE,TN
+"I do, yeah I work uh, at a bank.",[],FALSE,FALSE,TN
+I don't believe so. I think she had just more issues with her with her skin.,[],FALSE,FALSE,TN
+"Yeah, so I live with my girlfriend in a condo in the city here.",[],FALSE,FALSE,TN
+"Yes, sometimes yeah, I'll smoke like once or twice per week, with that with a friend or something like that.",[],FALSE,FALSE,TN
+"No cigarettes, no never.",[],FALSE,FALSE,TN
+"Sometimes, yeah, I'll have a beer or two on weekends or or a cocktail with friends.",[],FALSE,FALSE,TN
+"Uhm no, I haven't noticed really any any uh redness or or swelling",[],TRUE,FALSE,FN
+"Uhm, I do get it. It's a bit stiff. Uhm I, uh, yeah, I'm not really too sure it's like, not really, it's more more more stiff.",[],TRUE,FALSE,FN
+"Uhm, yeah, I was just wondering, yeah, like like what what this could be possibly?",[],FALSE,FALSE,TN
+Uhm I'm 26.,[],FALSE,FALSE,TN
+"No, that that sounds, that sounds great, thank you.",[],FALSE,FALSE,TN
+"Sounds great, thank you.",[],FALSE,FALSE,TN
+Bye.,[],FALSE,FALSE,TN
+"Hi there, I've just last night I was, I went for a run and I twisted my ankle. I think I stepped on something and it it really hurts.","['Twisted ankle', 'Pain']",TRUE,TRUE,TP
+It was just yesterday.,[],FALSE,FALSE,TN
+Yeah it was just just yesterday that it happened.,[],FALSE,FALSE,TN
+"Inwards yeah, I feel like I inverted my ankle.",['inverted ankle'],TRUE,TRUE,TP
+"No, I was able to, uh, kind of finish the I I I just finished the walk. I was able to walk home 'cause it didn't hurt that bad immediately. It was a bit painful, but the pain really started a few hours later and has been pretty much constant ever since.",[],TRUE,FALSE,FN
+"No, I haven't really noticed I uh, really, any swelling or I or or skin changes. Yeah, no skin changes and no swelling.",[],TRUE,FALSE,FN
+Dull and achy.,"['dullness', 'ache']",TRUE,TRUE,TP
+"I'm I, I feel like I've maybe I I've done something like this when I was younger, maybe playing basketball or something like this when I was a kid, I twisted my ankle before.",[],FALSE,FALSE,TN
+It's on the right kind of outside of the ankle.,[],FALSE,FALSE,TN
+On the right ankle.,"['redness and swelling', 'pain when walking']",TRUE,TRUE,TP
+"Yeah, exactly.",[],FALSE,FALSE,TN
+"I can kind of feel it around on the the sole of my foot as well, but mostly on the outside though.","['sole of the foot pain', 'foot sole discomfort']",TRUE,TRUE,TP
+"Alright, it gets worse really to if if I move my ankle or if I'm standing on it.",[],FALSE,FALSE,TN
+"Alright, just if I rest and avoid moving it.",[],FALSE,FALSE,TN
+"No, just my my right ankle.",[],FALSE,FALSE,TN
+"No, I've been I've been just training for this race coming up, so I mean I've been just trying to work on my fitness a little bit, but my weight has been relatively stable.",[],FALSE,FALSE,TN
+No numbness or tingling and no muscle weakness either.,[],TRUE,FALSE,FN
+"I'm uh, I had diarrhea a few months ago and I was given a fluoroquinolone as an antibiotic.",[],FALSE,FALSE,TN
+I I take a Vitamin D and some other vitamins too. Vitamin A as well I guess that just helps my my skin and and then the vitamin D for my my bones.,[],FALSE,FALSE,TN
+"No allergies, no.",[],FALSE,FALSE,TN
+"My grandparents have arthritis, so and my like my dad had had gout before.","['Arthritis', 'Gout']",TRUE,TRUE,TP
+I think osteo yeah osteoarthritis.,"['joint pain', 'stiffness in the knees']",TRUE,TRUE,TP
+"I do, yeah, I work as a software engineer.",[],FALSE,FALSE,TN
+Right now I'm actually just living alone in a in an apartment.,[],FALSE,FALSE,TN
+"No, never I can't with the with all this like training for yeah at the race and stuff like that.",[],FALSE,FALSE,TN
+"No, I've never used anything like that in the past.",[],FALSE,FALSE,TN
+"Uh rarely I'll have maybe a glass of wine like once every couple of months, but it's pretty infrequent.",[],FALSE,FALSE,TN
+"Uh a little bit of pain now that right, uh, like outside, but it's not uh, it doesn't hurt that bad. Yeah, I'll say no.",[],TRUE,FALSE,FN
+"I can, yeah I can move it around a little bit. I'm trying to avoid that though, just because it it does hurt, but I can move it around.",[],FALSE,FALSE,TN
+"I can, yeah, just for short periods of time 'cause it's just 'cause of the pain, but I can walk on it.",[],TRUE,FALSE,FN
+"OK, that sounds good, thank you.",[],FALSE,FALSE,TN
+"Hi, I've I've had this pain on the outside of my uh right elbow now it's it I first started knowing, noticing it several months ago, but recently it's just been more painful.",[],TRUE,FALSE,FN
+"No, there wasn't any any trauma or any triggers that that I noticed, I was just um feeling it, uh, a bit more at the end of of work. Um yeah, I was just having it uh, feeling the pain a bit more at the end of work.",[],TRUE,FALSE,FN
+"Um yeah, if I, really if I'm just resting the elbow um it makes it better, and I've tried uh things like ibuprofen um which has helped with the pain, I'll I'll do that for um hoping I can get through work sometimes if the pain is bad enough.",[],TRUE,FALSE,FN
+"Uh it's um kind of uh, well, it's achy and then sometimes depending on the movement it can get, it can be sharp as well.",[],TRUE,FALSE,FN
+"Um, so like, really it's mostly the movements at my wrist, if I'm bending my wrist down, uh I can I can feel it, or um if I'm having to pick things up or hold heavy objects at work, I do a lot of repetitive uh things at at work, I work on a line.",[],FALSE,FALSE,TN
+It is about a four.,[],FALSE,FALSE,TN
+"Uh, no I haven't.",[],FALSE,FALSE,TN
+Uh it's been getting worse.,"['Fatigue', 'Headache']",FALSE,TRUE,FP
+"Uh I did, I yeah, I tried some um some stuff that you can get at the um drugstore and it did help take the edge off a little bit.",[],FALSE,FALSE,TN
+"I am, yeah, I I have full range of motion of both the elbow and uh hand.",[],FALSE,FALSE,TN
+"Uh, no. I I've been been able to manage so far at work, but um it is starting to become an issue um yeah, with my job.",[],FALSE,FALSE,TN
+"No, it's just right there on the outside of my right elbow, and it's really annoying 'cause I'm right handed as well, so um yeah, it's causing problems there.",[],FALSE,FALSE,TN
+"Uh no, I kinda just feel it right over that that one spot.",[],FALSE,FALSE,TN
+"No, no, no numbness or tingling.",[],FALSE,FALSE,TN
+"No, I haven't had anything like that.",[],FALSE,FALSE,TN
+"Um no I, it's just been the elbow pain.",['elbow pain'],TRUE,TRUE,TP
+"No, my weights been stable over these last few months.",[],FALSE,FALSE,TN
+"No, I haven't had any fevers or chills.",[],FALSE,FALSE,TN
+"No, my energy's been good.",[],FALSE,FALSE,TN
+Uh no rashes.,['rashes'],FALSE,TRUE,FP
+No changes there.,[],FALSE,FALSE,TN
+Nothing like that.,[],FALSE,FALSE,TN
+"No, I haven't had any nausea or vomiting.",[],FALSE,FALSE,TN
+"No, I haven't had any urinary uh symptoms.",[],FALSE,FALSE,TN
+"Uh no, I don't.",[],FALSE,FALSE,TN
+"No, it looks, it looks the same.",[],FALSE,FALSE,TN
+Uh there is pain at the lateral uh lateral elbow.,['Pain at the lateral elbow'],TRUE,TRUE,TP
+No pain.,[],FALSE,FALSE,TN
+Uh no no pain.,[],FALSE,FALSE,TN
+OK.,[],FALSE,FALSE,TN
+"Uh it does, yeah.",[],FALSE,FALSE,TN
+"Uh it does, yeah that hurts as well.","['pain', 'hurt']",FALSE,TRUE,FP
+"Uh no, that that doesn't cause any pain.",[],FALSE,FALSE,TN
+"No, nothing there, that feels fine.",[],FALSE,FALSE,TN
+That feels normal.,[],FALSE,FALSE,TN
+"Uh, pronation um?",[],FALSE,FALSE,TN
+"No, that doesn't really cause any pain, pronation and supination.",[],FALSE,FALSE,TN
+Um I'm uh healthy.,[],FALSE,FALSE,TN
+"I had a surgery for um a C-section for uh my, my son, um but that's that's it.",[],FALSE,FALSE,TN
+That was about uh 17 years ago.,[],FALSE,FALSE,TN
+"Uh no, it was not.",[],FALSE,FALSE,TN
+"Um no, I've just been taking uh Tylenol and Advil um for the pain.",[],FALSE,FALSE,TN
+"Uh I I am, yes.",[],FALSE,FALSE,TN
+Uh no allergies.,"[""I'm feeling a bit off""]",FALSE,TRUE,FP
+"Um no, nothing like that in the family.",[],FALSE,FALSE,TN
+Um no neurological issues in the family.,"['memory loss', 'confusion']",TRUE,TRUE,TP
+"Uh no, nothing like that.",[],FALSE,FALSE,TN
+"Uh no, I haven't smoked before.",[],FALSE,FALSE,TN
+"No, I I don't use that.",[],FALSE,FALSE,TN
+"Um uh yeah, I'll have a glass of wine every once in awhile, but maybe just one, one a week.",[],FALSE,FALSE,TN
+"Um no, I haven't been around anybody who's been sick.",[],FALSE,FALSE,TN
+"Uh nope, I've been at home.",[],FALSE,FALSE,TN
+"Uh no, I was just wondering what this pain could be on my, in my elbow.",[],FALSE,FALSE,TN
+"Yeah, that that sounds um good, thank you.",[],FALSE,FALSE,TN
+"I I've had this, uh pain in the right buttock area, it's been really intense, and more recently I'm feeling it like radiate just down my right leg as well.",[],FALSE,FALSE,TN
+"So um it's been going on uh for, well, it's it's gotten really intense in the last uh like 2 days.",[],FALSE,FALSE,TN
+"Yeah, I do have a bit of pain uh down in my uh in in my buttock area. Um but um it's just gotten really uh, it's gotten more painful over these last couple of days.",[],FALSE,FALSE,TN
+"Um it's uh persistent, it's it it does get worse though, depending on what what I'm doing.",[],FALSE,FALSE,TN
+"Um well it it gets it gets worse with walking, with sitting, um really any like any kinds of movements, like if I just gotta kind of stay still and that's the only thing that really helps it.",[],FALSE,FALSE,TN
+"Uh yeah, I'm just taking some pain medic medications over the counter for these last couple of days um like Advil and Tylenol, but that's it.",[],FALSE,FALSE,TN
+"It does, I mean, uh not really, it hasn't really helped much.",[],FALSE,FALSE,TN
+"Uh it um, kind of like a sharp pain in the in the buttock and um it it um it's kind of like burning uh down the leg.",[],FALSE,FALSE,TN
+8,[],FALSE,FALSE,TN
+"No, I feel it just uh just in the buttock and down the leg.",[],FALSE,FALSE,TN
+"Uhm I have, yeah um I'm a a truck driver, and so I do a lot of uh a lot of sitting and I've had kind of sciatic pain um in the past.",[],FALSE,FALSE,TN
+"No, I don't think so, I don't, I haven't really done much, just kind of work and um ueah, I haven't had any trauma to the back or anything like that.",[],FALSE,FALSE,TN
+"Uh no no weakness, just um well, yeah, maybe I guess, maybe yeah, maybe a little bit of uh, leg weakness, I've had I've had a little bit of difficulty walking, been limping.",[],FALSE,FALSE,TN
+"Yeah, I've I've had some numbness and tingling down the the right leg.","['numbness', 'tingling']",TRUE,TRUE,TP
+"No, it's just kind of down the back of my leg.",['down the back of my leg'],TRUE,TRUE,TP
+"No, it's just been just been, uh, this pain.",[],FALSE,FALSE,TN
+No weight loss.,"['Unexplained fatigue', 'Loss of appetite']",FALSE,TRUE,FP
+No fevers or chills.,[],FALSE,FALSE,TN
+"No, I haven't been any, having any symptoms like that.",[],FALSE,FALSE,TN
+No diarrhea or constipation.,"[""I'm feeling a bit off""]",FALSE,TRUE,FP
+No blood in the stool.,['no blood in the stool'],TRUE,TRUE,TP
+"Uh no, no changes to the urine.",[],FALSE,FALSE,TN
+"I do have um high blood pressure and uh high cholesterol and I take medications for those, I take amlodipine and um a statin.","['high blood pressure', 'high cholesterol', 'medication side effects']",TRUE,TRUE,TP
+Just a multivitamin.,[],FALSE,FALSE,TN
+"I am, yes.",[],FALSE,FALSE,TN
+"Uh no, I don't believe so.",[],FALSE,FALSE,TN
+"Um yeah, I smoke uh about um half a pack of cigarettes per day.",[],FALSE,FALSE,TN
+"Uh for uh yeah, about 40 years.",[],FALSE,FALSE,TN
+"I have, yeah, I've cut down over the years, um I used to smoke more, it's just the culture with uh, I don't know everybody's driving a truck and smoking.",[],FALSE,FALSE,TN
+"Uh nope, nothing like that before.",[],FALSE,FALSE,TN
+"Um yeah, I'll have a beer or two on the weekend, so maybe a couple of drinks per week.",[],FALSE,FALSE,TN
+"No, I haven't been around anybody who's been sick.",[],FALSE,FALSE,TN
+"Uh just for the drop offs that I that I make um driving, I do have to make some pretty um long hauls uh back and forth um, the, yeah.",[],FALSE,FALSE,TN
+So I live in a house with my um with my wife uh yeah and son.,[],FALSE,FALSE,TN
+"Um no, I don't see anything like that.",[],FALSE,FALSE,TN
+"No, it doesn't feel hot.",[],FALSE,FALSE,TN
+No skin changes.,[],FALSE,FALSE,TN
+"Um yeah, I feel like I've been limping a little bit, uh yeah.",[],FALSE,FALSE,TN
+"I am, yeah, yeah, I guess there's like an antalgic gait.",[],FALSE,FALSE,TN
+"Um yeah, there is uh a little bit of tenderness um over the buttock area.",[],FALSE,FALSE,TN
+"Yeah, for sure.",[],FALSE,FALSE,TN
+"It uh yeah, that that that causes pain.",[],FALSE,FALSE,TN
+"Mhmm, oh yeah.",[],FALSE,FALSE,TN
+"It does, yeah.",[],FALSE,FALSE,TN
+"Uhm yeah I I do get some pain with my um, yeah when that's all straightened out, yeah.",[],FALSE,FALSE,TN
+No pain there.,[],FALSE,FALSE,TN
+Oh uh no pain with abduction.,[],FALSE,FALSE,TN
+Uh just wondering about possibly like what it could be.,[],FALSE,FALSE,TN
+"Yeah, that sounds good. Thank you.",[],FALSE,FALSE,TN
+"Hi, yes I've had this pain in my left elbow for a couple of weeks now and it's not getting any better so. I'm just here to kind of figure out what it is.",[],FALSE,FALSE,TN
+It's on the medial side.,[],FALSE,FALSE,TN
+"So it's been on going for like the past three months. But it's gotten worse over the last, I'd say three weeks.",[],FALSE,FALSE,TN
+Oh the pains been getting worse.,[],FALSE,FALSE,TN
+"No, no, not that I can think of.",[],FALSE,FALSE,TN
+"It's usually achey, but it can be sharp.","['ache', 'sharp']",TRUE,TRUE,TP
+"No, it's pretty. It's pretty much in that one area.",[],FALSE,FALSE,TN
+I am taking some NSAIDs that helps with the pain temporarily.,[],FALSE,FALSE,TN
+Um when I. I. I guess when I like extend my elbow out it gets worse.,[],FALSE,FALSE,TN
+I'd say about 5.,[],FALSE,FALSE,TN
+"Um no, um not really I. I'm otherwise pretty healthy.",[],FALSE,FALSE,TN
+No,[],FALSE,FALSE,TN
+"Um no, I just take some multivitamins.",[],FALSE,FALSE,TN
+Um no.,[],FALSE,FALSE,TN
+I I had a fracture when I was younger. It was in my humerus bone on the right side.,['Right humerus fracture'],TRUE,TRUE,TP
+I live with my partner of five years. We live in an apartment together.,"['Weird noises at night', ""Partner's constant phone usage""]",FALSE,TRUE,FP
+I am.,['feeling unwell'],FALSE,TRUE,FP
+"I work on the assembly line for Chrysler. D : OK, uh, and uh. Do you do repetitive tasks at work?",[],FALSE,FALSE,TN
+"Yeah, I used to play golf before this pain in my arm and my elbow, so I haven't played it in the past like six months.",[],FALSE,FALSE,TN
+I don't.,[],FALSE,FALSE,TN
+Um I'll have a glass of wine every other day.,[],FALSE,FALSE,TN
+I'll smoke a joint once a week.,[],FALSE,FALSE,TN
+"No, I don't see any of that.",[],FALSE,FALSE,TN
+Um a little bit.,[],FALSE,FALSE,TN
+"Actually, sorry with the elbow when I straighten it out all the way it hurts a little bit.",[],FALSE,FALSE,TN
+"No, no pain with shoulder.",['Shoulder pain'],TRUE,TRUE,TP
+With pronation it hurts.,['Pronation pain'],TRUE,TRUE,TP
+Wrist flexion yeah. That hurts too.,"['Wrist flexion', 'Pain in the wrist']",TRUE,TRUE,TP
+Down uh yes. That hurts too.,['pain'],TRUE,TRUE,TP
+"No, that was that. What do you think I have and how can I fix it?",[],FALSE,FALSE,TN
+"OK, that sounds great. Thank you.",[],FALSE,FALSE,TN
+Um so I was playing soccer the other day and I got kicked in the knee and since then my knee has been hurting and it looks a little bit red and a little bit swollen on the medial aspect of my right knee.,"['knee pain', 'medial knee swelling', 'redness on the medial aspect of the knee']",TRUE,TRUE,TP
+This was two days ago.,[],FALSE,FALSE,TN
+"No, it's staying the same or a little bit worse.",[],FALSE,FALSE,TN
+I'd say it's pretty sharp.,[],FALSE,FALSE,TN
+"I guess if I press on that area or I try to. And. I don't know, flex or extend my knee too much.",[],FALSE,FALSE,TN
+Um some ice helps.,[],FALSE,FALSE,TN
+Just a little bit.,[],FALSE,FALSE,TN
+Um I'd give it about a 5.,[],FALSE,FALSE,TN
+I don't recall.,[],FALSE,FALSE,TN
+Um a little bit only when I like try to extend or flex my knee too much.,['knee extension'],TRUE,TRUE,TP
+"No, no, not that I know of.",[],FALSE,FALSE,TN
+"Sure, I live with both my parents and three of my siblings.",[],FALSE,FALSE,TN
+"I am, I'm in my last year of grade 12.",[],FALSE,FALSE,TN
+"It's been going OK. We've been doing part online, part in-person.",[],FALSE,FALSE,TN
+And I play football.,"['Joint pain', 'Muscle strain']",FALSE,TRUE,FP
+Um not that in the past.,[],FALSE,FALSE,TN
+I am. We've been together for a year.,[],FALSE,FALSE,TN
+"No, we were both tested.",[],FALSE,FALSE,TN
+"It looks or is that a bruise, it looks red and I would say it's a little bit swollen on the medial aspect only.",[],FALSE,FALSE,TN
+"No, not that I notice.",[],FALSE,FALSE,TN
+"I am able to walk normally and it hurts, but I think I'm walking OK.",[],FALSE,FALSE,TN
+At just the medial part of it like the I guess where the ligament would be.,[],FALSE,FALSE,TN
+"To the varus stress? I guess it would be, there will be pain if I press down in that area.",[],FALSE,FALSE,TN
+"Yeah, so when I press when I do that it hurts on the medial aspect but not the lateral aspect.",[],FALSE,FALSE,TN
+"A little bit, yes.",[],FALSE,FALSE,TN
+Mmmm,[],FALSE,FALSE,TN
+"Ah no, that was it. Just what can I do about my my knee?",[],FALSE,FALSE,TN
+"So I've just been having this pain in my knee since I um just fell, uh, just three days ago slipping on the stairs. Since then I've been having a lot of pain.",['knee pain'],TRUE,TRUE,TP
+"Yeah, yeah, I've been having the pain since then.",[],FALSE,FALSE,TN
+And that was three days ago.,[],FALSE,FALSE,TN
+"Yeah, in my right knee.","['Pain', 'Swelling']",TRUE,TRUE,TP
+It's kind of like a dull aching pain.,[],FALSE,FALSE,TN
+"Uhm, it's kind of getting worse actually just in my right knee as well as my whole right calf as well.",[],FALSE,FALSE,TN
+Probably around 6.,[],FALSE,FALSE,TN
+"No, no before 3 days ago before my slip I was fine.",[],FALSE,FALSE,TN
+In my calf I'm getting a lot of pain as well. In my right calf.,"['Calf Pain', 'Pain in Right Calf']",TRUE,TRUE,TP
+"Yeah, if I am If I'm walking or if I'm moving that leg and putting weight on it, it's definitely worse, so it's definitely like better if I just stay seated and stay resting.",[],FALSE,FALSE,TN
+"I did take some Advil which did help for a few hours, but then it just kind of went back to the same.",[],FALSE,FALSE,TN
+"Yes, I also think there's some swelling in my right calf as well. Since yesterday.",['swelling in the right calf'],TRUE,TRUE,TP
+Mmm,[],FALSE,FALSE,TN
+"I don't see any rashes or redness, but it definitely does seem swollen and then it hurts as well when I move it or press it.",[],FALSE,FALSE,TN
+"Um just a few scratches on my hands, but nothing too bad.",[],FALSE,FALSE,TN
+"No, no, I didn't hit my head at all. I caught myself before then and no, I didn't lose any consciousness.",[],FALSE,FALSE,TN
+No cough.,[],FALSE,FALSE,TN
+"No, not that I've noticed.",[],FALSE,FALSE,TN
+"Not that I've noted, no.",[],FALSE,FALSE,TN
+No. OK.,[],FALSE,FALSE,TN
+I do have some high cholesterol and high blood pressure.,"['High Cholesterol', 'High Blood Pressure']",TRUE,TRUE,TP
+"Yeah, so cholesterol. I'm taking a like a Crestor medication and then for high blood pressure I'm taking a Ramipril.","['high blood pressure', 'cholesterol levels']",TRUE,TRUE,TP
+"Um. Just a. No, I I don't, um just besides a c-section for one of my children. I don't have any other surgeries.",[],FALSE,FALSE,TN
+"No, I've never had anything like that.",[],FALSE,FALSE,TN
+"Um No, that was that was it.",[],FALSE,FALSE,TN
+"Yeah, I live with my husband and our daughter. And it's just in a small townhouse, just in the city.",[],FALSE,FALSE,TN
+"I I do work from home, I'm actually just an accounting clerk, but I most of my work is from home right now.",[],FALSE,FALSE,TN
+Um nope.,[],FALSE,FALSE,TN
+"Yeah, I've been trying to just like stay rested, just stay seated otherwise it hurts a lot, especially after my fall so. I've tried to stay immobilized.","['Restlessness and fatigue', 'Severe pain in the affected area (after the fall)', 'Immobilization of the affected limb']",TRUE,TRUE,TP
+"Just socially, sometimes when I'm with friends or relatives like a glass of wine.",[],FALSE,FALSE,TN
+"No, I've never tried that.",[],FALSE,FALSE,TN
+"Uhm, No, I don't.",[],FALSE,FALSE,TN
+"Um so I don't know about heart or lung conditions, but uh my Mother had a stroke in her late 60s and my Father is pretty healthy.",[],FALSE,FALSE,TN
+"I'm not sure about blood clots, but my mother had a stroke that's, is that kind of like a blood clot?",[],FALSE,FALSE,TN
+I see OK.,[],FALSE,FALSE,TN
+"Uhm, I think I I don't know if it's maybe a little bit warm, but definitely swollen.",[],FALSE,FALSE,TN
+Yeah if I touch my right calf it's painful and then if I press down on it's really painful and then just on the outside of my right knee if I touch or press down it really hurts as well.,[],FALSE,FALSE,TN
+"Yeah, yeah I'll try that. And yeah, I think it definitely hurts. When I when I move my or point my toes towards my nose.",['pain in the knee when moving or pointing toes towards the nose'],TRUE,TRUE,TP
+"No, I think that's all.",[],FALSE,FALSE,TN
+OK sounds good. Thank you so much.,[],FALSE,FALSE,TN
+"I just came in here today, I've been having a lot of shoulder pain that's just kind of left me not doing any of my activities recently. Just in my left shoulder.","['Shoulder pain', 'Left shoulder']",TRUE,TRUE,TP
+"It started 5 days ago but it became pretty bad and I've been kind of having like a somewhat of a pain for the last couple weeks, but it got really bad just this week.",[],FALSE,FALSE,TN
+Uhm I have been just going to the gym more frequently over the last few months and lifting weights and things like that. But just this week I wasn't even really able to do that either.,[],FALSE,FALSE,TN
+"I think it was more progressive, but five days ago I do feel that there was like just. I was having some pain before that, but then I just noticed while working on I I started having more pain. But yeah I don't think there was anything like sudden that happened though.",[],FALSE,FALSE,TN
+Maybe like I did increase my weight like in the last two weeks. So I did feel like a little bit more pain with the increase last week.,[],FALSE,FALSE,TN
+"It hurts, particularly like in the front part of the shoulder.","['Shoulder pain', 'Front shoulder pain']",TRUE,TRUE,TP
+"Just my whole left shoulder, nothing else really.",['Left shoulder pain'],TRUE,TRUE,TP
+It's more achy.,[],FALSE,FALSE,TN
+But but certain like some movements so it can get like kind of sharp.,[],FALSE,FALSE,TN
+"Uhm, if I just if I carry anything with my left arm or if I have to lift anything or place it on my shoulder like it really hurts.",[],FALSE,FALSE,TN
+"I just like resting it, not carrying anything. And trying not to lie on my shoulder.",[],FALSE,FALSE,TN
+"Uhm, if I'm not doing it, doing anything or not doing much, it's probably like a two or three, but if I try to carry anything it goes up to like probably like a 7.",[],FALSE,FALSE,TN
+"Um not recently just just like normal weight exercise, maybe with the bands I do some overhead exercises, but in terms of sports I I play or I used to play a lot of tennis. I did have some issues with the same shoulder, which is why I kind of stopped playing tennis. My doctor said it, I might have overused that shoulder, but that's that was like a couple of years back so I thought it must have healed by now.",[],FALSE,FALSE,TN
+Um no not that I know of.,[],FALSE,FALSE,TN
+"No, just my shoulder.",[],FALSE,FALSE,TN
+"Yeah, it's been pretty painful like I kind of wake up every time I accidentally go on to my left side.",[],FALSE,FALSE,TN
+Yup.,[],FALSE,FALSE,TN
+"Um I do you feel that there might be some less strength in my left arm, but it's I'm not really using it much so it's hard to tell.",[],FALSE,FALSE,TN
+It does hurt like when I try to lift my arm up.,['Pain in the shoulder'],TRUE,TRUE,TP
+"No, I haven't felt any of that.",[],FALSE,FALSE,TN
+"Nope, nothing like that.",[],FALSE,FALSE,TN
+"Uh. No, I've been a pretty healthy actually just just that overuse injury like two years ago.",[],FALSE,FALSE,TN
+"Just recently I've been taking a lot more of the Advil, but that's about it.",[],FALSE,FALSE,TN
+"No, no prior surgeries or hospitalizations.",[],FALSE,FALSE,TN
+"Yeah, so I'm living with with my wife in a small condominium in downtown.",[],FALSE,FALSE,TN
+"Yeah, I'm working as a real estate agent.",[],FALSE,FALSE,TN
+"Rarely just on some occasions, but not regularly.",[],FALSE,FALSE,TN
+"No, I've never smoked.",[],FALSE,FALSE,TN
+Nope,[],FALSE,FALSE,TN
+"Uhm yes. So just to yeah, I do have some pain. Especially from. Yeah yeah pain throughout AB duction.",['Pain in the abdomen during movement'],TRUE,TRUE,TP
+"yeah, so probably from 60 degrees to 120 degrees is more painful.",[],FALSE,FALSE,TN
+"Yeah, if yeah, not not just like that, but if you were to like press down on it it the internal rotation does cause a little bit of pain.",[],FALSE,FALSE,TN
+"Uh. Just to, yeah, definitely just at the front of the shoulder there is some some pain over with palpation.",[],FALSE,FALSE,TN
+"No, I think that's it.",[],FALSE,FALSE,TN
+"OK, sounds good. Thank you.",[],FALSE,FALSE,TN
+"Yeah I had last night um so I'm having this pain in my right wrist. Yeah, but last night. I I tripped over something and I I ended up like landing on my hand to help break the fall and this morning I woke up and I have some like bruising on my hand and it's it's really sore to touch it.",[],FALSE,FALSE,TN
+It's my right hand.,['Right Hand Pain'],TRUE,TRUE,TP
+"So it was last night, probably like at 10:00 PM, something like that. Went out with a few friends for dinner and drinks.",[],FALSE,FALSE,TN
+"Yeah, I was standing height. We were just kind of walking down the street and I tripped over something on the curb. I think there is that yeah maybe like a pothole or something like that and so I felt right onto the concrete with my hand.",[],FALSE,FALSE,TN
+"Yeah, it was just it mostly right my hand.",[],FALSE,FALSE,TN
+"Um yeah, I do get some pain pain if I'm trying to move the wrist around and it hurts her to press on it as well.","['Wrist pain', 'Pain when moving wrist', 'Pressure on wrist']",TRUE,TRUE,TP
+"I do, yes. There's some swelling and bruising.","['swelling', 'bruising']",TRUE,TRUE,TP
+"Um so I have a sharp pain right at my wrist. I kind of. I feel it mostly at the base of my thumb, kind of right at the wrist, and that's where the swelling and bruising is as well.",[],FALSE,FALSE,TN
+"At the back of the hand, at the wrist and base of the thumb.",[],FALSE,FALSE,TN
+"Oh yeah, it's really sharp. It feels like sorry just stabbing me in the hand.",[],FALSE,FALSE,TN
+"If I'm not moving it around, it's a three, but if I move it, it goes up to like a 9 out of 10.",[],FALSE,FALSE,TN
+Um yeah I tried some anti-inflammatories that did help with taking the edge off a little bit and. But the pain just came right back and then also like just moving it at all hurts even texting on my phone was really bugging me.,[],FALSE,FALSE,TN
+Yeah it was yesterday.,[],FALSE,FALSE,TN
+"Yeah it started hurting right away and it's. Well, this morning it's a a bit worse yeah.","['Pain', 'Discomfort']",TRUE,TRUE,TP
+Yeah exactly.,[],FALSE,FALSE,TN
+"Yeah I do. I have a Asthma and I use an orange inhaler daily. It's been well controlled, I'll use, I haven't used the blue one in awhile.","['Asthma', 'orange inhaler', 'blue inhaler']",TRUE,TRUE,TP
+Just a Multi vitamin.,[],FALSE,FALSE,TN
+And vitamin D as well.,[],FALSE,FALSE,TN
+Yeah I had my my tonsils out and my wisdom teeth out when I was a teenager and or tonsils when I was a kid actually. Um and a c-second for my son.,[],FALSE,FALSE,TN
+No no every every that was OK.,[],FALSE,FALSE,TN
+"Yeah my my uncle died of a heart attack when he was in his 60s and I think my Grandfather also had had a heart attack as well. Um yeah, that's about it.",[],FALSE,FALSE,TN
+"Um yeah I do, I I work um in a restaurant and so. And this will be a difficult for my job coming up with an injured wrist I and hand. I I just restarted and I'll have to be carrying a lot of different things, and so I just hope it's not broken.",[],FALSE,FALSE,TN
+Oh so. I'm living on on my own actually in an apartment.,[],FALSE,FALSE,TN
+"Um no, I've I. I've never smoked, I couldn't with having asthma so I just stayed away from all of that.",[],FALSE,FALSE,TN
+Yeah I do I. I have a couple of bottles of wine per week.,[],FALSE,FALSE,TN
+"I'll probably I guess, probably like two or three glasses of wine a day.",[],FALSE,FALSE,TN
+"No, stayed away from that as well.",[],FALSE,FALSE,TN
+I I can but it I can't really bad my thumb and it it it hurts a lot. So I can bend my fingers but my thumb is kinda out.,[],FALSE,FALSE,TN
+I I. Probably just moving the the wrist like flexing and extending the wrist,[],FALSE,FALSE,TN
+"Yeah, exactly at the base of the thumb on the on the back of the hand there are some bad bruising and swelling there.",[],FALSE,FALSE,TN
+"No, it doesn't feel warm.",[],FALSE,FALSE,TN
+"Yeah, like, I mean, if I there's one spot that if I press down on it, it's like 10 of the 10 pain. It hurts really bad if I press at the base of my thumb there.",[],FALSE,FALSE,TN
+"I've had this pain in my back thats kind of like in my lower back and my buttocks and it's now radiating down to my right leg. I've had this for awhile now, but it's getting worse and I just want to come get it checked out.","['lower back pain', 'radiating pain down the leg', 'right leg pain']",TRUE,TRUE,TP
+About a month.,[],FALSE,FALSE,TN
+That's something that happened after that happens that that's been going on for the past week.,[],FALSE,FALSE,TN
+"And it's pretty much always there, but certain things can make it worse. Like if I'm walking or doing certain activities it can it can make it worse.",[],FALSE,FALSE,TN
+"No, not, I mean no, not really.",[],FALSE,FALSE,TN
+"Um usually or well before it was like a mild achy pain, but now it can be. It's sharp and it feels like a burning sensation.",[],TRUE,FALSE,FN
+It's like down my buttocks to the right leg.,['pain in the right buttock'],TRUE,TRUE,TP
+"Um a little, a little bit of tingling. Yeah, a little bit of tingling.",[],FALSE,FALSE,TN
+"So usually it's about like a 5 to 6 out of 10, but when it gets bad and um sharp, I'd give it an 8 out of 10.",[],TRUE,FALSE,FN
+"Yeah, so I'd say like just any sort of physical activity, like if I'm on my feet a lot, it hurts.",[],FALSE,FALSE,TN
+"Yeah, that's pretty much the only thing that I can think of right now.",[],FALSE,FALSE,TN
+"Um no like a long time ago, like 6-7 years ago I injured my back at work but. I just did some conservative treatments for that and it went away.",[],FALSE,FALSE,TN
+"I used to work on an assembly line, so I used to. Like carry heavy objects and things like that. Like car parts.","['carrying heavy objects', 'car parts']",FALSE,TRUE,FP
+About three years back.,[],FALSE,FALSE,TN
+Um I work from home now. I do daycare at home.,"['Fatigue', 'Headache']",FALSE,TRUE,FP
+"No, those are kind of the only regions that I'm experiencing it right now.",[],FALSE,FALSE,TN
+I would say ext.. Extending my back hurts more.,['extending the back hurts'],TRUE,TRUE,TP
+Um sometimes.,[],FALSE,FALSE,TN
+"Um lying down I guess it depends on the position. If I am straight on my back it's it's not too bad, but if I like I'm hunched over or something like that, it hurts.",[],FALSE,FALSE,TN
+I tried some ibuprofen and some like topical.. um like ointments but it helps temporarily and then the pain comes back.,[],FALSE,FALSE,TN
+"Uhm No, no fevers or chills.",[],FALSE,FALSE,TN
+Um no nothing like that.,[],FALSE,FALSE,TN
+"No, no numbness just like that, tingling, burning feeling.",[],FALSE,FALSE,TN
+I'm finding it hard to walk.,['Difficulty walking'],TRUE,TRUE,TP
+"Yeah, I'm putting more weight on my left leg.",['Weightedness in the left leg'],TRUE,TRUE,TP
+"No, I'm going. I'm using the washroom OK.",['I am going to the washroom'],FALSE,TRUE,FP
+"No, I don't. I just take calcium and vitamin D and other but multi vitamins.",[],FALSE,FALSE,TN
+I would say I it's it's OK. I live in an apartment with my husband.,"['Respiratory issues', 'Shortness of breath']",FALSE,TRUE,FP
+I'll have a glass of wine like once a week.,[],FALSE,FALSE,TN
+Um so I've I've been using cannabis oil for the past month just to see if it helps with the pain.,[],FALSE,FALSE,TN
+A little bit I think.,[],FALSE,FALSE,TN
+"Um lower back, yes.",['Lower Back Pain'],TRUE,TRUE,TP
+When I press down it feels sharp.,['Sharp pain in the lower abdomen'],TRUE,TRUE,TP
+"Um it seems to. Actually, no, it's not. It's not warm.",[],FALSE,FALSE,TN
+"I can bend down, it's just hard for me to get back up.",[],FALSE,FALSE,TN
+I can do that.,[],FALSE,FALSE,TN
+"I can do that, yeah, actually no. I can't. Sorry that that hurts.",[],FALSE,FALSE,TN
+Yeah,[],FALSE,FALSE,TN
+Yeah it does. Yeah.,[],FALSE,FALSE,TN
+"Um a little bit of limp yeah, I'm putting more weight on the left leg.",[],FALSE,FALSE,TN
+"Um no, what can I do about this back pain and how long do you think I'll have it for?",[],FALSE,FALSE,TN
+OK,[],FALSE,FALSE,TN
+"Hi, I'm here because I've had this numbness and tingling in my feet for awhile now and I started to notice these open wounds on my feet as well and I'm not feeling it, but it's there.",[],FALSE,FALSE,TN
+"It's been on going for the past like 2 years, but recently I've seen the past like 3 months it's gotten worse.",[],FALSE,FALSE,TN
+It it goes right up until my ankles.,[],FALSE,FALSE,TN
+"Yeah, I don't notice it because I can't feel it, but then I'll see them and they look bad.",[],FALSE,FALSE,TN
+"Um I mean it's possible um, but I didn't feel anything, so I'm not too sure about that. It is the summer, so I've been like going to the beach and when I'm at the park like I'll take off my flip flops.",[],FALSE,FALSE,TN
+"Hum, maybe a little bit of muscle weakness in my legs.",[],FALSE,FALSE,TN
+Maybe a little bit in my fingertips as well.,[],FALSE,FALSE,TN
+Um in the past year.,[],FALSE,FALSE,TN
+"Um yeah, definitely some of that like I'll find it hard to like open cans and bottles.",[],FALSE,FALSE,TN
+"Um only when, only sometimes when I'm trying to grip things pretty hard.",[],FALSE,FALSE,TN
+"No, no neck pain.",['Neck pain'],TRUE,TRUE,TP
+"Um yeah, so I've been diagnosed with diabetes. Hypertension. Hypercholesterolemia. Obesity. And and I think, yeah, I think that's that's about it.",[],FALSE,FALSE,TN
+"I do so. I'm on insulin, short acting and long acting, I'm on Ramipril, I'm on Atorvastatin, yeah.","['Insulin regimen', 'Medication list']",TRUE,TRUE,TP
+"A1c has been pretty high. Especially recently I think it was eight point 8.1 or something. The last time I got it checked. I haven't had my eyes checked in awhile, and in terms of my kidneys, I think I did a urinalysis recently and everything came back normal.","['A1c levels have been high, especially recently with an 8.8 or higher reading.', 'The last time it was checked was [insert date].']",TRUE,TRUE,TP
+"No, I don't believe so.",[],FALSE,FALSE,TN
+I live in a house downtown with my wife.,[],FALSE,FALSE,TN
+"I am, I work from home though.",[],FALSE,FALSE,TN
+"Oh no, I don't think so.",[],FALSE,FALSE,TN
+"No, not outside the province.","['headache', 'fatigue']",FALSE,TRUE,FP
+"Um yeah, I'll have some alcohol every day.",[],FALSE,FALSE,TN
+I'll have about 5 beers a day.,[],FALSE,FALSE,TN
+"Yeah, I. I'm hoping to cut down.",[],FALSE,FALSE,TN
+Talk about half a pack a day.,[],FALSE,FALSE,TN
+For the past almost 20 years.,[],FALSE,FALSE,TN
+"Ah yeah again, that's something that I'm hoping to quit doing in the future as well.",[],FALSE,FALSE,TN
+"Yeah, just my wife. We've been together for the past five years.",[],FALSE,FALSE,TN
+No cancers that I know of.,[],FALSE,FALSE,TN
+Um no no swelling or redness.,"['swelling', 'redness']",TRUE,TRUE,TP
+"Uhm, there are like. Yeah, there's some scarring from like ulcers.",[],FALSE,FALSE,TN
+"Healed. Yeah, that's right.",[],FALSE,FALSE,TN
+"Um no not nothing like that. No pain, just um I can't feel it.",[],FALSE,FALSE,TN
+Um pretty good. I can move them all.,[],FALSE,FALSE,TN
+My knees are also the same.,['knees'],TRUE,TRUE,TP
+I'm pretty normal. I'm not limping.,[],FALSE,FALSE,TN
+Just what do you think is going on with my feet and how do I get some sensation back?,[],FALSE,FALSE,TN
+"OK OK, thank you.",[],FALSE,FALSE,TN
+"I just came in here today, I usually don't come to the doctor that much unless I absolutely need it. Five days ago I started having this pain and swelling in my right knee. So and at first I thought it was just like my arthritis acting up but it's been getting more swollen and painful than usual, so I just wanted to come in and check it out.","['pain in the right knee', 'swelling in the right knee']",TRUE,TRUE,TP
+So like I would say around 5 days ago it started getting more and usually I do get pain in some of my joints but I I don't really get swelling so that was a bit different.,[],FALSE,FALSE,TN
+"It is, it does feel like if I touch the joint it does feel a bit warmer than the surrounding areas.",['joint warmth'],FALSE,TRUE,FP
+It It definitely it definitely looks more red than my other knee.,[],FALSE,FALSE,TN
+It's the right knee.,['Pain in the right knee'],TRUE,TRUE,TP
+"I think it's getting a. It's getting it was getting worse, but it's like a bit better right now.",[],FALSE,FALSE,TN
+Yeah it comes and goes in severity though.,[],FALSE,FALSE,TN
+It's it's like someone is stabbing me in the knee and it hurts the most when I'm moving the knee.,"['knee pain', 'pain when moving the knee']",TRUE,TRUE,TP
+"Uhm, I don't think so, no.",[],FALSE,FALSE,TN
+"Uhm, not really like resting it definitely helps, yeah, but I just have to keep it a bit immobilized.",[],FALSE,FALSE,TN
+"Uh, not really. I do take some painkillers, so just some Advil, which seems to help a little bit.",[],FALSE,FALSE,TN
+"Yeah, usually with my normal this arthritis I do get some morning stiffness but this is completely different, it's throughout the day pretty much.",[],FALSE,FALSE,TN
+"No, I didn't.",[],FALSE,FALSE,TN
+"I I did have like a steroid injection to the same knee just a week ago, but no, I I haven't fallen on it. I haven't had any operations.",[],FALSE,FALSE,TN
+"No,",[],FALSE,FALSE,TN
+"Yeah, I just got my general like I havee osteoarthritis, so I like It's been a pretty long time though but I get some pain in my hips sometimes my knees, so it's it's that's been going on for awhile, but this is something I've never experienced though like this significant pain and swelling and redness.",[],FALSE,FALSE,TN
+I do have. So I have a couple conditions. I have osteoarthritis in both my knees and hips. I have high blood pressure. I did have a heart attack four years ago and I also have had heart failure. And also I'm just a bit on the overweight side.,"['Osteoarthritis in both knees and hips', 'High blood pressure', 'Heart attack', 'Heart failure', 'Being overweight']",TRUE,TRUE,TP
+"Yeah, so I am taking just um Furosemide then Ramipril for my blood pressure. But yeah, that's that's about it right now and like just painkillers Document was truncated. For full conversion please use offline version of Total Doc Converter.",[],FALSE,FALSE,TN
