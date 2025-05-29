@@ -8,7 +8,7 @@
 ## 🧠 Key Features
 
 - 🔍 **Symptom-Based Condition Prediction** – Machine learning-based diagnosis using natural language input  
-- 💬 **Conversational Interface** – Interprets user input via OpenAI’s GPT API  
+- 💬 **Conversational Interface** – Interprets user input via Ollama's Chat completion API  
 - 📦 **Modular Design** – Can be extended to cover other medical domains and scheduling use cases  
 - ⚙️ **Modern Stack** – FastAPI backend, React frontend, containerized with Docker  
 - 🧩 **Edge-AI Ready** – Completely offline designed with edge deployment scenarios in mind  
