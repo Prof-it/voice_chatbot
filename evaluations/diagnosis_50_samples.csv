@@ -1,0 +1,43 @@
+diagnosis,icd10,chapter
+Type 2 diabetes mellitus without complications,E11.9,E
+Type 2 diabetes,E11.9,E
+Diabetes mellitus type 2,E11.9,E
+Essential hypertension,I10,I
+High blood pressure,I10,I
+Primary hypertension,I10,I
+Community-acquired pneumonia,J18.9,J
+Pneumonia,J18.9,J
+Lower respiratory tract infection,J18.9,J
+Migraine without aura,G43.0,G
+Migraine headache,G43.0,G
+Chronic migraine,G43.0,G
+"Major depressive disorder, recurrent, moderate",F33.1,F
+Depression,F33.1,F
+Recurrent depressive disorder,F33.1,F
+Osteoarthritis of knee,M17.9,M
+Knee osteoarthritis,M17.9,M
+Degenerative joint disease of knee,M17.9,M
+"Asthma, unspecified",J45.909,J
+Mild persistent asthma,J45.30,J
+Moderate persistent asthma,J45.40,J
+Gastroesophageal reflux disease,K21.9,K
+GERD,K21.9,K
+Acid reflux disease,K21.9,K
+"Malignant neoplasm of lung, unspecified",C34.90,C
+Lung cancer,C34.90,C
+Primary lung carcinoma,C34.90,C
+Chronic kidney disease stage 3,N18.3,N
+CKD stage 3,N18.3,N
+Stage 3 chronic kidney disease,N18.3,N
+"Iron deficiency anemia, unspecified",D50.9,D
+Iron deficiency anemia,D50.9,D
+Anemia due to iron deficiency,D50.9,D
+"Urinary tract infection, site not specified",N39.0,N
+UTI,N39.0,N
+Bladder infection,N39.0,N
+"Atopic dermatitis, unspecified",L20.9,L
+Eczema,L20.9,L
+Chronic atopic eczema,L20.9,L
+Generalized anxiety disorder,F41.1,F
+Anxiety disorder,F41.1,F
+GAD,F41.1,F
