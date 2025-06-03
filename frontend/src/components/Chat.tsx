@@ -1,10 +1,10 @@
-import { useState, useRef, useEffect } from "react";
-import Message from "./Message";
+import { useRef, useState } from "react";
 import Loader from "./Loader";
+import Message from "./Message";
 import { StructuredContent } from "./StructuredMessageContent";
 
 
-const BACKEND_URL = process.env.VITE_API_URL || "http://localhost:8000";
+const BACKEND_URL = process.env.VITE_API_URL || "http://raspberrypi:8000";
 const API_URL = `${BACKEND_URL}/chat`;
 const TRANSCRIBE_URL = `${BACKEND_URL}/transcribe_faster_whisper`;
 // const TRANSCRIBE_URL = `${BACKEND_URL}/transcribe_vosk`;

@@ -52,7 +52,7 @@ const formatDate = (dateString?: string): string => {
   };
 
 const StructuredMessageContent: React.FC<{ data: StructuredContent }> = ({ data }) => {
-  const { symptoms, mappings, icd10, appointment, symptoms_fhir, appointment_fhir } = data;
+  const { symptoms, mappings, icd10, symptoms_fhir, appointment_fhir } = data;
 
   return (
     <>
