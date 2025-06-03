@@ -24,6 +24,7 @@ python-dotenv==1.0.1
 pydantic==2.11.4              # ✅ Already in your env
 tqdm==4.67.1
 rich==13.9.4
+psutil==7.0.0
 
 # === Audio Processing ===
 faster-whisper==0.10.0
