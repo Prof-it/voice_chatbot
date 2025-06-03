@@ -23,6 +23,27 @@ from fhir.resources.appointment import Appointment
 
 from datetime import datetime, timedelta
 
+import psutil
+import os
+import logging
+
+def log_memory_usage(tag: str = "Memory"):
+    process = psutil.Process(os.getpid())
+    
+    # Current RAM usage
+    mem_bytes = process.memory_info().rss
+    mem_mb = mem_bytes / (1024 * 1024)
+
+    # Peak RAM usage (Linux/Unix: use `.rss`, Windows: use `.peak_wset`)
+    try:
+        peak_bytes = process.memory_info().peak_wset  # Windows only
+    except AttributeError:
+        peak_bytes = getattr(process.memory_info(), 'rss', mem_bytes)  # fallback for Linux
+    peak_mb = peak_bytes / (1024 * 1024)
+
+    logging.info(f"{tag} - RAM used: {mem_mb:.2f} MB | Peak: {peak_mb:.2f} MB")
+
+
 class SymptomDetection(BaseModel):
     detected: bool
 class Symptom(BaseModel):
@@ -132,15 +153,24 @@ async def extract_symptoms_json(messages: list, model: str) -> list[str] | None:
     Returns the list of symptom strings if VALID, otherwise None.
     """
     logging.info(f"extract_symptoms_json: Starting with model={model}")
+    log_memory_usage("Before LLM call")
     accumulator = ""
     stream = await client.chat(
         model=model,
         messages=[SYMPTOM_PROMPT, *messages],
         format=SymptomsList.model_json_schema(),
-        options={"temperature": 0},
+        options={
+        # "num_ctx": 256,
+        # "num_thread": 2,
+        # "top_p": 0.9,
+        # "repeat_penalty": 1.1,
+        "temperature": 0.0,
+    },
         stream=True
     )
     async for chunk in stream:
+        logging.info("llm_stream_response: Starting response stream")
+        log_memory_usage("During LLM stream")
         logging.debug(f"extract_symptoms_json: Received chunk={chunk}")
         if content := getattr(chunk.message, "content", None):
             accumulator += content
@@ -155,15 +185,20 @@ async def extract_symptoms_json(messages: list, model: str) -> list[str] | None:
             try:
                 obj = SymptomsList.model_validate_json(accumulator)
                 names = [s.name for s in obj.symptoms if s.name]
+                log_memory_usage("After LLM JSON validation")
                 if names:
                     logging.info(f"extract_symptoms_json: Parsed symptoms={names}")
                     return names
                 else:
                     logging.warning("extract_symptoms_json: No valid symptom names found – returning None")
+                    log_memory_usage("After LLM JSON validation")
                     return None
             except Exception as e:
                 logging.error(f"extract_symptoms_json: JSON validation failed: {e}")
+                log_memory_usage("After LLM JSON validation")
                 return None
+        
+    
 
 async def fallback_clarify(messages: list):
     logging.info("fallback_clarify: Starting fallback clarification stream")
@@ -173,7 +208,13 @@ async def fallback_clarify(messages: list):
     stream = await client.chat(
         model="llama3.2:1b",
         messages=[{"role": "system", "content": prompt}, *messages],
-        options={"temperature": 0.5},
+        options={
+        # "num_ctx": 256,
+        # "num_thread": 2,
+        # "top_p": 0.9,
+        # "repeat_penalty": 1.1,
+        "temperature": 0.0,
+    },
         stream=True
     )
     async for chunk in stream:
@@ -201,7 +242,13 @@ async def map_to_diagnoses(symptoms: list[str]) -> DiagnosesMappingResult:
         model="llama3.2:1b",
         messages=messages,
         format=DiagnosesMappingResult.model_json_schema(),
-        options={"temperature": 0},
+        options={
+        # "num_ctx": 256,
+        # "num_thread": 2,
+        # "top_p": 0.9,
+        # "repeat_penalty": 1.1,
+        "temperature": 0.0,
+    },
         stream=False  # single response
     )
     content = stream["message"]["content"]
@@ -219,13 +266,21 @@ async def llm_stream_response(chat_request: ChatRequest, icd10_data):
 
     user_text = msgs[-1].content if msgs else ""
     logging.info(f"llm_stream_response: User text={user_text!r}")
+    logging.info("llm_stream_response: Starting response stream")
+    log_memory_usage("Start of stream")
 
     # 1) DETECTION CALL
     det_resp = await client.chat(
         model="llama3.2:1b",
         messages=[DETECT_PROMPT, *msgs],
         format=SymptomDetection.model_json_schema(),
-        options={"temperature": 0.3},
+        options={
+        # "num_ctx": 256,
+        # "num_thread": 2,
+        # "top_p": 0.9,
+        # "repeat_penalty": 1.1,
+        "temperature": 0.0,
+    },
         stream=False
     )
     # extract content & parse
@@ -242,7 +297,7 @@ async def llm_stream_response(chat_request: ChatRequest, icd10_data):
         )
         # 2) emit metadata (empty)
         yield f"data: {json.dumps({'type':'final_metadata','accumulated_symptoms':[]})}\n\n"
-
+        log_memory_usage("Before final yield")
         yield "data: [DONE]\n\n"
         return
 

@@ -36,7 +36,7 @@ const Message: React.FC<MessageProps> = ({ role, content }) => {
         }}
       >
         <Typography variant="subtitle1" fontWeight="bold" gutterBottom>
-          {isBot ? 'VocaMedBot' : 'You'}:
+          {isBot ? 'VoiceMediAI Bot' : 'You'}:
         </Typography>
 
         {typeof content === 'string' ? (
