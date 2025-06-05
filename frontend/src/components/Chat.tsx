@@ -2,6 +2,8 @@ import { useRef, useState } from "react"; // Added useEffect for potential clean
 import Loader from "./Loader";
 import Message from "./Message"; // Assuming Message.tsx is in the same directory
 import { StructuredContent } from "./StructuredMessageContent";
+import { v4 as uuidv4 } from 'uuid';
+
 
 const BACKEND_URL = process.env.VITE_API_URL || "http://localhost:8000";
 const API_URL = `${BACKEND_URL}/chat`;
@@ -56,7 +58,7 @@ const Chat = () => {
     const sendMessage = async () => {
         if (!userInput.trim() || chatLimitReached) return;
 
-        const userMessageId = crypto.randomUUID();
+        const userMessageId = uuidv4(); // Unique ID for the user message
         const userMessage: MessageData = {
             id: userMessageId,
             role: "user",
@@ -80,7 +82,7 @@ const Chat = () => {
         setUserInput("");
         setLoading(true);
 
-        const botMessageId = crypto.randomUUID(); // Unique ID for the bot's response
+        const botMessageId = uuidv4(); // Unique ID for the bot's response
         const botMessagePlaceholder: MessageData = {
             id: botMessageId,
             role: "assistant",
