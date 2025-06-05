@@ -2,8 +2,8 @@ import React from 'react';
 import { Typography, Divider } from '@mui/material';
 
 export interface ICD10Mapping {
-  symptom: string;
-  diagnosis: string;
+  label: string;
+  // diagnosis: string;
   icd10: string;
 }
 
@@ -29,8 +29,7 @@ export interface FHIRAppointment {
 }
 
 export interface StructuredContent {
-  symptoms?: string[];
-  mappings?: { symptom: string; diagnosis: string }[];
+  symptoms?: string[];  
   icd10?: ICD10Mapping[];
   appointment?: AppointmentPrefill;
   symptoms_fhir?: FHIRCondition[];
@@ -52,32 +51,20 @@ const formatDate = (dateString?: string): string => {
   };
 
 const StructuredMessageContent: React.FC<{ data: StructuredContent }> = ({ data }) => {
-  const { symptoms, mappings, icd10, symptoms_fhir, appointment_fhir } = data;
+  const { symptoms, icd10, symptoms_fhir, appointment_fhir } = data;
 
   return (
     <>
       {/* Symptoms */}
       <Section title="🩺 Identified Symptoms" content={symptoms?.join(', ') || 'N/A'} />
 
-      {/* Mappings */}
-      <Section title="🏥 Mapped Clinical Diagnoses">
-        {mappings?.length ? (
-          mappings.map((m, i) => (
-            <Typography variant="body1" key={i}>
-              • {m.symptom} → <strong>{m.diagnosis}</strong>
-            </Typography>
-          ))
-        ) : (
-          <Typography variant="body1">N/A</Typography>
-        )}
-      </Section>
 
       {/* ICD-10 Codes */}
       <Section title="🗂️ ICD-10 Codes">
         {icd10?.length ? (
           icd10.map((item, i) => (
             <Typography variant="body1" key={i}>
-              • {item.symptom} → {item.diagnosis} → <strong>{item.icd10}</strong>
+              • {item.label} → <strong>{item.icd10}</strong>
             </Typography>
           ))
         ) : (

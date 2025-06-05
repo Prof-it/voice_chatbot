@@ -2,13 +2,9 @@ from fastapi import FastAPI, Depends
 from fastapi.middleware.cors import CORSMiddleware
 import json
 import os
-import torch
-# hf import
-from transformers import AutoTokenizer, AutoModelForSequenceClassification
+import pandas as pd
 
-# Constants
-ICD_MODEL_NAME = "AkshatSurolia/ICD-10-Code-Prediction"
-ICD_CACHE_DIR  = os.path.join(os.path.dirname(__file__), "models", "icd10")
+
 
 
 def create_app():
@@ -31,17 +27,7 @@ def create_app():
         """Loads JSON data on FastAPI startup."""
         
         # Ensure the cache directory exists
-        os.makedirs(ICD_CACHE_DIR, exist_ok=True)
-
-        # Load the tokenizer and model for ICD-10 code prediction
-        icd_tokenizer = AutoTokenizer.from_pretrained(ICD_MODEL_NAME, cache_dir=ICD_CACHE_DIR)
-        icd_model = AutoModelForSequenceClassification.from_pretrained(ICD_MODEL_NAME, cache_dir=ICD_CACHE_DIR)
-        device        = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-        icd_model.to(device)
-
-        app.state.icd10["tokenizer"] = icd_tokenizer
-        app.state.icd10["model"] = icd_model
-        app.state.icd10["device"] = device
+        # os.makedirs(ICD_CACHE_DIR, exist_ok=True)
 
     from api.chat import chat_router
     from api.transcribe import transcribe_router

@@ -4,18 +4,19 @@ import asyncio
 import logging
 import json
 import traceback
+import psutil
 
-from utils.predict import predict_icd10, map_icd10_to_specialties
-from utils.prompts import DETECT_PROMPT, MAP_PROMPT, SYMPTOM_PROMPT
+from utils.predict import map_symptoms, final_session_specialty
+from utils.prompts import DETECT_PROMPT, SYMPTOM_PROMPT
 from utils.types import ChatRequest
 
 
 from fastapi import APIRouter, HTTPException, Request
 from fastapi.responses import StreamingResponse
 from dotenv import load_dotenv
-from ollama import AsyncClient, ChatResponse
-from pydantic import BaseModel, ValidationError
-from typing import Literal, Dict, Any, List, AsyncGenerator
+from ollama import AsyncClient
+from pydantic import BaseModel
+from typing import Literal, Dict, Any
 from fhir.resources.condition import Condition
 from fhir.resources.codeableconcept import CodeableConcept
 
@@ -23,9 +24,7 @@ from fhir.resources.appointment import Appointment
 
 from datetime import datetime, timedelta
 
-import psutil
-import os
-import logging
+
 
 def log_memory_usage(tag: str = "Memory"):
     process = psutil.Process(os.getpid())
@@ -160,7 +159,7 @@ async def extract_symptoms_json(messages: list, model: str) -> list[str] | None:
         messages=[SYMPTOM_PROMPT, *messages],
         format=SymptomsList.model_json_schema(),
         options={
-        # "num_ctx": 256,
+        "num_ctx": 128,
         # "num_thread": 2,
         # "top_p": 0.9,
         # "repeat_penalty": 1.1,
@@ -209,7 +208,7 @@ async def fallback_clarify(messages: list):
         model="llama3.2:1b",
         messages=[{"role": "system", "content": prompt}, *messages],
         options={
-        # "num_ctx": 256,
+        "num_ctx": 128,
         # "num_thread": 2,
         # "top_p": 0.9,
         # "repeat_penalty": 1.1,
@@ -227,35 +226,6 @@ async def fallback_clarify(messages: list):
             yield _create_sse_data_string("fallback-done", chunk.model, finish_reason="stop")
     logging.info("fallback_clarify: Sending [DONE]")
     yield "data: [DONE]\n\n"
-
-async def map_to_diagnoses(symptoms: list[str]) -> DiagnosesMappingResult:
-    logging.info(f"map_to_diagnoses: Mapping symptoms={symptoms}")
-    system = (
-        MAP_PROMPT["content"] +
-        f"Map these symptoms: {json.dumps(symptoms)}. Output ONLY valid JSON per schema."
-    )
-    messages = [
-        {"role": "system", "content": system},
-        {"role": "user", "content": "Provide diagnoses for: " + ", ".join(symptoms)}
-    ]
-    stream = await client.chat(
-        model="llama3.2:1b",
-        messages=messages,
-        format=DiagnosesMappingResult.model_json_schema(),
-        options={
-        # "num_ctx": 256,
-        # "num_thread": 2,
-        # "top_p": 0.9,
-        # "repeat_penalty": 1.1,
-        "temperature": 0.0,
-    },
-        stream=False  # single response
-    )
-    content = stream["message"]["content"]
-    logging.debug(f"map_to_diagnoses: Received content={content}")
-    result = DiagnosesMappingResult.model_validate_json(content)
-    logging.info(f"map_to_diagnoses: Parsed mapping={result.mappings}")
-    return result
 
 async def llm_stream_response(chat_request: ChatRequest, icd10_data):
     logging.info("llm_stream_response: Starting response stream")
@@ -275,10 +245,7 @@ async def llm_stream_response(chat_request: ChatRequest, icd10_data):
         messages=[DETECT_PROMPT, *msgs],
         format=SymptomDetection.model_json_schema(),
         options={
-        # "num_ctx": 256,
-        # "num_thread": 2,
-        # "top_p": 0.9,
-        # "repeat_penalty": 1.1,
+        "num_ctx": 128,        
         "temperature": 0.0,
     },
         stream=False
@@ -335,15 +302,21 @@ async def llm_stream_response(chat_request: ChatRequest, icd10_data):
     # 4) Map to diagnoses
     logging.info(f"llm_stream_response: Proceeding to map {accu} to diagnoses")
     try:
-        mapping = await map_to_diagnoses(accu)
-        detailed = [m.diagnosis for m in mapping.mappings if m.diagnosis]
-        icd10_list = predict_icd10(detailed, icd10_data["tokenizer"], icd10_data["model"], icd10_data["device"])
-        specialty = map_icd10_to_specialties([item.get("icd10") for item in icd10_list if item.get("icd10")])
+        mappings = map_symptoms(accu)
+        specialty = final_session_specialty(mappings)
+        logging.info(f"llm_stream_response: Mappings={mappings}, specialty={specialty}")
+        icd_10_codes = [
+            {
+                "icd10": m["icd10_code"],
+                "label": m["label"],
+             } 
+            for m in mappings]
+        logging.info(f"llm_stream_response: ICD-10 codes={icd_10_codes}, specialty={specialty}")
+
         final = {
             "symptoms": accu,
-            "mappings": [m.model_dump() for m in mapping.mappings],
-            "detailed_diagnoses": detailed,
-            "icd10": icd10_list,
+            "mappings": mappings,            
+            "icd10": icd_10_codes,
             "appointment": {
                 "specialty": specialty,
                 "suggestedDate": "TBD",
@@ -356,6 +329,7 @@ async def llm_stream_response(chat_request: ChatRequest, icd10_data):
     except Exception as e:
         logging.error(f"llm_stream_response: Error during mapping or payload creation: {e}")
         final = {"symptoms": accu, "error_message": str(e)}
+        logging.error(traceback.format_exc())
 
     yield _create_sse_data_string("final", "llama3.2:1b", delta_content=json.dumps(final), finish_reason="stop")
     logging.info("llm_stream_response: Sending final_metadata and [DONE]")
