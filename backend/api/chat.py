@@ -179,7 +179,7 @@ async def extract_symptoms_json(messages: list, model: str) -> list[str] | None:
             # 1) quick sanity check
             if not accumulator.strip().startswith("{"):
                 logging.warning("extract_symptoms_json: Accumulator does not start with '[' – returning None")
-                return None
+                return []
             # 2) parse + validate
             try:
                 obj = SymptomsList.model_validate_json(accumulator)
@@ -191,11 +191,11 @@ async def extract_symptoms_json(messages: list, model: str) -> list[str] | None:
                 else:
                     logging.warning("extract_symptoms_json: No valid symptom names found – returning None")
                     log_memory_usage("After LLM JSON validation")
-                    return None
+                    return []
             except Exception as e:
                 logging.error(f"extract_symptoms_json: JSON validation failed: {e}")
                 log_memory_usage("After LLM JSON validation")
-                return None
+                return []
         
     
 
@@ -231,7 +231,7 @@ async def llm_stream_response(chat_request: ChatRequest, icd10_data):
     logging.info("llm_stream_response: Starting response stream")
     msgs = chat_request.messages
     accu = list(chat_request.accumulated_symptoms)
-    logging.debug(f"llm_stream_response: Initial accumulated_symptoms={accu}")
+    logging.info(f"llm_stream_response: Initial accumulated_symptoms={accu}")
 
 
     user_text = msgs[-1].content if msgs else ""
@@ -239,57 +239,26 @@ async def llm_stream_response(chat_request: ChatRequest, icd10_data):
     logging.info("llm_stream_response: Starting response stream")
     log_memory_usage("Start of stream")
 
-    # 1) DETECTION CALL
-    det_resp = await client.chat(
-        model="llama3.2:1b",
-        messages=[DETECT_PROMPT, *msgs],
-        format=SymptomDetection.model_json_schema(),
-        options={
-        "num_ctx": 128,        
-        "temperature": 0.0,
-    },
-        stream=False
-    )
-    # extract content & parse
-    det_json = det_resp["message"]["content"]
-    det_obj = SymptomDetection.model_validate_json(det_json)
-
-    if not det_obj.detected:
-        # short-circuit for non-symptom turns
-        yield _create_sse_data_string(
-            "assistant",
-            "llama3.2:1b",
-            delta_content="Hi! What symptoms are you experiencing today?",
-            finish_reason="stop"
-        )
-        # 2) emit metadata (empty)
-        yield f"data: {json.dumps({'type':'final_metadata','accumulated_symptoms':[]})}\n\n"
-        log_memory_usage("Before final yield")
-        yield "data: [DONE]\n\n"
-        return
-
-    # 2) Extract
+    # 1) Extract
     names = await extract_symptoms_json(msgs, "llama3.2:1b")
-    if not names:
-        logging.warning("llm_stream_response: Symptom extraction failed, using fallback_clarify")
-        async for sse in fallback_clarify(msgs):
-            yield sse
-        return
-    logging.info(f"llm_stream_response: Extracted names={names}")
 
     # 2) Merge new
     new = [n for n in names if n not in accu]
     if new:
         logging.info(f"llm_stream_response: New symptoms to add={new}")
-    accu += new
-    logging.debug(f"llm_stream_response: Updated accumulated_symptoms={accu}")
+        accu += new
+        logging.debug(f"llm_stream_response: Updated accumulated_symptoms={accu}")
+
 
     # 3) If <3 symptoms, ask for more
     if len(accu) < 3:
-        text = (
+        if accu:
+            text = (
                 f"I understand you're experiencing: {', '.join(accu)}. "
                 "Could you please tell me about any other symptoms you might have?"
             )
+        else:
+            text = "Hi! What symptoms are you experiencing today?"
         logging.info("llm_stream_response: Asking user for more symptoms")
         yield _create_sse_data_string("assistant", "llama3.2:1b", delta_content=text, finish_reason="stop")
 

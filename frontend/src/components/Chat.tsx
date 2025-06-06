@@ -22,7 +22,7 @@ export interface MessageData {
 
 const Chat = () => {
     const accumulatedSymptomsRef = useRef<string[]>([]);
-    const [messages, setMessages] = useState<MessageData[]>([]);
+    // const [messages, setMessages] = useState<MessageData[]>([]);
     const [userInput, setUserInput] = useState("");
     const [loading, setLoading] = useState(false);
     const [chatLimitReached, setChatLimitReached] = useState(false);
@@ -31,10 +31,29 @@ const Chat = () => {
     const mediaRecorderRef = useRef<MediaRecorder | null>(null);
     const audioChunksRef = useRef<Blob[]>([]);
     const sseBufferRef = useRef("");   // keeps partial chunks between reads
+    const [chatCompleted, setChatCompleted] = useState(false);
 
 
     // State to hold the transcription time of the last recorded audio
     const [lastTranscriptionTimeMs, setLastTranscriptionTimeMs] = useState<number | null>(null);
+
+    const initialMessages: MessageData[] = [
+        {
+            id: uuidv4(),
+            role: "assistant",
+            content:
+                "👋 Welcome! I’m **VoiceMedi AI**, your voice-based clinical assistant.\n\nI help you describe your health concerns in everyday language by typing or speaking and convert them into structured information that can be used to pre-fill appointment details.",
+        },
+        {
+            id: uuidv4(),
+            role: "assistant",
+            content:
+                "🛡️ Your privacy is protected. All processing happens **locally** on this kiosk. No voice or health data is ever sent to the cloud.\n\n🎤 To begin, click the mic or type your symptoms below. Try something like: *'I’ve had chest tightness since yesterday'*.\n\nLet’s get started just tell me how you’re feeling.",
+        },
+    ];
+
+
+    const [messages, setMessages] = useState<MessageData[]>(initialMessages);
 
     // Helper to update metrics for the last bot message in the state
     // This targets the message currently being streamed to.
@@ -142,6 +161,19 @@ const Chat = () => {
                         continue;
                     }
 
+                    const payloadObj = JSON.parse(rawEvent.slice(6));
+
+                    /* NEW: look for the metadata packet ----------------------------- */
+                    if (
+                        payloadObj.type === "final_metadata" &&
+                        Array.isArray(payloadObj.accumulated_symptoms)
+                    ) {
+                        accumulatedSymptomsRef.current = payloadObj.accumulated_symptoms;
+                        console.log("✅ symptoms updated →", accumulatedSymptomsRef.current);
+                        continue;          // nothing to show in the chat window
+                    }
+                    /* --------------------------------------------------------------- */
+
                     const deltaText =
                         JSON.parse(payload)?.choices?.[0]?.delta?.content ?? "";
                     if (!deltaText) continue;
@@ -149,18 +181,39 @@ const Chat = () => {
                     console.log("%c[SSE] ✏️  delta:", "color:blue", `"${deltaText}"`);
 
                     // 3) IMMUTABLE update → never mutate prev state
-                    setMessages(prev =>
-                        prev.map((m, i) =>
+                    setMessages(prev => {
+                        console.log("[DEBUG] SSE deltaText:", deltaText);
+                        console.log("[DEBUG] Previous last assistant content:", prev[prev.length - 1]?.content);
+
+                        const newMessages = prev.map((m, i) =>
                             i === prev.length - 1 && m.role === "assistant"
                                 ? {
-                                    ...m,
-                                    content:
-                                        (typeof m.content === "string" ? m.content : "") +
-                                        deltaText,
-                                }
+                                      ...m,
+                                      content:
+                                          (typeof m.content === "string" ? m.content : "") +
+                                          deltaText,
+                                  }
                                 : m
-                        )
-                    );
+                        );
+
+                        console.log("[DEBUG] Updated last assistant content:", newMessages[newMessages.length - 1]?.content);
+
+                        // If the last assistant message content is StructuredContent (i.e. not a string),
+                        // mark the chat as completed
+                        try {
+                            const rawContent = newMessages[newMessages.length - 1].content;
+                            const lastContent = typeof rawContent === "string" ? JSON.parse(rawContent) : rawContent;
+                            console.log("[DEBUG] Last message:", typeof lastContent);
+                            if (typeof lastContent !== "string") {
+                                console.log("[DEBUG] StructuredContent detected, setting chatCompleted = true");
+                                setChatCompleted(true);
+                            }
+                        } catch (e) {
+                            console.error("[DEBUG] Error parsing last message content:", e);
+                        }
+                        
+                        return newMessages;
+                    });
 
                     // 4) optional: peek at the brand-new assistant string
                     setTimeout(() => {
@@ -169,6 +222,13 @@ const Chat = () => {
                         ]?.textContent;
                         console.log("%c[DOM] 🖥️  now shows:", "color:purple", latest);
                     }, 0);
+                
+                    // console.log("Payload object:", payloadObj);
+                    // // 5) 
+                    // if (typeof payloadObj.content === "object" && payloadObj.content !== null) {
+                    //     setChatCompleted(true);
+                    //     console.log("Chat completed with structured content:", payloadObj.content);
+                    // }
                 }
             }
         } catch (error) {
@@ -261,6 +321,12 @@ const Chat = () => {
                 {transcribing && <div className="text-blue-500 text-center p-2">Transcribing...</div>}
             </div>
             {chatLimitReached && <div className="text-red-500 text-center p-2">Chat limit reached.</div>}
+            {chatCompleted && (
+                <div className="text-green-600 dark:text-green-400 text-center p-2">
+                    ✅ Chat completed! You can review the structured content above. Please close the chat window.
+                </div>
+            )}
+
             <div className="flex p-2 border-t bg-white dark:bg-gray-800">
                 <input
                     type="text"
@@ -268,18 +334,56 @@ const Chat = () => {
                     value={userInput}
                     onChange={(e) => setUserInput(e.target.value)}
                     onKeyDown={(e) => e.key === "Enter" && sendMessage()}
-                    placeholder={chatLimitReached ? "Chat limit reached..." : "Ask a medical question..."}
-                    disabled={chatLimitReached || loading || transcribing}
+                    placeholder={
+                        chatLimitReached
+                            ? "Chat limit reached..."
+                            : chatCompleted
+                            ? "Conversation complete."
+                            : "Ask a medical question..."
+                    }
+                    disabled={chatLimitReached || loading || transcribing || chatCompleted}
                 />
+
                 {recording ? (
                     <>
-                        <button onClick={stopRecording} className="ml-2 px-4 py-2 rounded-lg bg-red-500 text-white" disabled={loading}>Stop</button>
-                        <button onClick={cancelRecording} className="ml-2 px-4 py-2 rounded-lg bg-gray-400 text-white hover:bg-gray-500" disabled={loading}>❌ Cancel</button>
+                        <button
+                            onClick={stopRecording}
+                            className="ml-2 px-4 py-2 rounded-lg bg-red-500 text-white"
+                            disabled={loading || chatCompleted}
+                        >
+                            Stop
+                        </button>
+                        <button
+                            onClick={cancelRecording}
+                            className="ml-2 px-4 py-2 rounded-lg bg-gray-400 text-white hover:bg-gray-500"
+                            disabled={loading || chatCompleted}
+                        >
+                            ❌ Cancel
+                        </button>
                     </>
                 ) : (
-                    <button onClick={startRecording} className="ml-2 px-4 py-2 rounded-lg bg-green-500 text-white" disabled={loading || chatLimitReached || transcribing}>🎤</button>
+                    <button
+                        onClick={startRecording}
+                        className="ml-2 px-4 py-2 rounded-lg bg-green-500 text-white"
+                        disabled={loading || chatLimitReached || transcribing || chatCompleted}
+                    >
+                        🎤
+                    </button>
                 )}
-                <button className="ml-2 bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600" onClick={sendMessage} disabled={loading || chatLimitReached || transcribing || !userInput.trim()}>Send</button>
+
+                <button
+                    className="ml-2 bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600"
+                    onClick={sendMessage}
+                    disabled={
+                        loading ||
+                        chatLimitReached ||
+                        transcribing ||
+                        chatCompleted ||
+                        !userInput.trim()
+                    }
+                >
+                    Send
+                </button>
             </div>
         </div>
     );
