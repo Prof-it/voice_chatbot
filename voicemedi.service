@@ -1,0 +1,49 @@
+# /etc/systemd/system/voicmedi.service
+[Unit]
+Description=VoiceMedi AI Pipeline (Backend + Frontend)
+After=network.target
+
+[Service]
+Type=forking
+User=pi
+WorkingDirectory=/home/pi/voice_chatbot
+# Ensure .env is loaded if you use python-dotenv in code
+EnvironmentFile=/home/pi/voice_chatbot/.env
+ExecStart=/home/pi/voice_chatbot/start-all.sh
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
+
+<!-- Usage
+Deploy scripts to your Pi:
+
+bash
+Copy
+Edit
+scp install.sh start-all.sh pi@raspberrypi:/home/pi/voice_chatbot/
+chmod +x install.sh start-all.sh
+Run one-time install:
+
+bash
+Copy
+Edit
+cd ~/voice_chatbot
+./install.sh
+Enable & start service:
+
+bash
+Copy
+Edit
+sudo systemctl daemon-reload
+sudo systemctl enable voicmedi.service
+sudo systemctl start voicmedi.service
+Check status/logs:
+
+bash
+Copy
+Edit
+sudo journalctl -u voicmedi.service -f
+tail -n50 logs/backend.log logs/frontend.log
+This replaces the previous Docker-based workflow with lightweight shell scripts and a single systemd unit, minimizing memory overhead and ensuring automatic startup on reboot. -->
