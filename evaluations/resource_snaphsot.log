@@ -1,0 +1,300 @@
+krishna@raspberrypi:~/voice_chatbot/backend $ top -bn1 | head -n5
+top - 22:31:52 up 18 min,  2 users,  load average: 0.43, 0.84, 0.60
+Tasks: 227 total,   1 running, 226 sleeping,   0 stopped,   0 zombie
+%Cpu(s):  2.9 us,  2.9 sy,  0.0 ni, 48.6 id, 45.7 wa,  0.0 hi,  0.0 si,  0.0 st 
+MiB Mem :   4044.5 total,    905.1 free,   1638.2 used,   1831.1 buff/cache     
+MiB Swap:  10240.0 total,   9906.6 free,    333.4 used.   2406.3 avail Mem 
+
+krishna@raspberrypi:~/voice_chatbot/backend $ top -bn1 | head -n5
+top - 22:33:15 up 20 min,  2 users,  load average: 1.52, 1.09, 0.71
+Tasks: 224 total,   2 running, 222 sleeping,   0 stopped,   0 zombie
+%Cpu(s):  0.0 us,  0.0 sy,  0.0 ni, 75.0 id, 25.0 wa,  0.0 hi,  0.0 si,  0.0 st 
+MiB Mem :   4044.5 total,    259.5 free,   2800.9 used,   1255.0 buff/cache     
+MiB Swap:  10240.0 total,   9874.9 free,    365.1 used.   1243.6 avail Mem 
+krishna@raspberrypi:~/voice_chatbot/backend $ free -h
+               total        used        free      shared  buff/cache   available
+Mem:           3.9Gi       2.7Gi       257Mi       205Mi       1.2Gi       1.2Gi
+Swap:            9Gi       365Mi       9.6Gi
+
+krishna@raspberrypi:~/voice_chatbot/backend $ ps aux --sort=-%cpu | head -n10
+USER         PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+ollama      4833 49.9 35.3 3733536 1462512 ?     Sl   22:32   0:58 /usr/local/bin/ollama runner --model /usr/share/ollama/.ollama/models/blobs/sha256-74701a8c35f6c8d9a4b91f3f3497643001d63e0c7a84e085bed452548fa88d45 --ctx-size 256 --batch-size 512 --threads 4 --no-mmap --parallel 2 --port 33881
+krishna     3507  3.9  5.6 34423808 233872 ?     Sl   22:22   0:28 /usr/lib/chromium/chromium --js-flags=--no-decommit-pooled-pages --force-renderer-accessibility --enable-remote-extensions --show-component-extension-options --enable-gpu-rasterization --no-default-browser-check --disable-pings --media-router=0 --disable-dev-shm-usage --enable-remote-extensions --load-extension --use-angle=gles
+krishna     3566  3.3  2.4 34214176 102416 ?     Sl   22:22   0:24 /usr/lib/chromium/chromium --type=gpu-process --disable-dev-shm-usage --enable-gpu-rasterization --ozone-platform=wayland --use-angle=gles --crashpad-handler-pid=0 --enable-crash-reporter=,built on Debian GNU/Linux 12 (bookworm) --change-stack-guard-on-fork=enable --gpu-preferences=UAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAABgAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAEAAAAAAAAAAIAAAAAAAAAAgAAAAAAAAA --shared-files --field-trial-handle=3,i,5211570201266004057,9989953472919366361,262144 --disable-features=EyeDropper --variations-seed-version
+krishna     4242  2.9 15.0 4679152 623824 pts/0  Sl+  22:30   0:07 /home/krishna/voice_chatbot/venv/bin/python /home/krishna/voice_chatbot/venv/bin/uvicorn main:app --host 0.0.0.0 --port 8000 --log-level critical
+krishna     2286  2.8  1.1 560304 49200 ?        Sl   22:19   0:24 lxterminal
+krishna     3570  0.9  3.3 34148704 137200 ?     Sl   22:22   0:07 /usr/lib/chromium/chromium --type=utility --utility-sub-type=network.mojom.NetworkService --lang=en-GB --service-sandbox-type=none --disable-dev-shm-usage --use-angle=gles --crashpad-handler-pid=0 --enable-crash-reporter=,built on Debian GNU/Linux 12 (bookworm) --change-stack-guard-on-fork=enable --shared-files=v8_context_snapshot_data:100 --field-trial-handle=3,i,5211570201266004057,9989953472919366361,262144 --disable-features=EyeDropper --variations-seed-version
+krishna      908  0.9  1.3 648976 57520 ?        Dsl  22:13   0:12 /usr/bin/labwc -m
+krishna     3597  0.7  3.5 1459616096 146864 ?   Sl   22:22   0:05 /usr/lib/chromium/chromium --type=renderer --crashpad-handler-pid=0 --enable-crash-reporter=,built on Debian GNU/Linux 12 (bookworm) --change-stack-guard-on-fork=enable --disable-dev-shm-usage --js-flags=--no-decommit-pooled-pages --ozone-platform=wayland --lang=en-GB --num-raster-threads=2 --enable-main-frame-before-activation --renderer-client-id=6 --time-ticks-at-unix-epoch=-1749931974913886 --launch-time-ticks=569168094 --shared-files=v8_context_snapshot_data:100 --field-trial-handle=3,i,5211570201266004057,9989953472919366361,262144 --disable-features=EyeDropper --variations-seed-version
+root           1  0.2  0.2 169440 10848 ?        Ss   22:12   0:03 /sbin/init splash
+
+krishna@raspberrypi:~/voice_chatbot/backend $ ps aux --sort=-%mem | head -n10
+USER         PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+ollama      4833 45.5 35.3 3733536 1462512 ?     Sl   22:32   0:58 /usr/local/bin/ollama runner --model /usr/share/ollama/.ollama/models/blobs/sha256-74701a8c35f6c8d9a4b91f3f3497643001d63e0c7a84e085bed452548fa88d45 --ctx-size 256 --batch-size 512 --threads 4 --no-mmap --parallel 2 --port 33881
+krishna     4242  2.7 15.0 4679152 623824 pts/0  Sl+  22:30   0:07 /home/krishna/voice_chatbot/venv/bin/python /home/krishna/voice_chatbot/venv/bin/uvicorn main:app --host 0.0.0.0 --port 8000 --log-level critical
+krishna     3507  3.8  5.6 34423808 233872 ?     Sl   22:22   0:28 /usr/lib/chromium/chromium --js-flags=--no-decommit-pooled-pages --force-renderer-accessibility --enable-remote-extensions --show-component-extension-options --enable-gpu-rasterization --no-default-browser-check --disable-pings --media-router=0 --disable-dev-shm-usage --enable-remote-extensions --load-extension --use-angle=gles
+krishna     4020  0.0  4.0 34156864 167856 ?     Sl   22:25   0:00 /usr/lib/chromium/chromium --type=utility --utility-sub-type=video_capture.mojom.VideoCaptureService --lang=en-GB --service-sandbox-type=none --disable-dev-shm-usage --use-angle=gles --message-loop-type-ui --crashpad-handler-pid=0 --enable-crash-reporter=,built on Debian GNU/Linux 12 (bookworm) --change-stack-guard-on-fork=enable --shared-files=v8_context_snapshot_data:100 --field-trial-handle=3,i,5211570201266004057,9989953472919366361,262144 --disable-features=EyeDropper --variations-seed-version
+krishna     4019  0.0  3.9 34205536 165296 ?     Sl   22:25   0:00 /usr/lib/chromium/chromium --type=utility --utility-sub-type=audio.mojom.AudioService --lang=en-GB --service-sandbox-type=none --disable-dev-shm-usage --use-angle=gles --crashpad-handler-pid=0 --enable-crash-reporter=,built on Debian GNU/Linux 12 (bookworm) --change-stack-guard-on-fork=enable --shared-files=v8_context_snapshot_data:100 --field-trial-handle=3,i,5211570201266004057,9989953472919366361,262144 --disable-features=EyeDropper --variations-seed-version
+krishna     3597  0.7  3.5 1459616096 146864 ?   Sl   22:22   0:05 /usr/lib/chromium/chromium --type=renderer --crashpad-handler-pid=0 --enable-crash-reporter=,built on Debian GNU/Linux 12 (bookworm) --change-stack-guard-on-fork=enable --disable-dev-shm-usage --js-flags=--no-decommit-pooled-pages --ozone-platform=wayland --lang=en-GB --num-raster-threads=2 --enable-main-frame-before-activation --renderer-client-id=6 --time-ticks-at-unix-epoch=-1749931974913886 --launch-time-ticks=569168094 --shared-files=v8_context_snapshot_data:100 --field-trial-handle=3,i,5211570201266004057,9989953472919366361,262144 --disable-features=EyeDropper --variations-seed-version
+ollama      1062  0.1  3.3 1990544 140192 ?      Ssl  22:13   0:01 /usr/local/bin/ollama serve
+krishna     3570  0.9  3.3 34148704 137200 ?     Sl   22:22   0:07 /usr/lib/chromium/chromium --type=utility --utility-sub-type=network.mojom.NetworkService --lang=en-GB --service-sandbox-type=none --disable-dev-shm-usage --use-angle=gles --crashpad-handler-pid=0 --enable-crash-reporter=,built on Debian GNU/Linux 12 (bookworm) --change-stack-guard-on-fork=enable --shared-files=v8_context_snapshot_data:100 --field-trial-handle=3,i,5211570201266004057,9989953472919366361,262144 --disable-features=EyeDropper --variations-seed-version
+krishna     3530  0.0  2.9 34114272 122224 ?     S    22:22   0:00 /usr/lib/chromium/chromium --type=zygote --crashpad-handler-pid=0 --enable-crash-reporter=,built on Debian GNU/Linux 12 (bookworm) --change-stack-guard-on-fork=enable
+
+krishna@raspberrypi:~/voice_chatbot/backend $ vcgencmd measure_temp
+temp=74.1'C
+
+krishna@raspberrypi:~/voice_chatbot/backend $ sudo powertop --html=powertop.html
+modprobe cpufreq_stats failedCannot load from file /var/cache/powertop/saved_results.powertop
+Cannot load from file /var/cache/powertop/saved_parameters.powertop
+File will be loaded after taking minimum number of measurement(s) with battery only 
+RAPL device for cpu 0
+RAPL device for cpu 0
+Devfreq not enabled
+glob returned GLOB_ABORTED
+Cannot load from file /var/cache/powertop/saved_parameters.powertop
+File will be loaded after taking minimum number of measurement(s) with battery only 
+Preparing to take measurements
+Taking 1 measurement(s) for a duration of 20 second(s) each.
+PowerTOP outputting using base filename powertop.html
+krishna@raspberrypi:~/voice_chatbot/backend $ ^C
+krishna@raspberrypi:~/voice_chatbot/backend $ sudo powertop --html=powertop.html
+modprobe cpufreq_stats failedLoaded 0 prior measurements
+Cannot load from file /var/cache/powertop/saved_parameters.powertop
+File will be loaded after taking minimum number of measurement(s) with battery only 
+RAPL device for cpu 0
+RAPL device for cpu 0
+Devfreq not enabled
+glob returned GLOB_ABORTED
+Cannot load from file /var/cache/powertop/saved_parameters.powertop
+File will be loaded after taking minimum number of measurement(s) with battery only 
+Preparing to take measurements
+Taking 1 measurement(s) for a duration of 20 second(s) each.
+PowerTOP outputting using base filename powertop.html
+
+krishna@raspberrypi:~/voice_chatbot/backend $ uvicorn main:app --host 0.0.0.0 --port 8000 --log-level info
+INFO:     Will watch for changes in these directories: ['/app']
+INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+INFO:     Started reloader process [1] using StatReload
+LOG (VoskAPI:ReadDataFiles():model.cc:213) Decoding params beam=10 max-active=3000 lattice-beam=2
+LOG (VoskAPI:ReadDataFiles():model.cc:216) Silence phones 1:2:3:4:5:6:7:8:9:10
+LOG (VoskAPI:RemoveOrphanNodes():nnet-nnet.cc:948) Removed 0 orphan nodes.
+LOG (VoskAPI:RemoveOrphanComponents():nnet-nnet.cc:847) Removing 0 orphan components.
+LOG (VoskAPI:ReadDataFiles():model.cc:248) Loading i-vector extractor from ./models/vosk-model-small-en-us-0.15/ivector/final.ie
+LOG (VoskAPI:ComputeDerivedVars():ivector-extractor.cc:183) Computing derived variables for iVector extractor
+LOG (VoskAPI:ComputeDerivedVars():ivector-extractor.cc:204) Done.
+LOG (VoskAPI:ReadDataFiles():model.cc:282) Loading HCL and G from ./models/vosk-model-small-en-us-0.15/graph/HCLr.fst ./models/vosk-model-small-en-us-0.15/graph/Gr.fst
+LOG (VoskAPI:ReadDataFiles():model.cc:303) Loading winfo ./models/vosk-model-small-en-us-0.15/graph/phones/word_boundary.int
+INFO:     Started server process [8]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:root:llm_stream_response: Starting response stream
+INFO:root:Start of stream - RAM used: 592.70 MB | Peak: 592.70 MB
+INFO:root:extract_symptoms_json: Starting with model=llama3.2:1b
+INFO:root:Before LLM call - RAM used: 592.70 MB | Peak: 592.70 MB
+INFO:httpx:HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+INFO:root:llm_stream_response: Starting response stream
+INFO:root:During LLM stream - RAM used: 592.70 MB | Peak: 592.70 MB
+INFO:root:llm_stream_response: Starting response stream
+INFO:root:During LLM stream - RAM used: 592.70 MB | Peak: 592.70 MB
+INFO:root:llm_stream_response: Starting response stream
+INFO:root:During LLM stream - RAM used: 592.70 MB | Peak: 592.70 MB
+INFO:root:llm_stream_response: Starting response stream
+INFO:root:During LLM stream - RAM used: 592.70 MB | Peak: 592.70 MB
+INFO:root:llm_stream_response: Starting response stream
+INFO:root:During LLM stream - RAM used: 592.70 MB | Peak: 592.70 MB
+INFO:root:llm_stream_response: Starting response stream
+INFO:root:During LLM stream - RAM used: 592.70 MB | Peak: 592.70 MB
+INFO:root:llm_stream_response: Starting response stream
+INFO:root:During LLM stream - RAM used: 592.70 MB | Peak: 592.70 MB
+INFO:root:llm_stream_response: Starting response stream
+INFO:root:During LLM stream - RAM used: 592.70 MB | Peak: 592.70 MB
+INFO:root:llm_stream_response: Starting response stream
+INFO:root:During LLM stream - RAM used: 592.70 MB | Peak: 592.70 MB
+INFO:root:llm_stream_response: Starting response stream
+INFO:root:During LLM stream - RAM used: 592.70 MB | Peak: 592.70 MB
+INFO:root:llm_stream_response: Starting response stream
+INFO:root:During LLM stream - RAM used: 592.70 MB | Peak: 592.70 MB
+INFO:root:llm_stream_response: Starting response stream
+INFO:root:During LLM stream - RAM used: 592.70 MB | Peak: 592.70 MB
+INFO:root:llm_stream_response: Starting response stream
+INFO:root:During LLM stream - RAM used: 592.70 MB | Peak: 592.70 MB
+INFO:root:llm_stream_response: Starting response stream
+INFO:root:During LLM stream - RAM used: 592.70 MB | Peak: 592.70 MB
+INFO:root:llm_stream_response: Starting response stream
+INFO:root:During LLM stream - RAM used: 592.70 MB | Peak: 592.70 MB
+INFO:root:llm_stream_response: Starting response stream
+INFO:root:During LLM stream - RAM used: 592.70 MB | Peak: 592.70 MB
+INFO:root:llm_stream_response: Starting response stream
+INFO:root:During LLM stream - RAM used: 592.70 MB | Peak: 592.70 MB
+INFO:root:llm_stream_response: Starting response stream
+INFO:root:During LLM stream - RAM used: 592.70 MB | Peak: 592.70 MB
+INFO:root:llm_stream_response: Starting response stream
+INFO:root:During LLM stream - RAM used: 592.70 MB | Peak: 592.70 MB
+INFO:root:llm_stream_response: Starting response stream
+INFO:root:During LLM stream - RAM used: 592.70 MB | Peak: 592.70 MB
+INFO:root:llm_stream_response: Starting response stream
+INFO:root:During LLM stream - RAM used: 592.70 MB | Peak: 592.70 MB
+INFO:root:llm_stream_response: Starting response stream
+INFO:root:During LLM stream - RAM used: 592.70 MB | Peak: 592.70 MB
+INFO:root:llm_stream_response: Starting response stream
+INFO:root:During LLM stream - RAM used: 592.70 MB | Peak: 592.70 MB
+INFO:root:llm_stream_response: Starting response stream
+INFO:root:During LLM stream - RAM used: 592.70 MB | Peak: 592.70 MB
+INFO:root:llm_stream_response: Starting response stream
+INFO:root:During LLM stream - RAM used: 592.70 MB | Peak: 592.70 MB
+INFO:root:llm_stream_response: Starting response stream
+INFO:root:During LLM stream - RAM used: 592.70 MB | Peak: 592.70 MB
+INFO:root:llm_stream_response: Starting response stream
+INFO:root:During LLM stream - RAM used: 592.70 MB | Peak: 592.70 MB
+INFO:root:llm_stream_response: Starting response stream
+INFO:root:During LLM stream - RAM used: 592.70 MB | Peak: 592.70 MB
+INFO:root:llm_stream_response: Starting response stream
+INFO:root:During LLM stream - RAM used: 592.70 MB | Peak: 592.70 MB
+INFO:root:llm_stream_response: Starting response stream
+INFO:root:During LLM stream - RAM used: 592.70 MB | Peak: 592.70 MB
+INFO:root:llm_stream_response: Starting response stream
+INFO:root:During LLM stream - RAM used: 592.70 MB | Peak: 592.70 MB
+INFO:root:llm_stream_response: Starting response stream
+INFO:root:During LLM stream - RAM used: 592.70 MB | Peak: 592.70 MB
+INFO:root:llm_stream_response: Starting response stream
+INFO:root:During LLM stream - RAM used: 592.70 MB | Peak: 592.70 MB
+INFO:root:llm_stream_response: Starting response stream
+INFO:root:During LLM stream - RAM used: 592.70 MB | Peak: 592.70 MB
+INFO:root:llm_stream_response: Starting response stream
+INFO:root:During LLM stream - RAM used: 592.70 MB | Peak: 592.70 MB
+INFO:root:llm_stream_response: Starting response stream
+INFO:root:During LLM stream - RAM used: 592.70 MB | Peak: 592.70 MB
+INFO:root:llm_stream_response: Starting response stream
+INFO:root:During LLM stream - RAM used: 592.70 MB | Peak: 592.70 MB
+INFO:root:llm_stream_response: Starting response stream
+INFO:root:During LLM stream - RAM used: 592.70 MB | Peak: 592.70 MB
+INFO:root:llm_stream_response: Starting response stream
+INFO:root:During LLM stream - RAM used: 592.70 MB | Peak: 592.70 MB
+INFO:root:llm_stream_response: Starting response stream
+INFO:root:During LLM stream - RAM used: 592.70 MB | Peak: 592.70 MB
+INFO:root:llm_stream_response: Starting response stream
+INFO:root:During LLM stream - RAM used: 592.70 MB | Peak: 592.70 MB
+INFO:root:llm_stream_response: Starting response stream
+INFO:root:During LLM stream - RAM used: 592.70 MB | Peak: 592.70 MB
+INFO:root:llm_stream_response: Starting response stream
+INFO:root:During LLM stream - RAM used: 592.70 MB | Peak: 592.70 MB
+INFO:root:llm_stream_response: Starting response stream
+INFO:root:During LLM stream - RAM used: 592.70 MB | Peak: 592.70 MB
+INFO:root:llm_stream_response: Starting response stream
+INFO:root:During LLM stream - RAM used: 592.70 MB | Peak: 592.70 MB
+INFO:root:extract_symptoms_json: Stream done, validating JSON
+INFO:root:After LLM JSON validation - RAM used: 592.70 MB | Peak: 592.70 MB
+INFO:root:extract_symptoms_json: Parsed symptoms=['Sore throat', 'Tiredness', 'Headache behind the eyes']
+INFO:root:llm_stream_response: New symptoms to add=['Sore throat', 'Tiredness', 'Headache behind the eyes']
+INFO:root:llm_stream_response: Proceeding to map ['Sore throat', 'Tiredness', 'Headache behind the eyes'] to diagnoses
+INFO:root:llm_stream_response: Mappings=[{'label': 'Sore throat', 'icd10_candidates': [('J04.1', 0.7312505127544927), ('J10.1', 0.7150354354187212), ('J39.2', 0.6866881962630208)], 'icd10_code': 'J04.1', 'similarity': 0.7312505127544927, 'specialty': 'Pulmonology / Respiratory'}, {'label': 'Tiredness', 'icd10_candidates': [('R53', 0.5456294448731439), ('I06.8', 0.4026108885313063), ('I51.6', 0.0)], 'icd10_code': 'R53', 'similarity': 0.5456294448731439, 'specialty': 'General Medicine'}, {'label': 'Headache behind the eyes', 'icd10_candidates': [('I85.9', 0.22580118190595397), ('I82.0', 0.1967744952301782), ('I61.1', 0.1830659346367004)], 'icd10_code': 'I85.9', 'similarity': 0.22580118190595397, 'specialty': 'Cardiology'}], specialty=Pulmonology / Respiratory
+INFO:root:llm_stream_response: ICD-10 codes=[{'icd10': 'J04.1', 'label': 'Sore throat'}, {'icd10': 'R53', 'label': 'Tiredness'}, {'icd10': 'I85.9', 'label': 'Headache behind the eyes'}], specialty=Pulmonology / Respiratory
+INFO:root:llm_stream_response: Final payload prepared successfully
+INFO:root:llm_stream_response: Sending final_metadata and [DONE]
+INFO:root:llm_stream_response: Starting response stream
+INFO:root:llm_stream_response: Initial accumulated_symptoms=[]
+INFO:root:llm_stream_response: User text='Hi, I’ve been feeling really off for the past three days. I have a persistent, dry cough that seems to get worse at night, and I’ve been waking up with a sore throat. I also feel unusually tired and sometimes get a slight headache behind my eyes. I haven’t had a fever, but my chest feels tight when I take a deep breath. Should I be worried about pneumonia or something else?'
+INFO:root:llm_stream_response: Starting response stream
+INFO:root:Start of stream - RAM used: 88.20 MB | Peak: 88.20 MB
+INFO:root:extract_symptoms_json: Starting with model=llama3.2:1b
+INFO:root:Before LLM call - RAM used: 88.20 MB | Peak: 88.20 MB
+INFO:httpx:HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+INFO:root:llm_stream_response: Starting response stream
+INFO:root:During LLM stream - RAM used: 88.20 MB | Peak: 88.20 MB
+INFO:root:llm_stream_response: Starting response stream
+INFO:root:During LLM stream - RAM used: 88.20 MB | Peak: 88.20 MB
+INFO:root:llm_stream_response: Starting response stream
+INFO:root:During LLM stream - RAM used: 88.20 MB | Peak: 88.20 MB
+INFO:root:llm_stream_response: Starting response stream
+INFO:root:During LLM stream - RAM used: 88.20 MB | Peak: 88.20 MB
+INFO:root:llm_stream_response: Starting response stream
+INFO:root:During LLM stream - RAM used: 88.20 MB | Peak: 88.20 MB
+INFO:root:llm_stream_response: Starting response stream
+INFO:root:During LLM stream - RAM used: 88.20 MB | Peak: 88.20 MB
+INFO:root:llm_stream_response: Starting response stream
+INFO:root:During LLM stream - RAM used: 88.20 MB | Peak: 88.20 MB
+INFO:root:llm_stream_response: Starting response stream
+INFO:root:During LLM stream - RAM used: 88.20 MB | Peak: 88.20 MB
+INFO:root:llm_stream_response: Starting response stream
+INFO:root:During LLM stream - RAM used: 88.20 MB | Peak: 88.20 MB
+INFO:root:llm_stream_response: Starting response stream
+INFO:root:During LLM stream - RAM used: 88.20 MB | Peak: 88.20 MB
+INFO:root:llm_stream_response: Starting response stream
+INFO:root:During LLM stream - RAM used: 88.20 MB | Peak: 88.20 MB
+INFO:root:llm_stream_response: Starting response stream
+INFO:root:During LLM stream - RAM used: 88.20 MB | Peak: 88.20 MB
+INFO:root:llm_stream_response: Starting response stream
+INFO:root:During LLM stream - RAM used: 88.20 MB | Peak: 88.20 MB
+INFO:root:llm_stream_response: Starting response stream
+INFO:root:During LLM stream - RAM used: 88.20 MB | Peak: 88.20 MB
+INFO:root:llm_stream_response: Starting response stream
+INFO:root:During LLM stream - RAM used: 88.20 MB | Peak: 88.20 MB
+INFO:root:llm_stream_response: Starting response stream
+INFO:root:During LLM stream - RAM used: 88.20 MB | Peak: 88.20 MB
+INFO:root:llm_stream_response: Starting response stream
+INFO:root:During LLM stream - RAM used: 88.20 MB | Peak: 88.20 MB
+INFO:root:llm_stream_response: Starting response stream
+INFO:root:During LLM stream - RAM used: 88.20 MB | Peak: 88.20 MB
+INFO:root:llm_stream_response: Starting response stream
+INFO:root:During LLM stream - RAM used: 88.20 MB | Peak: 88.20 MB
+INFO:root:llm_stream_response: Starting response stream
+INFO:root:During LLM stream - RAM used: 88.20 MB | Peak: 88.20 MB
+INFO:root:llm_stream_response: Starting response stream
+INFO:root:During LLM stream - RAM used: 88.20 MB | Peak: 88.20 MB
+INFO:root:llm_stream_response: Starting response stream
+INFO:root:During LLM stream - RAM used: 88.20 MB | Peak: 88.20 MB
+INFO:root:llm_stream_response: Starting response stream
+INFO:root:During LLM stream - RAM used: 88.20 MB | Peak: 88.20 MB
+INFO:root:llm_stream_response: Starting response stream
+INFO:root:During LLM stream - RAM used: 88.20 MB | Peak: 88.20 MB
+INFO:root:llm_stream_response: Starting response stream
+INFO:root:During LLM stream - RAM used: 88.20 MB | Peak: 88.20 MB
+INFO:root:llm_stream_response: Starting response stream
+INFO:root:During LLM stream - RAM used: 88.20 MB | Peak: 88.20 MB
+INFO:root:llm_stream_response: Starting response stream
+INFO:root:During LLM stream - RAM used: 88.20 MB | Peak: 88.20 MB
+INFO:root:llm_stream_response: Starting response stream
+INFO:root:During LLM stream - RAM used: 88.20 MB | Peak: 88.20 MB
+INFO:root:llm_stream_response: Starting response stream
+INFO:root:During LLM stream - RAM used: 88.20 MB | Peak: 88.20 MB
+INFO:root:llm_stream_response: Starting response stream
+INFO:root:During LLM stream - RAM used: 88.20 MB | Peak: 88.20 MB
+INFO:root:llm_stream_response: Starting response stream
+INFO:root:During LLM stream - RAM used: 88.20 MB | Peak: 88.20 MB
+INFO:root:llm_stream_response: Starting response stream
+INFO:root:During LLM stream - RAM used: 88.20 MB | Peak: 88.20 MB
+INFO:root:llm_stream_response: Starting response stream
+INFO:root:During LLM stream - RAM used: 88.20 MB | Peak: 88.20 MB
+INFO:root:llm_stream_response: Starting response stream
+INFO:root:During LLM stream - RAM used: 88.20 MB | Peak: 88.20 MB
+INFO:root:llm_stream_response: Starting response stream
+INFO:root:During LLM stream - RAM used: 88.20 MB | Peak: 88.20 MB
+INFO:root:llm_stream_response: Starting response stream
+INFO:root:During LLM stream - RAM used: 88.20 MB | Peak: 88.20 MB
+INFO:root:llm_stream_response: Starting response stream
+INFO:root:During LLM stream - RAM used: 88.20 MB | Peak: 88.20 MB
+INFO:root:llm_stream_response: Starting response stream
+INFO:root:During LLM stream - RAM used: 88.20 MB | Peak: 88.20 MB
+INFO:root:llm_stream_response: Starting response stream
+INFO:root:During LLM stream - RAM used: 88.20 MB | Peak: 88.20 MB
+INFO:root:llm_stream_response: Starting response stream
+INFO:root:During LLM stream - RAM used: 88.20 MB | Peak: 88.20 MB
+INFO:root:llm_stream_response: Starting response stream
+INFO:root:During LLM stream - RAM used: 88.20 MB | Peak: 88.20 MB
+INFO:root:llm_stream_response: Starting response stream
+INFO:root:During LLM stream - RAM used: 88.20 MB | Peak: 88.20 MB
+INFO:root:llm_stream_response: Starting response stream
+INFO:root:During LLM stream - RAM used: 88.20 MB | Peak: 88.20 MB
+INFO:root:llm_stream_response: Starting response stream
+INFO:root:During LLM stream - RAM used: 88.20 MB | Peak: 88.20 MB
+INFO:root:llm_stream_response: Starting response stream
+INFO:root:During LLM stream - RAM used: 88.20 MB | Peak: 88.20 MB
+INFO:root:extract_symptoms_json: Stream done, validating JSON
+INFO:root:After LLM JSON validation - RAM used: 88.20 MB | Peak: 88.20 MB
+INFO:root:extract_symptoms_json: Parsed symptoms=['Sore throat', 'Tiredness', 'Headache behind the eyes']
+INFO:root:llm_stream_response: New symptoms to add=['Sore throat', 'Tiredness', 'Headache behind the eyes']
+INFO:root:llm_stream_response: Proceeding to map ['Sore throat', 'Tiredness', 'Headache behind the eyes'] to diagnoses
+INFO:root:llm_stream_response: Mappings=[{'label': 'Sore throat', 'icd10_candidates': [('J04.1', 0.7312505127544927), ('J10.1', 0.7150354354187212), ('J39.2', 0.6866881962630208)], 'icd10_code': 'J04.1', 'similarity': 0.7312505127544927, 'specialty': 'Pulmonology / Respiratory'}, {'label': 'Tiredness', 'icd10_candidates': [('R53', 0.5456294448731439), ('I06.8', 0.4026108885313063), ('I51.6', 0.0)], 'icd10_code': 'R53', 'similarity': 0.5456294448731439, 'specialty': 'General Medicine'}, {'label': 'Headache behind the eyes', 'icd10_candidates': [('I85.9', 0.22580118190595397), ('I82.0', 0.1967744952301782), ('I61.1', 0.1830659346367004)], 'icd10_code': 'I85.9', 'similarity': 0.22580118190595397, 'specialty': 'Cardiology'}], specialty=Pulmonology / Respiratory
+INFO:root:llm_stream_response: ICD-10 codes=[{'icd10': 'J04.1', 'label': 'Sore throat'}, {'icd10': 'R53', 'label': 'Tiredness'}, {'icd10': 'I85.9', 'label': 'Headache behind the eyes'}], specialty=Pulmonology / Respiratory
+INFO:root:llm_stream_response: Final payload prepared successfully
+INFO:root:llm_stream_response: Sending final_metadata and [DONE]

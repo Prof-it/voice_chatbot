@@ -9,7 +9,7 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(
 
 TRANSCRIPT_FILE = "syntheticData.txt"
 API_URL = "http://localhost:8000/chat"
-OUTPUT_CSV = "LLM_symptom_extractions_13062025_1.csv"
+OUTPUT_CSV = "symptom_extraction_results.csv"
 
 def load_transcript_with_continuation(file_path):
     full_lines = []
