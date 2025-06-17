@@ -74,7 +74,6 @@ def clean_symptom(text: str) -> str:
 # ---------------------------------------------------------------------------
 # 4.  New function to map list[str] symptoms → ICD‑10 + specialty
 # ---------------------------------------------------------------------------
-
 def map_symptoms(symptoms: List[str]) -> List[Dict[str, Any]]:
     """Return list of dicts with ICD‑10 suggestions + specialty."""
     output = []
@@ -84,7 +83,8 @@ def map_symptoms(symptoms: List[str]) -> List[Dict[str, Any]]:
         if matches:
             code, score = matches[0]  # take best
         else:
-            code, score = None, 0.0
+            code, score = "R99", 0.0  # fallback to R99 for undefined symptoms
+            matches = [("R99", 0.0)]
         output.append({
             "label": s,
             "icd10_candidates": matches,
@@ -93,6 +93,7 @@ def map_symptoms(symptoms: List[str]) -> List[Dict[str, Any]]:
             "specialty": assign_specialty(code)
         })
     return output
+ß
 
 def final_session_specialty(mapped: List[Dict[str, Any]]) -> str:
     """Select a single specialty for the encounter.
