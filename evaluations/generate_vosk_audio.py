@@ -4,7 +4,7 @@ from subprocess import run, CalledProcessError
 from pydub import AudioSegment
 
 # Configuration
-TRANSCRIPT_FILE = "testData.txt"  # Make sure it's in the same folder
+TRANSCRIPT_FILE = "syntheticData.txt"  # Make sure it's in the same folder
 OUTPUT_DIR = "tmp_wav_outputs"
 FINAL_OUTPUT = "conversation_full.wav"
 

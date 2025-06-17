@@ -1,5 +1,4 @@
 
-import os
 import pandas as pd
 import httpx
 import asyncio
@@ -8,8 +7,7 @@ from jiwer import compute_measures, cer
 from jiwer import Compose, ToLowerCase, RemovePunctuation, RemoveMultipleSpaces, RemoveWhiteSpace, RemoveEmptyStrings
 
 
-
-TRANSCRIPT_FILE = "testData.txt"
+TRANSCRIPT_FILE = "syntheticData.txt"
 AUDIO_DIR = "tmp_xtts_wavs"
 API_URL = "http://localhost:8000/transcribe_vosk"
 
@@ -56,14 +54,6 @@ async def transcribe_and_compare():
         for file in audio_files:
             print(f"🔎 Processing {file.name}...")
 
-            # if file.name > "turn_259_D.wav" :
-            #     break
-            # idx = int(file.stem.split("_")[1])
-            # if idx < 871 or idx > 2553:
-            #     continue
-            # if file.name < "turn_871_P.wav" or file.name > "turn_2553_P.wav":
-            #     continue
-
             if not file.exists():
                 print(f"⚠️ Skipping {file.name}: file not found.")
                 continue    
@@ -106,7 +96,7 @@ async def transcribe_and_compare():
 
                     # Save intermediate results after each file
                     df = pd.DataFrame(results)
-                    df.to_csv("transcription_results_871_to_2553.csv", index=False)
+                    df.to_csv("asr_transcription_analysis.csv", index=False)
                 except Exception as e:
                     print(f"[{file.name}] ❌ Error: {e}")
 

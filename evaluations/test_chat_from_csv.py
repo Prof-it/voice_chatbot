@@ -7,9 +7,9 @@ import logging
 # Configure logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
-TRANSCRIPT_FILE = "testData.txt"
+TRANSCRIPT_FILE = "syntheticData.txt"
 API_URL = "http://localhost:8000/chat"
-OUTPUT_CSV = "LLM_symptom_extractions_10.csv"
+OUTPUT_CSV = "LLM_symptom_extractions_13062025_1.csv"
 
 def load_transcript_with_continuation(file_path):
     full_lines = []
@@ -92,8 +92,8 @@ async def main():
         count += 1
         print(f"[{count}] Extracted: {new_accumulated}")
 
-        # if count >= 10:
-        #     break
+        if count >= 10:
+            break
 
     # write CSV
     df = pd.DataFrame(results)

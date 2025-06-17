@@ -25,7 +25,7 @@ speaker_map_internal_ids = {
 }
 
 # Paths
-transcript_path = "testData.txt"
+transcript_path = "syntheticData.txt"
 temp_dir = Path("tmp_xtts_wavs")
 output_conversation_path = "conversation_xtts.wav"
 temp_dir.mkdir(parents=True, exist_ok=True)

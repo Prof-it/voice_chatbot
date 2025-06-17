@@ -7,9 +7,8 @@ import traceback
 import psutil
 
 from utils.predict import map_symptoms, final_session_specialty
-from utils.prompts import DETECT_PROMPT, SYMPTOM_PROMPT
+from utils.prompts import SYMPTOM_PROMPT
 from utils.types import ChatRequest
-
 
 from fastapi import APIRouter, HTTPException, Request
 from fastapi.responses import StreamingResponse
@@ -160,9 +159,6 @@ async def extract_symptoms_json(messages: list, model: str) -> list[str] | None:
         format=SymptomsList.model_json_schema(),
         options={
         "num_ctx": 128,
-        # "num_thread": 2,
-        # "top_p": 0.9,
-        # "repeat_penalty": 1.1,
         "temperature": 0.0,
     },
         stream=True
