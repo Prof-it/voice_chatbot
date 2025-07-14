@@ -93,7 +93,6 @@ def map_symptoms(symptoms: List[str]) -> List[Dict[str, Any]]:
             "specialty": assign_specialty(code)
         })
     return output
-ß
 
 def final_session_specialty(mapped: List[Dict[str, Any]]) -> str:
     """Select a single specialty for the encounter.
