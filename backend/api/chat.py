@@ -179,7 +179,17 @@ async def extract_symptoms_json(messages: list, model: str) -> list[str] | None:
             # 2) parse + validate
             try:
                 obj = SymptomsList.model_validate_json(accumulator)
-                names = [s.name for s in obj.symptoms if s.name]
+                # Only include symptoms present in the original messages
+                raw_text = " ".join(
+                    m.content if hasattr(m, "content") else m["content"] 
+                    for m in messages
+                ).lower()
+                names = [
+                    symptom.name 
+                    for symptom in obj.symptoms 
+                    if symptom.name and symptom.name.lower() in raw_text
+                ]
+                
                 log_memory_usage("After LLM JSON validation")
                 if names:
                     logging.info(f"extract_symptoms_json: Parsed symptoms={names}")
