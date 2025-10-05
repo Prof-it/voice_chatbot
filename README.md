@@ -1,4 +1,7 @@
 # VoiceMedi AI 🩺🤖  
+This is a forked repo for the purpose of publication to distinguish from the original repo done for the thesis. 
+Any code changes after the thesis is done here.
+
 *An Edge-AI Chatbot for Symptom Extraction and Appointment Pre-Fill*  
 
 **VoiceMedi AI** is an open-source healthcare chatbot. It helps users describe symptoms naturally, predicts conditions using machine learning, and shares structured appointment data. This prototype is a core module in a broader Edge-AI pipeline to automate clinical intake workflows.
