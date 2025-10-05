@@ -1,6 +1,6 @@
 # VoiceMedi AI 🩺🤖  
-**This repo is a fork for publication, to distinguish it from the original thesis repo.**
-**Any code changes after the thesis is done here.**
+**This repo is a fork for publication, to distinguish it from the original thesis repo.**  
+**Any code changes after the thesis are done here.**
 
 *An Edge-AI Chatbot for Symptom Extraction and Appointment Pre-Fill*  
 
@@ -69,7 +69,7 @@ ollama run llama3:2.1b
 ### Run the Project:
 ```bash
 # Clone the repository
-git clone https://github.com/krishsat9937/voice_chatbot.git
+git clone https://github.com/Prof-it/voice_chatbot.git
 cd voice_chatbot
 
 # Build and launch containers
@@ -100,6 +100,5 @@ npm start
 
 ## 🖥️ System Architecture  
 ![Voicehat architecture (1)](https://github.com/user-attachments/assets/656b355b-d243-425d-be91-0c86d5a4e6f7)
-
 
 ---
