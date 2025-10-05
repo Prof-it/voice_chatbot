@@ -1,6 +1,6 @@
 # VoiceMedi AI 🩺🤖  
-This is a forked repo for the purpose of publication to distinguish from the original repo done for the thesis. 
-Any code changes after the thesis is done here.
+**This repo is a fork for publication, to distinguish it from the original thesis repo.**
+**Any code changes after the thesis is done here.**
 
 *An Edge-AI Chatbot for Symptom Extraction and Appointment Pre-Fill*  
 
